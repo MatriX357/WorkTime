@@ -14,7 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
-        android:text="Projekty"
+        android:text="Osoby"
         android:textAlignment="center"
         android:textColor="@color/color_3"
         android:textSize="24sp"

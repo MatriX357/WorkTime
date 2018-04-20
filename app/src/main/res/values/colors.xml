@@ -7,6 +7,7 @@
     <color name="color_2">#fcc418</color>
     <color name="color_3">#3f403f</color>
     <color name="color_4">#E0FCFF</color>
-    <color name="color_5"></color>
+    <color name="color_5">#bde4f4</color>
     <color name="color_6"></color>
+    <color name="przeźroczysty">#003f403f</color>
 </resources>
