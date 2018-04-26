@@ -9,7 +9,7 @@ public class Main extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nowy_projekt);
+        setContentView(R.layout.activity_main);
     }
 
     public void rejestracja(View view) {
@@ -17,10 +17,18 @@ public class Main extends AppCompatActivity {
     }
 
     public void zaloguj(View view) {
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_master);
     }
 
     public void anuluj(View view) {
         setContentView(R.layout.activity_main);
+    }
+
+//    public void profil(View view) {
+//        setContentView(R.layout.activity_profil);
+//    }
+
+    public void nowyprojekt(View view) {
+        setContentView(R.layout.activity_nowy_projekt);
     }
 }
