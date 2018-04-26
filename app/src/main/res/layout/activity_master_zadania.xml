@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/okno3">
+    android:background="@drawable/okno4">
 
     <TextView
         android:id="@+id/textView4"
@@ -45,8 +45,7 @@
         android:clickable="true"
         app:backgroundTint="@color/przeźroczysty"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/add1a" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton3"
@@ -57,7 +56,6 @@
         android:clickable="true"
         app:backgroundTint="@color/przeźroczysty"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/arrl1a" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
