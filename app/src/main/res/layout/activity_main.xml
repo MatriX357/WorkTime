@@ -20,6 +20,8 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="41dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:text="WorkTime"
         android:textAlignment="center"
         android:textColor="#000000"
@@ -30,8 +32,9 @@
 
     <View
         android:id="@+id/view12"
-        android:layout_width="257dp"
+        android:layout_width="200dp"
         android:layout_height="255dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/okno5"
@@ -44,22 +47,24 @@
 
     <View
         android:id="@+id/view13"
-        android:layout_width="256dp"
-        android:layout_height="254dp"
+        android:layout_width="200dp"
+        android:layout_height="255dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/okno2"
         app:layout_constraintBottom_toBottomOf="@+id/view12"
         app:layout_constraintEnd_toEndOf="@+id/view12"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/view12"
         app:layout_constraintTop_toTopOf="@+id/view12"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button1"
         android:layout_width="102dp"
         android:layout_height="26dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:accessibilityLiveRegion="polite"
         android:autoText="true"
@@ -72,36 +77,40 @@
         android:textAllCaps="false"
         android:textColor="@android:color/background_light"
         android:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="@+id/view13"
+        app:layout_constraintStart_toStartOf="@+id/view13"
         app:layout_constraintTop_toBottomOf="@+id/editText5" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="102dp"
         android:layout_height="26dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:accessibilityLiveRegion="polite"
         android:autoText="true"
         android:background="@drawable/zaloguj"
         android:fontFamily="serif"
-        android:padding="3dp"
         android:onClick="rejestracja"
+        android:padding="3dp"
         android:text="Rejestracja"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@android:color/background_light"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/view13"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="@+id/view13"
+        app:layout_constraintStart_toStartOf="@+id/view13"
+        app:layout_constraintTop_toBottomOf="@+id/button1"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/editText5"
-        android:layout_width="190dp"
+        android:layout_width="145dp"
         android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
@@ -116,14 +125,16 @@
         android:textColorHint="@color/greyer"
         android:textDirection="anyRtl"
         android:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/view13"
-        app:layout_constraintStart_toEndOf="@+id/view13"
+        app:layout_constraintEnd_toEndOf="@+id/view13"
+        app:layout_constraintStart_toStartOf="@+id/view13"
         app:layout_constraintTop_toBottomOf="@+id/editText6" />
 
     <EditText
         android:id="@+id/editText6"
-        android:layout_width="192dp"
+        android:layout_width="145dp"
         android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="44dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
@@ -138,9 +149,8 @@
         android:textColorHint="@color/greyer"
         android:textDirection="anyRtl"
         android:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/view12"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toEndOf="@+id/view12"
+        app:layout_constraintEnd_toEndOf="@+id/view13"
+        app:layout_constraintStart_toStartOf="@+id/view13"
         app:layout_constraintTop_toTopOf="@+id/view13" />
 
 
