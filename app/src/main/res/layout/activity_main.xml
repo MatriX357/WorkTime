@@ -54,10 +54,10 @@
         android:background="@drawable/okno2"
         app:layout_constraintBottom_toBottomOf="@+id/view12"
         app:layout_constraintEnd_toEndOf="@+id/view12"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/view12"
         app:layout_constraintTop_toTopOf="@+id/view12"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/button1"
@@ -107,7 +107,7 @@
 
     <EditText
         android:id="@+id/editText5"
-        android:layout_width="145dp"
+        android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -131,7 +131,7 @@
 
     <EditText
         android:id="@+id/editText6"
-        android:layout_width="145dp"
+        android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"

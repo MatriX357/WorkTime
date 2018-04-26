@@ -23,6 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
+                                                <entry key="scalingPercent" value="130" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -35,10 +36,12 @@
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="c6efff" />
-                                      <entry key="backgroundLayerName" value="logo_1b" />
-                                      <entry key="foregroundImage" value="C:\WorkTime\grafika4.png" />
-                                      <entry key="foregroundLayerName" value="logo_1a" />
-                                      <entry key="outputName" value="logo_1" />
+                                      <entry key="backgroundLayerName" value="logo_3b" />
+                                      <entry key="foregroundImage" value="C:\WorkTime\grafika2.png" />
+                                      <entry key="foregroundLayerName" value="logo_3a" />
+                                      <entry key="legacyIconShape" value="NONE" />
+                                      <entry key="outputName" value="logo_3" />
+                                      <entry key="showGrid" value="true" />
                                     </map>
                                   </option>
                                 </PersistentState>
