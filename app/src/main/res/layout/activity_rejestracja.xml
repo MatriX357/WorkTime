@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/okno1">
+    android:background="@drawable/okno1"
+    tools:context=".Rejestracja">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView_rejestracja"
         android:layout_width="0dp"
         android:layout_height="131dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/logo_2a" />
@@ -29,7 +31,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_rejestracja" />
 
     <View
         android:id="@+id/view12"
@@ -60,7 +62,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button_anuluj"
         android:layout_width="60dp"
         android:layout_height="26dp"
         android:layout_marginEnd="12dp"
@@ -78,10 +80,10 @@
         android:textSize="10sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText5" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_r_kod" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button_rejestruj"
         android:layout_width="60dp"
         android:layout_height="26dp"
         android:layout_marginStart="12dp"
@@ -90,7 +92,7 @@
         android:autoText="true"
         android:background="@drawable/zaloguj"
         android:fontFamily="serif"
-        android:onClick="rejestracja"
+        android:onClick="rejestruj"
         android:padding="3dp"
         android:text="Zarejestruj"
         android:textAlignment="center"
@@ -99,10 +101,10 @@
         android:textSize="10sp"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText5" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_r_kod" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/editText_r_kod"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
@@ -123,10 +125,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_r_haslo2" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/editText_r_haslo2"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
@@ -147,10 +149,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_r_haslo" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/editText_r_haslo"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
@@ -171,10 +173,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_r_mail2" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editText_r_mail2"
         android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
@@ -195,10 +197,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText6" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_r_mail" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/editText_r_mail"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"

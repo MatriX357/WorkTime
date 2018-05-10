@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/textView_n"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -32,37 +32,13 @@
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_n"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editText5"
-        android:layout_width="170dp"
-        android:layout_height="78dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/wpisz_email"
-        android:ems="10"
-        android:gravity="start"
-        android:hint="Dodatkowe uwagi"
-        android:inputType="text"
-        android:paddingLeft="5dp"
-        android:singleLine="false"
-        android:textAlignment="gravity"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textColorHint="@color/greyer"
-        android:textColorLink="@android:color/black"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText7" />
-
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView_n"
         android:layout_width="0dp"
         android:layout_height="106dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +59,7 @@
         android:translationY="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_n" />
 
     <View
         android:id="@+id/view13"
@@ -100,7 +76,8 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button_dodaj"
+        android:onClick="dodaj"
         android:layout_width="60dp"
         android:layout_height="26dp"
         android:layout_marginEnd="8dp"
@@ -110,7 +87,6 @@
         android:autoText="true"
         android:background="@drawable/zaloguj"
         android:fontFamily="serif"
-        android:onClick="zaloguj"
         android:padding="3dp"
         android:text="Dodaj"
         android:textAlignment="center"
@@ -123,38 +99,38 @@
         app:layout_constraintTop_toBottomOf="@+id/view13" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/imageView_n_wroc1"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="profil"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        android:onClick="anuluj"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_n"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back"
         tools:ignore="VectorDrawableCompat" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textView_n_wroc2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical|center_horizontal"
-        android:onClick="profil"
+        android:onClick="anuluj"
         android:text="Projekty"
         android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_n"
+        app:layout_constraintStart_toEndOf="@+id/imageView_n_wroc1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/editText_n_info"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
@@ -174,12 +150,11 @@
         android:textDirection="anyRtl"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_n_time" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editText_n_time"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
@@ -188,7 +163,7 @@
         android:background="@drawable/wpisz_email"
         android:ems="10"
         android:hint="Szacowany czas"
-        android:inputType="text"
+        android:inputType="number"
         android:paddingLeft="5dp"
         android:singleLine="true"
         android:textAlignment="viewStart"
@@ -200,10 +175,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_n_api" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/editText_n_api"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
@@ -224,10 +199,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_n_platform" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/editText_n_platform"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
@@ -248,10 +223,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_n_client" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editText_n_client"
         android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
@@ -272,10 +247,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText6" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_n_name" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/editText_n_name"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="4dp"
@@ -297,6 +272,29 @@
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
         app:layout_constraintTop_toTopOf="@+id/view13" />
+
+    <EditText
+        android:id="@+id/editText_n_extraInfo"
+        android:layout_width="170dp"
+        android:layout_height="78dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/wpisz_email"
+        android:ems="10"
+        android:gravity="start"
+        android:hint="Dodatkowe uwagi"
+        android:inputType="text"
+        android:paddingLeft="5dp"
+        android:singleLine="false"
+        android:textAlignment="gravity"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColorHint="@color/greyer"
+        android:textColorLink="@android:color/black"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/view13"
+        app:layout_constraintStart_toStartOf="@+id/view13"
+        app:layout_constraintTop_toBottomOf="@+id/editText_n_info" />
 
 
 </android.support.constraint.ConstraintLayout>

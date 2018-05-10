@@ -4,21 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/okno1">
+    android:background="@drawable/okno1"
+    tools:context=".Main">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView_main"
         android:layout_width="0dp"
-        android:layout_height="173dp"
+        android:layout_height="131dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/logo_1a" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="41dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -28,7 +30,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_main" />
 
     <View
         android:id="@+id/view12"
@@ -79,10 +81,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText5" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_haslo" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_rejestracja"
         android:layout_width="102dp"
         android:layout_height="26dp"
         android:layout_marginEnd="8dp"
@@ -106,7 +108,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/editText_haslo"
         android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
@@ -127,10 +129,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText6" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_mail" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/editText_mail"
         android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
