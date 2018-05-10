@@ -1,5 +1,6 @@
 package pl.maciejnalewajka.worktime;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class Projekty extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class Master extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private ListView listView;
     private ArrayAdapter adapter;
     private ArrayList<String> data;
@@ -51,5 +52,10 @@ public class Projekty extends AppCompatActivity implements AdapterView.OnItemCli
     }
     public void anuluj(View view){
         setContentView(R.layout.activity_master);
+    }
+
+    public void profil(View view) {
+        Intent intent_pro = new Intent(this, Profil.class);
+        startActivity(intent_pro);
     }
 }

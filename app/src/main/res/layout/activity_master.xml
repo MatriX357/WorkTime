@@ -7,7 +7,7 @@
     android:background="@color/color_1">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textView_m_profil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -31,6 +31,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
+        android:gravity="center"
         android:text="Projekty"
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
@@ -41,7 +42,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/listview_master"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -55,7 +56,7 @@
     </ListView>
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageView_m_np"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginBottom="8dp"

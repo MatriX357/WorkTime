@@ -49,7 +49,7 @@ public class Main extends AppCompatActivity {
             if (text_haslo.getText().toString().length() < 8 && cyfry < 2) {
                 Toast.makeText(this, "Podaj poprawne hasło!", Toast.LENGTH_SHORT).show();
             } else {
-                Intent intent_zal = new Intent(this, Projekty.class);
+                Intent intent_zal = new Intent(this, Master.class);
                 startActivity(intent_zal);
             }
         }

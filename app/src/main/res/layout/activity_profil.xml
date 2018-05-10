@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_n"
+        android:id="@+id/textView_p"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -27,7 +27,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Nowy projekt"
+        android:text="Profil"
         android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
@@ -47,15 +47,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:srcCompat="@mipmap/logo_3a" />
+        app:srcCompat="@mipmap/logo_4a" />
 
     <View
         android:id="@+id/view12"
         android:layout_width="200dp"
-        android:layout_height="330dp"
+        android:layout_height="170dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/okno5"
         android:translationX="-10dp"
         android:translationY="20dp"
@@ -66,7 +65,7 @@
     <View
         android:id="@+id/view13"
         android:layout_width="200dp"
-        android:layout_height="330dp"
+        android:layout_height="170dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/okno2"
@@ -78,30 +77,30 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button_dodaj"
-        android:onClick="dodaj"
+        android:id="@+id/button_wyloguj"
         android:layout_width="60dp"
         android:layout_height="26dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:accessibilityLiveRegion="polite"
         android:autoText="true"
         android:background="@drawable/zaloguj"
         android:fontFamily="serif"
+        android:onClick="dodaj"
         android:padding="3dp"
-        android:text="Dodaj"
+        android:text="Wyloguj"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@android:color/background_light"
         android:textSize="10sp"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/view13" />
+        app:layout_constraintStart_toStartOf="@+id/view13" />
 
     <ImageView
-        android:id="@+id/imageView_n_wroc1"
+        android:id="@+id/imageView_p_wroc1"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginBottom="8dp"
@@ -115,7 +114,7 @@
         tools:ignore="VectorDrawableCompat" />
 
     <TextView
-        android:id="@+id/textView_n_wroc2"
+        android:id="@+id/textView_p_wroc2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -128,11 +127,11 @@
         android:textColor="@android:color/background_light"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView_p"
-        app:layout_constraintStart_toEndOf="@+id/imageView_n_wroc1"
+        app:layout_constraintStart_toEndOf="@+id/imageView_p_wroc1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_n_info"
+        android:id="@+id/editText_p_password"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
@@ -140,8 +139,8 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Inne"
-        android:inputType="text"
+        android:hint="Password"
+        android:inputType="textPassword"
         android:paddingLeft="5dp"
         android:singleLine="true"
         android:textAlignment="viewStart"
@@ -153,82 +152,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText_n_time" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_p_email" />
 
     <EditText
-        android:id="@+id/editText_n_time"
-        android:layout_width="170dp"
-        android:layout_height="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/wpisz_email"
-        android:ems="10"
-        android:hint="Szacowany czas"
-        android:inputType="number"
-        android:paddingLeft="5dp"
-        android:singleLine="true"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textColor="@android:color/black"
-        android:textColorHint="@color/greyer"
-        android:textDirection="anyRtl"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText_n_api" />
-
-    <EditText
-        android:id="@+id/editText_n_api"
-        android:layout_width="170dp"
-        android:layout_height="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/wpisz_email"
-        android:ems="10"
-        android:hint="Dostępne API"
-        android:inputType="text"
-        android:paddingLeft="5dp"
-        android:singleLine="true"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textColor="@android:color/black"
-        android:textColorHint="@color/greyer"
-        android:textDirection="anyRtl"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText_n_platform" />
-
-    <EditText
-        android:id="@+id/editText_n_platform"
-        android:layout_width="170dp"
-        android:layout_height="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/wpisz_email"
-        android:ems="10"
-        android:hint="Platforma"
-        android:inputType="text"
-        android:paddingLeft="5dp"
-        android:singleLine="true"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textColor="@android:color/black"
-        android:textColorHint="@color/greyer"
-        android:textDirection="anyRtl"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText_n_client" />
-
-    <EditText
-        android:id="@+id/editText_n_client"
+        android:id="@+id/editText_p_email"
         android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
@@ -236,8 +163,8 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Klient"
-        android:inputType="text|textEmailAddress"
+        android:hint="Email"
+        android:inputType="textEmailAddress|textEmailSubject"
         android:paddingLeft="5dp"
         android:singleLine="true"
         android:textAlignment="viewStart"
@@ -260,7 +187,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Nazwa projektu"
+        android:hint="Name"
         android:inputType="text"
         android:paddingLeft="5dp"
         android:singleLine="true"
@@ -276,27 +203,27 @@
         app:layout_constraintTop_toTopOf="@+id/view13" />
 
     <EditText
-        android:id="@+id/editText_n_extraInfo"
+        android:id="@+id/editText_p_phone"
         android:layout_width="170dp"
-        android:layout_height="78dp"
+        android:layout_height="28dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:gravity="start"
-        android:hint="Dodatkowe uwagi"
-        android:inputType="text"
+        android:hint="phone"
+        android:inputType="number"
         android:paddingLeft="5dp"
-        android:singleLine="false"
-        android:textAlignment="gravity"
+        android:singleLine="true"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
         android:textColorHint="@color/greyer"
-        android:textColorLink="@android:color/black"
+        android:textDirection="anyRtl"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText_n_info" />
-
+        app:layout_constraintTop_toBottomOf="@+id/editText_p_password" />
 
 </android.support.constraint.ConstraintLayout>
