@@ -44,7 +44,8 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
     }
 
     public void nowyprojekt(View view) {
-        setContentView(R.layout.activity_nowy_projekt);
+        Intent intent_pro = new Intent(this, NowyProjekt.class);
+        startActivity(intent_pro);
     }
 
     public void dodaj(View view) {
@@ -54,9 +55,6 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
             Toast.makeText(this, "Uzupełnij wymagane pola!", Toast.LENGTH_SHORT).show();
         }
 
-    }
-    public void anuluj(View view){
-        setContentView(R.layout.activity_master);
     }
 
     public void profil(View view) {
