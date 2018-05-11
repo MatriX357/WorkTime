@@ -32,6 +32,11 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
         extraInfo = (EditText)findViewById(R.id.editText_n_extraInfo);
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -58,4 +63,6 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
         Intent intent_pro = new Intent(this, Profil.class);
         startActivity(intent_pro);
     }
+
+
 }

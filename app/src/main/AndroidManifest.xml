@@ -31,6 +31,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".ProfilEdit"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait">
+        </activity>
         <activity android:name=".MasterDetale"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait">
