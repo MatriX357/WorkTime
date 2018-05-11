@@ -4,39 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/okno1"
-    tools:context=".Rejestracja">
+    android:background="@drawable/okno1">
 
-    <ImageView
-        android:id="@+id/imageView_rejestracja"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="131dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="53dp"
+        android:background="@color/color_1"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/logo_2a" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView_z"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:padding="5dp"
-        android:text="Rejestracja"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="Nowe zadanie"
+        android:textAlignment="gravity"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_z"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_rejestracja" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_z"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:srcCompat="@mipmap/logo_3a" />
 
     <View
         android:id="@+id/view12"
         android:layout_width="200dp"
-        android:layout_height="310dp"
+        android:layout_height="255dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -45,12 +61,12 @@
         android:translationY="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_z" />
 
     <View
         android:id="@+id/view13"
         android:layout_width="200dp"
-        android:layout_height="310dp"
+        android:layout_height="255dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/okno2"
@@ -62,58 +78,70 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button_anuluj"
+        android:id="@+id/button_dodaj"
         android:layout_width="60dp"
         android:layout_height="26dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:accessibilityLiveRegion="polite"
         android:autoText="true"
         android:background="@drawable/zaloguj"
         android:fontFamily="serif"
+        android:onClick="dodaj"
+        android:padding="3dp"
+        android:text="Dodaj"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@android:color/background_light"
+        android:textSize="10sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/view13"
+        app:layout_constraintStart_toStartOf="@+id/view13"
+        app:layout_constraintTop_toBottomOf="@+id/editText_z_info" />
+
+    <ImageView
+        android:id="@+id/imageView_z_wroc1"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:onClick="anuluj"
-        android:padding="3dp"
-        android:text="Anuluj"
-        android:textAlignment="center"
-        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_z"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back"
+        tools:ignore="VectorDrawableCompat" />
+
+    <TextView
+        android:id="@+id/textView_z_wroc2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center_vertical|center_horizontal"
+        android:onClick="anuluj"
+        android:text="Zadania"
+        android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
-        android:textSize="10sp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText_r_kod" />
-
-    <Button
-        android:id="@+id/button_rejestruj"
-        android:layout_width="60dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="32dp"
-        android:accessibilityLiveRegion="polite"
-        android:autoText="true"
-        android:background="@drawable/zaloguj"
-        android:fontFamily="serif"
-        android:onClick="rejestruj"
-        android:padding="3dp"
-        android:text="Zarejestruj"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@android:color/background_light"
-        android:textSize="10sp"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText_r_kod" />
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_z"
+        app:layout_constraintStart_toEndOf="@+id/imageView_z_wroc1"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_r_kod"
+        android:id="@+id/editText_z_info"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Kod firmy"
-        android:inputType="textPassword"
+        android:hint="Inne"
+        android:inputType="text"
         android:paddingLeft="5dp"
         android:singleLine="true"
         android:textAlignment="viewStart"
@@ -125,19 +153,19 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText_r_haslo2" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_z_priority" />
 
     <EditText
-        android:id="@+id/editText_r_haslo2"
+        android:id="@+id/editText_z_time"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Powtórz hasło"
-        android:inputType="textPassword"
+        android:hint="Dostępne API"
+        android:inputType="text"
         android:paddingLeft="5dp"
         android:singleLine="true"
         android:textAlignment="viewStart"
@@ -149,19 +177,19 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText_r_haslo" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_z_task" />
 
     <EditText
-        android:id="@+id/editText_r_haslo"
+        android:id="@+id/editText_z_priority"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Hasło"
-        android:inputType="textPassword"
+        android:hint="Platforma"
+        android:inputType="text"
         android:paddingLeft="5dp"
         android:singleLine="true"
         android:textAlignment="viewStart"
@@ -173,43 +201,19 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText_r_mail2" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_z_time" />
 
     <EditText
-        android:id="@+id/editText_r_mail2"
-        android:layout_width="170dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/wpisz_email"
-        android:ems="10"
-        android:hint="Powtórz e-mail"
-        android:inputType="textEmailAddress"
-        android:paddingLeft="5dp"
-        android:singleLine="true"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textColor="@android:color/black"
-        android:textColorHint="@color/greyer"
-        android:textDirection="anyRtl"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toBottomOf="@+id/editText_r_mail" />
-
-    <EditText
-        android:id="@+id/editText_r_mail"
+        android:id="@+id/editText_z_user"
         android:layout_width="170dp"
         android:layout_height="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="E-mail"
-        android:inputType="textEmailAddress"
+        android:hint="Nazwa projektu"
+        android:inputType="text"
         android:paddingLeft="5dp"
         android:singleLine="true"
         android:textAlignment="viewStart"
@@ -222,6 +226,30 @@
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"
         app:layout_constraintTop_toTopOf="@+id/view13" />
+
+    <EditText
+        android:id="@+id/editText_z_task"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/wpisz_email"
+        android:ems="10"
+        android:hint="Klient"
+        android:inputType="text|textEmailAddress"
+        android:paddingLeft="5dp"
+        android:singleLine="true"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/greyer"
+        android:textDirection="anyRtl"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/view13"
+        app:layout_constraintStart_toStartOf="@+id/view13"
+        app:layout_constraintTop_toBottomOf="@+id/editText_z_user" />
 
 
 </android.support.constraint.ConstraintLayout>

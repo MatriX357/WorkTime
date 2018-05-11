@@ -99,7 +99,7 @@
         android:fontFamily="sans-serif"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="anuluj"
-        android:text="Anuluj"
+        android:text="Projekty"
         android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
         android:textSize="14sp"

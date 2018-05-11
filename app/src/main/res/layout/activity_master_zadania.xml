@@ -58,7 +58,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Użytkownik"
+        android:text="Zadania"
         android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"

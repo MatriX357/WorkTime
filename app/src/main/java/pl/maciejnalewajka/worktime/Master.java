@@ -61,6 +61,4 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
         Intent intent_pro = new Intent(this, Profil.class);
         startActivity(intent_pro);
     }
-
-
 }

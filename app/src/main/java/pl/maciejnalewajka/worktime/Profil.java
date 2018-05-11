@@ -39,4 +39,5 @@ public class Profil extends AppCompatActivity {
         Intent intent_edit_pro = new Intent(this, ProfilEdit.class);
         startActivity(intent_edit_pro);
     }
+
 }
