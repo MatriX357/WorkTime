@@ -25,18 +25,11 @@ public class ProfilEdit extends AppCompatActivity {
         phone.setText(profil.get_phone());
     }
 
-    public void anuluj(View view) {
+    public void back(View view) {
         finish();
     }
 
-    public void sprawdz() {
-        profil.name.setText(name.getText().toString());
-        profil.email.setText(email.getText().toString());
-        profil.phone.setText(phone.getText().toString());
-        finish();
-    }
-
-    public void zmień(View view){
+    public void change(View view){
         boolean a = false;
         char[] znaki = email.getText().toString().toCharArray();
         for(int i=0; i<znaki.length; i++){
@@ -64,22 +57,23 @@ public class ProfilEdit extends AppCompatActivity {
                     Toast.makeText(this, "Podane hasła nie są takie same!", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    profil.password.setText(pass());
-                    sprawdz();
+                    String g = "";
+                    for(int i=0; i<password.getText().toString().length(); i++){
+                        g += "*";
+                    }
+                    profil.password.setText(g);
+                    profil.name.setText(name.getText().toString());
+                    profil.email.setText(email.getText().toString());
+                    profil.phone.setText(phone.getText().toString());
+                    finish();
                 }
             }
         }
         else{
-            sprawdz();
+            profil.name.setText(name.getText().toString());
+            profil.email.setText(email.getText().toString());
+            profil.phone.setText(phone.getText().toString());
+            finish();
         }
     }
-
-    private String pass(){
-        String g = "";
-        for(int i=0; i<password.getText().toString().length(); i++){
-            g += "*";
-        }
-        return g;
-    }
-
 }

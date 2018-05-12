@@ -8,17 +8,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Main extends AppCompatActivity {
-    EditText text_login, text_haslo;
+    static EditText text_login, text_haslo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        text_login = findViewById(R.id.editText_mail);
-        text_haslo = findViewById(R.id.editText_haslo);
+        text_login = findViewById(R.id.editText_main_email);
+        text_haslo = findViewById(R.id.editText_main_password);
     }
 
-    public void zaloguj(View view) {
+    public void logIn(View view) {
 
 
         // Sprawdzenie pól
@@ -55,7 +55,7 @@ public class Main extends AppCompatActivity {
         }
     }
 
-    public void rejestracja(View view){
+    public void register(View view){
         Intent intent_re = new Intent(this, Rejestracja.class);
         startActivity(intent_re);
     }

@@ -7,7 +7,7 @@
     android:background="@drawable/okno1">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_pe"
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:background="@color/color_1"
@@ -27,7 +27,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Edycja profilu"
+        android:text="@string/edycja_profilu"
         android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
@@ -46,11 +46,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_pe"
         app:srcCompat="@mipmap/logo_4a" />
 
     <View
-        android:id="@+id/view12"
+        android:id="@+id/view_pe1"
         android:layout_width="200dp"
         android:layout_height="210dp"
         android:layout_marginEnd="8dp"
@@ -63,50 +63,49 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView_pe" />
 
     <View
-        android:id="@+id/view13"
+        android:id="@+id/view_pe2"
         android:layout_width="200dp"
         android:layout_height="210dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/okno2"
-        app:layout_constraintBottom_toBottomOf="@+id/view12"
-        app:layout_constraintEnd_toEndOf="@+id/view12"
+        app:layout_constraintBottom_toBottomOf="@+id/view_pe1"
+        app:layout_constraintEnd_toEndOf="@+id/view_pe1"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/view12"
-        app:layout_constraintTop_toTopOf="@+id/view12"
+        app:layout_constraintStart_toStartOf="@+id/view_pe1"
+        app:layout_constraintTop_toTopOf="@+id/view_pe1"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button_zmien"
+        android:id="@+id/button_change"
         android:layout_width="60dp"
         android:layout_height="26dp"
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:accessibilityLiveRegion="polite"
-        android:autoText="true"
         android:background="@drawable/zaloguj"
         android:fontFamily="serif"
-        android:onClick="zmień"
+        android:onClick="change"
         android:padding="3dp"
-        android:text="Zmień"
+        android:text="@string/zmie"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@android:color/background_light"
         android:textSize="10sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintStart_toStartOf="@+id/view13" />
+        app:layout_constraintEnd_toEndOf="@+id/view_pe2"
+        app:layout_constraintStart_toStartOf="@+id/view_pe2" />
 
     <ImageView
-        android:id="@+id/imageView_pe_wroc1"
+        android:id="@+id/imageView_pe_back1"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="anuluj"
+        android:onClick="back"
         app:layout_constraintBottom_toTopOf="@+id/imageView_pe"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -114,20 +113,20 @@
         tools:ignore="VectorDrawableCompat" />
 
     <TextView
-        android:id="@+id/textView_pe_wroc2"
+        android:id="@+id/textView_pe_back2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical|center_horizontal"
-        android:onClick="anuluj"
-        android:text="Anuluj"
+        android:onClick="back"
+        android:text="@string/profil"
         android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView_pe"
-        app:layout_constraintStart_toEndOf="@+id/imageView_pe_wroc1"
+        app:layout_constraintStart_toEndOf="@+id/imageView_pe_back1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -139,7 +138,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:paddingLeft="5dp"
         android:singleLine="true"
@@ -150,8 +149,8 @@
         android:textColorHint="@color/greyer"
         android:textDirection="anyRtl"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintStart_toStartOf="@+id/view13"
+        app:layout_constraintEnd_toEndOf="@+id/view_pe2"
+        app:layout_constraintStart_toStartOf="@+id/view_pe2"
         app:layout_constraintTop_toBottomOf="@+id/editText_pe_email" />
 
     <EditText
@@ -163,7 +162,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:paddingLeft="5dp"
         android:singleLine="true"
@@ -174,8 +173,8 @@
         android:textColorHint="@color/greyer"
         android:textDirection="anyRtl"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintStart_toStartOf="@+id/view13"
+        app:layout_constraintEnd_toEndOf="@+id/view_pe2"
+        app:layout_constraintStart_toStartOf="@+id/view_pe2"
         app:layout_constraintTop_toBottomOf="@+id/editText_pe_password" />
 
     <EditText
@@ -187,7 +186,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress|textEmailSubject"
         android:paddingLeft="5dp"
         android:singleLine="true"
@@ -198,8 +197,8 @@
         android:textColorHint="@color/greyer"
         android:textDirection="anyRtl"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintStart_toStartOf="@+id/view13"
+        app:layout_constraintEnd_toEndOf="@+id/view_pe2"
+        app:layout_constraintStart_toStartOf="@+id/view_pe2"
         app:layout_constraintTop_toBottomOf="@+id/editText_pe_name" />
 
     <EditText
@@ -211,7 +210,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Name"
+        android:hint="@string/name"
         android:inputType="text"
         android:paddingLeft="5dp"
         android:singleLine="true"
@@ -222,9 +221,9 @@
         android:textColorHint="@color/greyer"
         android:textDirection="anyRtl"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintStart_toStartOf="@+id/view13"
-        app:layout_constraintTop_toTopOf="@+id/view13" />
+        app:layout_constraintEnd_toEndOf="@+id/view_pe2"
+        app:layout_constraintStart_toStartOf="@+id/view_pe2"
+        app:layout_constraintTop_toTopOf="@+id/view_pe2" />
 
     <EditText
         android:id="@+id/editText_pe_phone"
@@ -235,8 +234,8 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="phone"
-        android:inputType="number"
+        android:hint="@string/phone"
+        android:inputType="phone"
         android:paddingLeft="5dp"
         android:singleLine="true"
         android:textAlignment="viewStart"
@@ -246,8 +245,8 @@
         android:textColorHint="@color/greyer"
         android:textDirection="anyRtl"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/view13"
-        app:layout_constraintStart_toStartOf="@+id/view13"
+        app:layout_constraintEnd_toEndOf="@+id/view_pe2"
+        app:layout_constraintStart_toStartOf="@+id/view_pe2"
         app:layout_constraintTop_toBottomOf="@+id/editText_pe_password2" />
 
 </android.support.constraint.ConstraintLayout>

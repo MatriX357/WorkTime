@@ -31,11 +31,11 @@ public class Profil extends AppCompatActivity {
         return phone.getText();
     }
 
-    public void anuluj(View view) {
+    public void back(View view) {
         finish();
     }
 
-    public void edytuj(View view) {
+    public void edit(View view) {
         Intent intent_edit_pro = new Intent(this, ProfilEdit.class);
         startActivity(intent_edit_pro);
     }

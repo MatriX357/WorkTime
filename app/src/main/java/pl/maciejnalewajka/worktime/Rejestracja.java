@@ -7,27 +7,26 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Rejestracja extends AppCompatActivity {
-    EditText mail, mail2, haslo, haslo2, kod;
+    static EditText mail, mail2, haslo, haslo2, kod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rejestracja);
-        mail = findViewById(R.id.editText_r_mail);
-        mail2 = findViewById(R.id.editText_r_mail2);
-        haslo = findViewById(R.id.editText_r_haslo);
-        haslo2 = findViewById(R.id.editText_r_haslo2);
-        kod = findViewById(R.id.editText_r_kod);
+        mail = findViewById(R.id.editText_r_email);
+        mail2 = findViewById(R.id.editText_r_email2);
+        haslo = findViewById(R.id.editText_r_password);
+        haslo2 = findViewById(R.id.editText_r_password2);
+        kod = findViewById(R.id.editText_r_code);
     }
 
-    public void rejestruj(View view){
+    public void register(View view){
         boolean s = sprawdz();
         if(s == true){
-
         }
     }
 
-    public void anuluj(View view) {
+    public void back(View view) {
         finish();
     }
 

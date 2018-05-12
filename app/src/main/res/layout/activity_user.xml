@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_1">
@@ -15,16 +15,16 @@
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:onClick="profil"
-        android:text="Profil"
+        android:text="@string/profil"
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/listview"
+        app:layout_constraintBottom_toTopOf="@+id/listview_u"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_user"
+        android:id="@+id/textView_u"
         android:layout_width="138dp"
         android:layout_height="38dp"
         android:layout_marginEnd="8dp"
@@ -32,7 +32,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Projekty"
+        android:text="@string/projekty"
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/listview_u"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -51,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_user">
+        app:layout_constraintTop_toBottomOf="@+id/textView_u">
 
     </ListView>
 

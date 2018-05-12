@@ -7,38 +7,34 @@
     android:background="@color/color_1">
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageView_mo_back1"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="profil"
-        app:layout_constraintBottom_toTopOf="@+id/listview"
+        android:onClick="back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back"
         tools:ignore="VectorDrawableCompat" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textView_mo_back2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical|center_horizontal"
-        android:onClick="anuluj"
-        android:text="Projekty"
+        android:onClick="back"
+        android:text="@string/zadania"
         android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/listview"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintStart_toEndOf="@+id/imageView_mo_back1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView_mo2"
         android:layout_width="138dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -46,7 +42,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Detale"
+        android:text="@string/osoba"
         android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
@@ -56,7 +52,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/listview_mz"
+        android:id="@+id/listview_mo"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -65,22 +61,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
+        app:layout_constraintTop_toBottomOf="@+id/textView_mo2">
 
     </ListView>
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:onClick="nowe_zadanie"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/listview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_add"
-        tools:ignore="VectorDrawableCompat" />
 
 </android.support.constraint.ConstraintLayout>
