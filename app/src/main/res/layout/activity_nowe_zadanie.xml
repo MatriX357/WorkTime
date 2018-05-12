@@ -164,8 +164,8 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Dostępne API"
-        android:inputType="text"
+        android:hint="Czas"
+        android:inputType="number"
         android:paddingLeft="5dp"
         android:singleLine="true"
         android:textAlignment="viewStart"
@@ -179,8 +179,9 @@
         app:layout_constraintStart_toStartOf="@+id/view13"
         app:layout_constraintTop_toBottomOf="@+id/editText_z_task" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText_z_priority"
+        android:onClick="setPriority"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
@@ -188,7 +189,8 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Platforma"
+        android:gravity="center"
+        android:hint="Priorytet"
         android:inputType="text"
         android:paddingLeft="5dp"
         android:singleLine="true"
@@ -203,8 +205,9 @@
         app:layout_constraintStart_toStartOf="@+id/view13"
         app:layout_constraintTop_toBottomOf="@+id/editText_z_time" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText_z_user"
+        android:onClick="setUser"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="4dp"
@@ -212,7 +215,8 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Nazwa projektu"
+        android:gravity="center"
+        android:hint="Osoba"
         android:inputType="text"
         android:paddingLeft="5dp"
         android:singleLine="true"
@@ -236,7 +240,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="Klient"
+        android:hint="Zadanie"
         android:inputType="text|textEmailAddress"
         android:paddingLeft="5dp"
         android:singleLine="true"

@@ -28,8 +28,8 @@
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical|center_horizontal"
-        android:onClick="profil"
-        android:text="Zadania"
+        android:onClick="anuluj"
+        android:text="Projekty"
         android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
         android:textSize="14sp"
@@ -57,7 +57,7 @@
 
     <ListView
         android:id="@+id/listview_mz"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/background_light"
@@ -71,6 +71,7 @@
 
     <ImageView
         android:id="@+id/imageView4"
+        android:onClick="nowe_zadanie"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginBottom="8dp"

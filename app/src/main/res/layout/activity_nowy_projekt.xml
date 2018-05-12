@@ -291,6 +291,7 @@
         android:singleLine="false"
         android:textAlignment="gravity"
         android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
         android:textColorHint="@color/greyer"
         android:textColorLink="@android:color/black"
         android:visibility="visible"
