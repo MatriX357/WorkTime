@@ -19,9 +19,6 @@ public class Main extends AppCompatActivity {
     }
 
     public void logIn(View view) {
-
-
-        // Sprawdzenie pól
         //login
         boolean l = false;
         //boolean h = false;
@@ -49,8 +46,8 @@ public class Main extends AppCompatActivity {
             if (text_haslo.getText().toString().length() < 8 && cyfry < 2) {
                 Toast.makeText(this, "Podaj poprawne hasło!", Toast.LENGTH_SHORT).show();
             } else {
-                Intent intent_zal = new Intent(this, Master.class);
-                startActivity(intent_zal);
+                Intent intent_zaloguj = new Intent(this, Master.class);
+                startActivity(intent_zaloguj);
             }
         }
     }
@@ -58,5 +55,12 @@ public class Main extends AppCompatActivity {
     public void register(View view){
         Intent intent_re = new Intent(this, Rejestracja.class);
         startActivity(intent_re);
+    }
+
+
+    //Tymczasowe
+    public void user(View view){
+        Intent intent_user = new Intent(this, User.class);
+        startActivity(intent_user);
     }
 }

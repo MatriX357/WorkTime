@@ -3,64 +3,44 @@ package pl.maciejnalewajka.worktime;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 
-public class Master extends AppCompatActivity implements AdapterView.OnItemClickListener{
-    private ListView lv;
-    ArrayList<HashMap<String, String>> contactList;
-    static String name2, platform2, procent;
-    ProgressBar progresbar;
-
+public class Master extends AppCompatActivity{
+    ListView lv;
+    LinkedHashMap<Integer, String> listdatas ;
+    LayoutInflater inflater ;
+    AddjavaListAdapter adapter ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
-
-
-        lv = (ListView)findViewById(R.id.listview_m);
-        progresbar = (ProgressBar)findViewById(R.id.l_progressBar);
-        contactList = new ArrayList<>();
-        name2 = "Maciek";
-        platform2 = "Wysoki";
-        procent = "26%";
-        HashMap<String, String> contact = new HashMap<>();
-        HashMap<String, String> contact2 = new HashMap<>();
-        contact.put("name", name2);
-        contact.put("priority", platform2);
-        contact.put("procent", procent);
-        contact2.put("name", name2);
-        contact2.put("priority", platform2);
-        contact2.put("procent", procent);
-        contactList.add(contact);
-        contactList.add(contact);
-
-        ListAdapter adapter = new SimpleAdapter(this, contactList,
-                R.layout.list_projects, new String[]{ "name","priority", "procent"},
-                new int[]{R.id.l_nazwa, R.id.l_priorytet, R.id.l_procent});
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(this);
+        listdatas  = new LinkedHashMap<Integer, String>() ;
+        inflater = LayoutInflater.from(this);
+        adapter = new AddjavaListAdapter();
+        lv.setAdapter(adapter) ;
     }
 
     @Override
     public void onBackPressed() {
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        Intent intent_osoba = new Intent(this, MasterOsoba.class);
-        startActivity(intent_osoba);
-//        progresbar =lv.getSelectedView().findViewById(R.id.l_progressBar);
-//        progresbar.setProgress(70);
-    }
+
 
     public void new_project(View view) {
         Intent intent_new_project = new Intent(this, NowyProjekt.class);
@@ -70,5 +50,56 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
     public void profil(View view) {
         Intent intent_profil = new Intent(this, Profil.class);
         startActivity(intent_profil);
+    }
+
+    class Kontenery{
+        ProgressBar bar;
+        TextView name, procent, priority;
+    }
+
+    class AddjavaListAdapter extends BaseAdapter {
+
+
+
+        @Override
+        public int getCount() {
+            return listdatas.keySet().size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            Object[] d = listdatas.keySet().toArray() ;
+            int c = (Integer)d[position] ;
+            return listdatas.get(c) ;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View v, ViewGroup parent) {
+            Kontenery holder ;
+            if (v==null) {
+                v = inflater.inflate(R.layout.list_projects, null) ;
+                holder = new Kontenery() ;
+
+                holder.name = (TextView) v.findViewById(R.id.l_nazwa) ;
+                holder.bar = (ProgressBar) v.findViewById(R.id.l_progressBar);
+                holder.priority = (Button) (TextView) v.findViewById(R.id.l_priorytet) ;
+                holder.procent = (TextView) v.findViewById(R.id.l_procent) ;
+
+                v.setTag(holder) ;
+
+            }else{
+                holder = (Kontenery) v.getTag();
+            }
+
+            holder.name.setText("Maciek") ;
+            holder.bar.setProgress(20) ;
+
+            return v;
+        }
     }
 }

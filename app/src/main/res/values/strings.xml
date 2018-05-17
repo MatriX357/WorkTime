@@ -31,7 +31,7 @@
     <string name="code">Code</string>
     <string name="powt_rz_has_o">Powtórz hasło</string>
     <string name="worktime">WorkTime</string>
-    <string name="log_in">Log In</string>
+    <string name="zaloguj">Zaloguj</string>
     <string name="back">Back</string>
     <string name="register">Register</string>
 </resources>
