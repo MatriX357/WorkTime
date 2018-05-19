@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_1">
@@ -18,7 +19,6 @@
 
     <ImageView
         android:id="@+id/imageView_uzs_back1"
-        tools:ignore="VectorDrawableCompat"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginBottom="8dp"
@@ -28,7 +28,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_uzs"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back" />
+        app:srcCompat="@drawable/back"
+        tools:ignore="VectorDrawableCompat" />
 
     <TextView
         android:id="@+id/textView_uzs_back2"

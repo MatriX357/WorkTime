@@ -7,10 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.UUID;
 
 public class NoweZadanie extends AppCompatActivity {
     static TextView user, priority;
     static EditText task, time, info;
+    static String new_task_uuid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,5 +60,10 @@ public class NoweZadanie extends AppCompatActivity {
     }
 
     public void add(View view){
+        if(task.getText().toString() != "" && Integer.parseInt(time.getText().toString()) != 0){
+            Toast.makeText(this, "Dodano nowe zadanie!", Toast.LENGTH_SHORT).show();
+            new_task_uuid = UUID.randomUUID().toString();
+        }
+        else{Toast.makeText(this, "Wprowadź poprawne dane!", Toast.LENGTH_SHORT).show();}
     }
 }

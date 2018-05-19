@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 public class PobieranieDanych extends AsyncTask<Void, Void, Void> {
     // Klasa pobierania danych
+    Dane dane;
     ArrayList<HashMap<String, Object>> users_list;
     ArrayList<HashMap<String, Object>> masters_list;
     String data = "";
@@ -40,7 +41,8 @@ public class PobieranieDanych extends AsyncTask<Void, Void, Void> {
             if (data != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(data);
-                    JSONArray jsonAr_users = jsonObj.getJSONArray("users");
+                    JSONObject company = jsonObj.getJSONObject("company");
+                    JSONArray jsonAr_users = company.getJSONArray("users");
                     for (int i=0; i<jsonAr_users.length(); i++) {
                         JSONObject users = jsonAr_users.getJSONObject(i);
                         String name = users.getString("name");
@@ -152,6 +154,8 @@ public class PobieranieDanych extends AsyncTask<Void, Void, Void> {
         catch (MalformedURLException e) {e.printStackTrace();}
         catch (IOException e)           {e.printStackTrace();}
 
+        dane.users_list = users_list;
+        dane.masters_list = masters_list;
         return null;
     }
 

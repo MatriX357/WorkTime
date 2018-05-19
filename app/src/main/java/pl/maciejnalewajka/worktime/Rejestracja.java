@@ -6,8 +6,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.UUID;
+
 public class Rejestracja extends AppCompatActivity {
-    static EditText mail, mail2, haslo, haslo2, kod;
+    static EditText mail, mail2, haslo, haslo2, code;
+    static String register_uuid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,12 +20,21 @@ public class Rejestracja extends AppCompatActivity {
         mail2 = findViewById(R.id.editText_r_email2);
         haslo = findViewById(R.id.editText_r_password);
         haslo2 = findViewById(R.id.editText_r_password2);
-        kod = findViewById(R.id.editText_r_code);
+        code = findViewById(R.id.editText_r_code);
     }
 
     public void register(View view){
         boolean s = sprawdz();
         if(s == true){
+            register_uuid = UUID.randomUUID().toString();
+            if(code.getText().toString() == ""){
+                // Konto master
+            }
+            else{
+                // Konto user
+            }
+            Toast.makeText(this, "Wysłano prośbę o rejestrację!", Toast.LENGTH_SHORT).show();
+            back(view);
         }
     }
 

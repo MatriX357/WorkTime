@@ -6,8 +6,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.UUID;
+
 public class NowyProjekt extends AppCompatActivity {
     static EditText name, client, platform, api, time, info, extraInfo;
+    static String new_project_uuid;
+    Dane dane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,9 @@ public class NowyProjekt extends AppCompatActivity {
             Toast.makeText(this, "Uzupełnij wymagane pola!", Toast.LENGTH_SHORT).show();
         }
         else{
-            //DODAJ
+            Toast.makeText(this, "Dodano nowy projekt!", Toast.LENGTH_SHORT).show();
+            new_project_uuid = UUID.randomUUID().toString();
+            // Dodaj nowy projekt do danych.
         }
     }
 }

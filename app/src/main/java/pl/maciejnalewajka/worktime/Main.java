@@ -3,12 +3,19 @@ package pl.maciejnalewajka.worktime;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Main extends AppCompatActivity {
     static EditText text_login, text_haslo;
+    public Dane dane;
+    HashMap<String, Object> lol;
+    ArrayList<HashMap<String, Object>> lolek;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,9 +23,53 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         text_login = findViewById(R.id.editText_main_email);
         text_haslo = findViewById(R.id.editText_main_password);
+        dane = new Dane(lolek, null);
     }
 
     public void logIn(View view) {
+        // Pobierza dane zamim porównasz
+
+        if(spr() == true && search() == true){
+            Intent intent_zaloguj = new Intent(this, Master.class);
+            startActivity(intent_zaloguj);
+        }
+        else{
+//            Toast.makeText(this, dane.getUsers_list().get(0).get("password").toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void register(View view){
+        Intent intent_re = new Intent(this, Rejestracja.class);
+        startActivity(intent_re);
+    }       // Przenosi do rejestracji
+
+    private boolean search(){
+        wypelnienie();
+        try {
+            for (int i = 0; i < dane.users_list.size(); i++) {
+                if (dane.users_list.get(i).get("email").equals(text_login.getText().toString())) {
+                    if (dane.users_list.get(i).get("password").toString().equals(text_haslo.getText().toString())) {
+                        dane.setMy_hash(dane.users_list.get(i));
+                        return true;
+                    }
+                }
+            }
+            for (int i = 0; i < dane.masters_list.size(); i++) {
+                if (dane.masters_list.get(i).get("email").toString() == text_login.getText().toString()) {
+                    if (dane.masters_list.get(i).get("password").toString() == text_haslo.getText().toString()) {
+                        dane.setMy_hash(dane.masters_list.get(i));
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }               // Uzupełnia dane z logowania
+
+    private boolean spr(){
         //login
         boolean l = false;
         //boolean h = false;
@@ -45,20 +96,35 @@ public class Main extends AppCompatActivity {
         else {
             if (text_haslo.getText().toString().length() < 8 && cyfry < 2) {
                 Toast.makeText(this, "Podaj poprawne hasło!", Toast.LENGTH_SHORT).show();
-            } else {
-                Intent intent_zaloguj = new Intent(this, Master.class);
-                startActivity(intent_zaloguj);
+            }
+            else {
+                return true;
             }
         }
+        return false;
+    }               // Sprawdza czy email i hasła są prawidłowe
+
+    //Tymczasowe wypełnienie
+    public void wypelnienie() {
+//        try {
+            String maciek = "maciek";
+            int phone = 794257753;
+            String email = "@";
+            int password = 12345678;
+            lol = new HashMap<String, Object>();
+            lolek = new ArrayList<HashMap<String, Object>>();
+            lol.put("name", maciek);
+            lol.put("phone", phone);
+            lol.put("email", email);
+            lol.put("password", password);
+            lolek.add(lol);
+            dane.setUsers_list(lolek);
+//        }
+//        catch (Exception e){
+//            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+//        }
     }
-
-    public void register(View view){
-        Intent intent_re = new Intent(this, Rejestracja.class);
-        startActivity(intent_re);
-    }
-
-
-    //Tymczasowe
+    //Tymczasowe przejście do usera
     public void user(View view){
         Intent intent_user = new Intent(this, User.class);
         startActivity(intent_user);

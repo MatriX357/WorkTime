@@ -42,7 +42,7 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/l2_procent"
+            android:id="@+id/l2_priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|end"
@@ -51,7 +51,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/l2_active"
+            android:id="@+id/l2_procent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|end"

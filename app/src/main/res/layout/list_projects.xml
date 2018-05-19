@@ -43,20 +43,20 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/l_priorytet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|end"
-            android:text="Wysoki"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/l_procent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|end"
-            android:text="10%"
+            android:text="56%"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/l_active"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|end"
+            android:text="Aktywne"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
     </LinearLayout>
