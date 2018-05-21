@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.github.mikephil.charting.utils.ColorTemplate;
+
 import java.util.ArrayList;
 import java.util.List;
 

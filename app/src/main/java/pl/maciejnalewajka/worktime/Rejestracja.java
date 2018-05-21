@@ -1,16 +1,23 @@
 package pl.maciejnalewajka.worktime;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Queue;
 import java.util.UUID;
 
 public class Rejestracja extends AppCompatActivity {
     static EditText mail, mail2, haslo, haslo2, code;
     static String register_uuid;
+    public String url_1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,17 +30,20 @@ public class Rejestracja extends AppCompatActivity {
         code = findViewById(R.id.editText_r_code);
     }
 
-    public void register(View view){
+    public void register(View view) throws IOException {
         boolean s = sprawdz();
         if(s == true){
             register_uuid = UUID.randomUUID().toString();
-            if(code.getText().toString() == ""){
+            if(code.getText().toString().equals("0")){
                 // Konto master
+
+            }
+            else if(code.getText().toString() == "1"){
+                // Konteo user
             }
             else{
-                // Konto user
+                Toast.makeText(this, "Wpisz poprawny kod!", Toast.LENGTH_SHORT).show();
             }
-            Toast.makeText(this, "Wysłano prośbę o rejestrację!", Toast.LENGTH_SHORT).show();
             back(view);
         }
     }
@@ -41,6 +51,8 @@ public class Rejestracja extends AppCompatActivity {
     public void back(View view) {
         finish();
     }
+
+
 
     private boolean sprawdz(){
         boolean a=false;

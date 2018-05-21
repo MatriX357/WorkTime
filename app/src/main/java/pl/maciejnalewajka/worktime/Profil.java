@@ -18,6 +18,7 @@ public class Profil extends AppCompatActivity {
         email = (TextView)findViewById(R.id.editText_p_email);
         password = (TextView)findViewById(R.id.editText_p_password);
         phone = (TextView)findViewById(R.id.editText_p_phone);
+
         dane = new Dane(null, null);
         name.setText(dane.getMy_hash().get("name").toString());
         email.setText(dane.getMy_hash().get("email").toString());
@@ -48,5 +49,10 @@ public class Profil extends AppCompatActivity {
         Intent intent_edit_pro = new Intent(this, ProfilEdit.class);
         startActivity(intent_edit_pro);
     }
+
+    public void logout(View view) {
+        Intent intent_edit_log = new Intent(getApplicationContext(), Main.class);
+        startActivity(intent_edit_log);
+    }       // Wylogowanie i usunięcie loginu i hasła z pamięci
 
 }

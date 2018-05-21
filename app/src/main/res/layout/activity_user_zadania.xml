@@ -68,15 +68,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/charts_uz_id"
+        android:layout_width="0dp"
+        android:layout_height="230dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_uz">
+
+    </com.github.mikephil.charting.charts.BarChart>
+
     <ListView
         android:id="@+id/listView_uz"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:background="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_uz">
+        app:layout_constraintTop_toBottomOf="@+id/charts_uz_id">
 
     </ListView>
 

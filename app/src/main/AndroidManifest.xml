@@ -24,7 +24,8 @@
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".Master"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".Profil"
             android:configChanges="keyboardHidden|orientation|screenSize"

@@ -16,29 +16,35 @@ import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Master extends AppCompatActivity implements AdapterView.OnItemClickListener{
+    BarChart barChart;
     private ListView lv;
     public ArrayList<Elementy> data;
     private ArrayAdapter<Elementy> adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
-
+        barChart = (BarChart) findViewById(R.id.charts_m_id);
         lv = (ListView) findViewById(R.id.listview_m);
-        data = new ArrayList<Elementy>();
-        data.add(new Elementy(25, "Maciek", "20%", "Aktywne"));
-        data.add(new Elementy(39, "Kamil", "59%", "Aktywne"));
 
-        adapter = new ElementyMaster(this, data);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(this);
+        charts();
+
+
+
     }
 
     @Override
@@ -61,6 +67,32 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
         Intent intent_profil = new Intent(this, Profil.class);
         startActivity(intent_profil);
     }
+
+    public void charts(){
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        barEntries.add(new BarEntry(12,12));
+        barEntries.add(new BarEntry(2, 39));
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Projekty");
+        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        BarData barData = new BarData(barDataSet);
+        barChart.setDrawGridBackground(true);
+        barChart.setData(barData);
+    }
+
+    private void elementy(){
+
+        data = new ArrayList<Elementy>();
+        data.add(new Elementy(20, "Maciek", "20%", "Aktywne"));
+        data.add(new Elementy(59, "Kamil", "59%", "Aktywne"));
+        adapter = new ElementyMaster(this, data);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(this);
+    }
+
+
+
 
 
 

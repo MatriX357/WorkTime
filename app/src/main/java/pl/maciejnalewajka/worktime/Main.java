@@ -1,6 +1,8 @@
 package pl.maciejnalewajka.worktime;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,11 @@ import java.util.HashMap;
 
 public class Main extends AppCompatActivity {
     static EditText text_login, text_haslo;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    public static final String NAME = "name";
+    public static final String LOGIN = "login";
+    public static final String PASSWORD = "password";
     public Dane dane;
     HashMap<String, Object> lol;
     ArrayList<HashMap<String, Object>> lolek;
@@ -23,6 +30,9 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         text_login = findViewById(R.id.editText_main_email);
         text_haslo = findViewById(R.id.editText_main_password);
+        sharedPreferences = getSharedPreferences(NAME, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        restoreData();
         dane = new Dane(lolek, null);
     }
 
@@ -30,6 +40,11 @@ public class Main extends AppCompatActivity {
         // Pobierza dane zamim porównasz
 
         if(spr() == true && search() == true){
+            String text_l = text_login.getText().toString();
+            String text_h = text_haslo.getText().toString();
+            editor.putString(LOGIN, text_l);
+            editor.putString(PASSWORD, text_h);
+            editor.commit();
             Intent intent_zaloguj = new Intent(this, Master.class);
             startActivity(intent_zaloguj);
         }
@@ -104,6 +119,17 @@ public class Main extends AppCompatActivity {
         return false;
     }               // Sprawdza czy email i hasła są prawidłowe
 
+    private void restoreData() {
+        String saved_l = sharedPreferences.getString(LOGIN, "");
+        String saved_p = sharedPreferences.getString(PASSWORD, "");
+        text_login.setText(saved_l);
+        text_haslo.setText(saved_p);
+    }
+
+    @Override
+    public void onBackPressed() {
+    }
+
     //Tymczasowe wypełnienie
     public void wypelnienie() {
 //        try {
@@ -124,6 +150,16 @@ public class Main extends AppCompatActivity {
 //            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
 //        }
     }
+
+
+
+
+
+
+
+
+
+
     //Tymczasowe przejście do usera
     public void user(View view){
         Intent intent_user = new Intent(this, User.class);

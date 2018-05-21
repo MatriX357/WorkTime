@@ -220,4 +220,26 @@
         app:layout_constraintStart_toStartOf="@+id/view_p2"
         app:layout_constraintTop_toBottomOf="@+id/editText_p_password" />
 
+    <Button
+        android:id="@+id/button_p_logout"
+        android:layout_width="60dp"
+        android:layout_height="26dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:accessibilityLiveRegion="polite"
+        android:background="@drawable/zaloguj"
+        android:fontFamily="serif"
+        android:onClick="logout"
+        android:padding="3dp"
+        android:text="Wyloguj"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@android:color/background_light"
+        android:textSize="10sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
