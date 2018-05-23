@@ -1,6 +1,8 @@
 package pl.maciejnalewajka.worktime;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,7 +10,12 @@ import android.widget.TextView;
 
 public class Profil extends AppCompatActivity {
     static TextView name, email, password, phone;
-    public Dane dane;
+    Dane dane;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    public static final String NAME = "name";
+    public static final String LOGIN = "login";
+    public static final String PASSWORD = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +25,14 @@ public class Profil extends AppCompatActivity {
         email = (TextView)findViewById(R.id.editText_p_email);
         password = (TextView)findViewById(R.id.editText_p_password);
         phone = (TextView)findViewById(R.id.editText_p_phone);
+        sharedPreferences = getSharedPreferences(NAME, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        }
 
-        dane = new Dane(null, null);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dane = new Dane();
         name.setText(dane.getMy_hash().get("name").toString());
         email.setText(dane.getMy_hash().get("email").toString());
         phone.setText(dane.getMy_hash().get("phone").toString());
@@ -27,32 +40,22 @@ public class Profil extends AppCompatActivity {
         for(int i=0; i<dane.getMy_hash().get("password").toString().length(); i++){
             g += "*";}
         password.setText(g);
-        }
-
-    public String get_name(){
-        return name.getText().toString();
-    }
-
-    public String get_email(){
-        return email.getText().toString();
-    }
-
-    public CharSequence get_phone(){
-        return phone.getText();
     }
 
     public void back(View view) {
         finish();
-    }
+    }   // Powrót do widoku projektów
 
     public void edit(View view) {
         Intent intent_edit_pro = new Intent(this, ProfilEdit.class);
         startActivity(intent_edit_pro);
-    }
+    }           // Przejście do okna edycji
 
     public void logout(View view) {
+        editor.remove(LOGIN);
+        editor.remove(PASSWORD);
+        editor.commit();
         Intent intent_edit_log = new Intent(getApplicationContext(), Main.class);
         startActivity(intent_edit_log);
-    }       // Wylogowanie i usunięcie loginu i hasła z pamięci
-
+    }       // Wylogowanie i usuwanie loginu i hasła z pamięci
 }

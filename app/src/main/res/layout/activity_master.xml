@@ -19,7 +19,7 @@
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/charts_m_id"
+        app:layout_constraintBottom_toTopOf="@+id/listview_m"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,24 +49,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:onClick="new_project"
-        app:layout_constraintBottom_toTopOf="@+id/charts_m_id"
+        app:layout_constraintBottom_toTopOf="@+id/listview_m"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_add"
         tools:ignore="VectorDrawableCompat" />
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/charts_m_id"
-        android:layout_width="0dp"
-        android:layout_height="230dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_m">
-
-    </com.github.mikephil.charting.charts.BarChart>
 
     <ListView
         android:id="@+id/listview_m"
@@ -78,7 +65,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/charts_m_id">
+        app:layout_constraintTop_toBottomOf="@+id/textView_m">
 
     </ListView>
 

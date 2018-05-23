@@ -7,19 +7,6 @@
     android:layout_height="match_parent"
     android:background="@color/color_1">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/charts_u_id"
-        android:layout_width="0dp"
-        android:layout_height="230dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_u">
-
-    </com.github.mikephil.charting.charts.BarChart>
-
     <TextView
         android:id="@+id/textView_u_profil"
         android:layout_width="wrap_content"
@@ -33,7 +20,7 @@
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/charts_u_id"
+        app:layout_constraintBottom_toTopOf="@+id/listview_u"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/charts_u_id">
+        app:layout_constraintTop_toBottomOf="@+id/textView_u">
 
     </ListView>
 

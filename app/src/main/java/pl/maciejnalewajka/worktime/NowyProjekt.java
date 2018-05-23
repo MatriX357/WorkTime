@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class NowyProjekt extends AppCompatActivity {
@@ -24,11 +25,12 @@ public class NowyProjekt extends AppCompatActivity {
         time = (EditText)findViewById(R.id.editText_n_time);
         info = (EditText)findViewById(R.id.editText_n_info);
         extraInfo = (EditText)findViewById(R.id.editText_n_extraInfo);
+        dane = new Dane();
     }
 
     public void back(View view) {
         finish();
-    }
+    }       // Przycisk wstecz
 
     public void add(View view) {
         if(name.getText().toString().equals("") | client.getText().toString().equals("") |
@@ -39,7 +41,18 @@ public class NowyProjekt extends AppCompatActivity {
         else{
             Toast.makeText(this, "Dodano nowy projekt!", Toast.LENGTH_SHORT).show();
             new_project_uuid = UUID.randomUUID().toString();
-            // Dodaj nowy projekt do danych.
+            HashMap<String, Object> project_map = new HashMap<>();
+            project_map.put("project_id", new_project_uuid.toString());
+            project_map.put("name", name.getText().toString());
+            project_map.put("client", client.getText().toString());
+            project_map.put("platform", platform.getText().toString());
+            project_map.put("api", api.getText().toString());
+            project_map.put("time", time.getText().toString());
+//            project_map.put("project_date", project_date);
+            project_map.put("info", info.getText().toString());
+            project_map.put("extraInfo", extraInfo.getText().toString());
+            project_map.put("user_master_id", dane.getMy_hash().get("user_id").toString());
+            dane.projects_list.add(project_map);
         }
-    }
+    }               // Dodanie nowego projekru
 }

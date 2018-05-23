@@ -28,7 +28,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Master extends AppCompatActivity implements AdapterView.OnItemClickListener{
-    BarChart barChart;
     private ListView lv;
     public ArrayList<Elementy> data;
     private ArrayAdapter<Elementy> adapter;
@@ -38,12 +37,7 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
-        barChart = (BarChart) findViewById(R.id.charts_m_id);
         lv = (ListView) findViewById(R.id.listview_m);
-
-        charts();
-
-
 
     }
 
@@ -66,19 +60,6 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
     public void profil(View view) {
         Intent intent_profil = new Intent(this, Profil.class);
         startActivity(intent_profil);
-    }
-
-    public void charts(){
-        ArrayList<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(12,12));
-        barEntries.add(new BarEntry(2, 39));
-
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Projekty");
-        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-
-        BarData barData = new BarData(barDataSet);
-        barChart.setDrawGridBackground(true);
-        barChart.setData(barData);
     }
 
     private void elementy(){

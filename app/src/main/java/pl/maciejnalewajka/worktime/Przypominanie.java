@@ -1,6 +1,9 @@
 package pl.maciejnalewajka.worktime;
 
-public class Przypominanie {
 
+import android.support.v7.app.AppCompatActivity;
+
+
+public class Przypominanie extends AppCompatActivity {
 
 }
