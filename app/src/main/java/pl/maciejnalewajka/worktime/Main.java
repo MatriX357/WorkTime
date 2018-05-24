@@ -9,9 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class Main extends AppCompatActivity {
     static EditText text_login, text_haslo;
     private SharedPreferences sharedPreferences;
@@ -32,6 +29,8 @@ public class Main extends AppCompatActivity {
         restoreData();
         PobieranieUserow pobierz = new PobieranieUserow();
         pobierz.execute();
+        PobieranieProjektow pobierz_projekty = new PobieranieProjektow();
+        pobierz_projekty.execute();
     }
 
     @Override
@@ -42,8 +41,7 @@ public class Main extends AppCompatActivity {
 
     public void logIn(View view) {
 
-        PobieranieProjektow pobierz_projekty = new PobieranieProjektow();
-        pobierz_projekty.execute();
+
         if(spr() == true && search() == true){
             save_data();
             if(dane.getMy_hash().get("type").toString().equals("Master")){
@@ -132,5 +130,9 @@ public class Main extends AppCompatActivity {
     public void user(View view){
         Intent intent_user = new Intent(this, User.class);
         startActivity(intent_user);
+    }
+
+    public void revers(){
+        new StringBuilder("lolek").reverse().toString();
     }
 }

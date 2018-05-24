@@ -33,13 +33,13 @@ public class NowyProjekt extends AppCompatActivity {
     }       // Przycisk wstecz
 
     public void add(View view) {
+        String myID = dane.getMy_hash().get("user_id").toString();
         if(name.getText().toString().equals("") | client.getText().toString().equals("") |
                 platform.getText().toString().equals("") | api.getText().toString().equals("") |
                 time.getText().toString().equals("")){
             Toast.makeText(this, "Uzupełnij wymagane pola!", Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(this, "Dodano nowy projekt!", Toast.LENGTH_SHORT).show();
             new_project_uuid = UUID.randomUUID().toString();
             HashMap<String, Object> project_map = new HashMap<>();
             project_map.put("project_id", new_project_uuid.toString());
@@ -50,9 +50,11 @@ public class NowyProjekt extends AppCompatActivity {
             project_map.put("time", time.getText().toString());
 //            project_map.put("project_date", project_date);
             project_map.put("info", info.getText().toString());
-            project_map.put("extraInfo", extraInfo.getText().toString());
-            project_map.put("user_master_id", dane.getMy_hash().get("user_id").toString());
-            dane.projects_list.add(project_map);
+            project_map.put("extra_info", extraInfo.getText().toString());
+            project_map.put("user_master_id", myID);
+            Dane.projects_list.add(project_map);
+            Toast.makeText(this, "Dodano nowy projekt!", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }               // Dodanie nowego projekru
 }

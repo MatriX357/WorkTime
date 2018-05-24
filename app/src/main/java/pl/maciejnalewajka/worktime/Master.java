@@ -3,49 +3,39 @@ package pl.maciejnalewajka.worktime;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 public class Master extends AppCompatActivity implements AdapterView.OnItemClickListener{
-    private ListView lv;
-    public ArrayList<Elementy> data;
-    private ArrayAdapter<Elementy> adapter;
-
+    ListView lv;
+    ArrayList<Elementy> data;
+    ArrayAdapter<Elementy> adapter;
+    Dane dane;
+    String myID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
-        lv = (ListView) findViewById(R.id.listview_m);
+        lv = findViewById(R.id.listview_m);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dane = new Dane();
+        myID = dane.getMy_hash().get("user_id").toString();
+        elementy();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         data.get(position).setProgres(data.get(position).getProgres()+2);
         adapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -62,20 +52,28 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
         startActivity(intent_profil);
     }
 
-    private void elementy(){
-
+    public void elementy(){
+        String active, name;
+        int pro;
         data = new ArrayList<Elementy>();
-        data.add(new Elementy(20, "Maciek", "20%", "Aktywne"));
-        data.add(new Elementy(59, "Kamil", "59%", "Aktywne"));
+        for(int i = 0; i< Dane.projects_list.size(); i++){
+            if(Dane.projects_list.get(i).get("user_master_id").toString().equals(myID)){
+                pro = 0;
+                for (int j=0; j<Dane.tasks_list.size(); j++){
+                    if(Dane.tasks_list.get(j).get("project_id").toString().equals(Dane.projects_list.get(i).get("project_id").toString())){
+                        pro += Integer.parseInt(Dane.tasks_list.get(j).get("used_time").toString());
+                    }
+                }
+                if(Integer.parseInt(Dane.projects_list.get(i).get("time").toString())>pro){
+                    active = "Aktywne";
+                }
+                else{active = "Nieaktywne";}
+                name = Dane.projects_list.get(i).get("name").toString();
+                data.add(new Elementy(pro, name, String.valueOf(pro) + "%", active));
+            }
+        }
         adapter = new ElementyMaster(this, data);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
     }
-
-
-
-
-
-
-
 }

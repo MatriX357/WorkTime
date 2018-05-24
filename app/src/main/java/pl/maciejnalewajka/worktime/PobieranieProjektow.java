@@ -47,7 +47,7 @@ public class PobieranieProjektow extends AsyncTask<Void, Void, Void> {
                 String time = JOb.getString("time");
                 String project_date = JOb.getString("project_date");
                 String info = JOb.getString("info");
-                String extraInfo = JOb.getString("extraInfo");
+                String extraInfo = JOb.getString("extra_info");
                 String user_master_id = JOb.getString("user_master_id");
                 HashMap<String, Object> project_map = new HashMap<>();
                 project_map.put("project_id", project_id);
@@ -58,7 +58,7 @@ public class PobieranieProjektow extends AsyncTask<Void, Void, Void> {
                 project_map.put("time", time);
                 project_map.put("project_date", project_date);
                 project_map.put("info", info);
-                project_map.put("extraInfo", extraInfo);
+                project_map.put("extra_info", extraInfo);
                 project_map.put("user_master_id", user_master_id);
                 dane.projects_list.add(project_map);
             }
