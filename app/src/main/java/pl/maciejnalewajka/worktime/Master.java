@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Master extends AppCompatActivity implements AdapterView.OnItemClickListener{
     ListView lv;
@@ -40,17 +39,17 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
 
     @Override
     public void onBackPressed() {
-    }
+    }                 // Przycisk wstecz zablokowany
 
     public void new_project(View view) {
         Intent intent_new_project = new Intent(this, NowyProjekt.class);
         startActivity(intent_new_project);
-    }
+    }       // Dodanie nowego projektu
 
     public void profil(View view) {
         Intent intent_profil = new Intent(this, Profil.class);
         startActivity(intent_profil);
-    }
+    }           // Przechodzi do profilu
 
     public void elementy(){
         String active, name;
@@ -72,8 +71,8 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
                 data.add(new Elementy(pro, name, String.valueOf(pro) + "%", active));
             }
         }
-        adapter = new ElementyMaster(this, data);
+        adapter = new ElementyProjektow(this, data);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
-    }
+    }                   // Pokazywanie projektów
 }

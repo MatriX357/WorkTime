@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="3dp"
     android:background="@android:color/background_light"
     android:padding="10dp">
 
@@ -31,7 +32,7 @@
             android:max="100"
             android:progress="50"
 
-             />
+            />
 
     </LinearLayout>
 

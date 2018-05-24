@@ -27,10 +27,12 @@ public class Main extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         restoreData();
-        PobieranieUserow pobierz = new PobieranieUserow();
-        pobierz.execute();
+        PobieranieUserow pobierz_userow = new PobieranieUserow();
+        pobierz_userow.execute();
         PobieranieProjektow pobierz_projekty = new PobieranieProjektow();
         pobierz_projekty.execute();
+        PobieranieTaskow pobierz_taski = new PobieranieTaskow();
+        pobierz_taski.execute();
     }
 
     @Override

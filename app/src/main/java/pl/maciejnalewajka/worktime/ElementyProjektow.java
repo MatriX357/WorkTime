@@ -14,12 +14,12 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ElementyMaster extends ArrayAdapter<Elementy> {
+public class ElementyProjektow extends ArrayAdapter<Elementy> {
 
     private Context context;
     private List<Elementy> data;
 
-    public ElementyMaster(Context context, ArrayList<Elementy> data) {
+    public ElementyProjektow(Context context, ArrayList<Elementy> data) {
         super(context, R.layout.list_projects);
         this.data = data;
         this.context = context;
