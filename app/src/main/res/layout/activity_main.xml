@@ -153,26 +153,5 @@
         app:layout_constraintStart_toStartOf="@+id/view_main1"
         app:layout_constraintTop_toTopOf="@+id/view_main1" />
 
-    <Button
-        android:id="@+id/button_main_user"
-        android:layout_width="102dp"
-        android:layout_height="26dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:accessibilityLiveRegion="polite"
-        android:background="@drawable/zaloguj"
-        android:fontFamily="serif"
-        android:onClick="user"
-        android:padding="3dp"
-        android:text="user"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@android:color/background_light"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 
 </android.support.constraint.ConstraintLayout>

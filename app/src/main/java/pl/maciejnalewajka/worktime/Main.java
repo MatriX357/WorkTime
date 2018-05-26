@@ -128,11 +128,6 @@ public class Main extends AppCompatActivity {
     public void onBackPressed() {
     }           // Wyłączenie przycisku wstecz
 
-    //Tymczasowe przejście do usera
-    public void user(View view){
-        Intent intent_user = new Intent(this, User.class);
-        startActivity(intent_user);
-    }
 
     public void revers(){
         new StringBuilder("lolek").reverse().toString();

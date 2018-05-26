@@ -80,7 +80,7 @@
         android:textSize="10sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view_r2"
-        app:layout_constraintTop_toBottomOf="@+id/editText_r_code" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_r_phone" />
 
     <Button
         android:id="@+id/button_r_register"
@@ -100,10 +100,10 @@
         android:textSize="10sp"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/view_r2"
-        app:layout_constraintTop_toBottomOf="@+id/editText_r_code" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_r_phone" />
 
     <EditText
-        android:id="@+id/editText_r_code"
+        android:id="@+id/editText_r_phone"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
@@ -111,7 +111,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="@string/code"
+        android:hint="@string/phone"
         android:inputType="textPassword"
         android:paddingLeft="5dp"
         android:singleLine="true"
@@ -172,10 +172,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view_r2"
         app:layout_constraintStart_toStartOf="@+id/view_r2"
-        app:layout_constraintTop_toBottomOf="@+id/editText_r_email2" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_r_email" />
 
     <EditText
-        android:id="@+id/editText_r_email2"
+        android:id="@+id/editText_r_email"
         android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
@@ -196,10 +196,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view_r2"
         app:layout_constraintStart_toStartOf="@+id/view_r2"
-        app:layout_constraintTop_toBottomOf="@+id/editText_r_email" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_r_name" />
 
     <EditText
-        android:id="@+id/editText_r_email"
+        android:id="@+id/editText_r_name"
         android:layout_width="170dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
@@ -207,7 +207,7 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/wpisz_email"
         android:ems="10"
-        android:hint="@string/email"
+        android:hint="@string/name"
         android:inputType="textEmailAddress"
         android:paddingLeft="5dp"
         android:singleLine="true"
