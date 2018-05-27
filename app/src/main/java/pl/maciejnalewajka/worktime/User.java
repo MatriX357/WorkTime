@@ -61,22 +61,20 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
                 if(projekty_lista.get(k).equals(Dane.projects_list.get(i).get("project_id").toString())){
                     pro = 0; used = 0; ilosc = 0;
                     for (int j=0; j<Dane.tasks_list.size(); j++){
-                        if(Dane.tasks_list.get(j).get("project_id").toString().equals(Dane.projects_list.get(i).get("project_id").toString())){
-                            pro += Integer.parseInt(Dane.tasks_list.get(j).get("time").toString());
-                            used += Integer.parseInt(Dane.tasks_list.get(j).get("used_time").toString());
-                        }
                         if(Dane.tasks_list.get(j).get("project_id").toString().equals(Dane.projects_list.get(i).get("project_id").toString()) &&
                                 Dane.tasks_list.get(j).get("user_id").toString().equals(myID)){
+                            pro += Integer.parseInt(Dane.tasks_list.get(j).get("time").toString());
+                            used += Integer.parseInt(Dane.tasks_list.get(j).get("used_time").toString());
                             ilosc +=1;
                         }
                     }
-                    if(pro<100){
+                    if(used != 0){used = (used*100)/pro;}
+                    if(used<100){
                         active = "Aktywne";
                     }
                     else{active = "Nieaktywne";}
                     name = Dane.projects_list.get(i).get("name").toString();
-                    pro = (used*100)/pro;
-                    data.add(new Elementy(pro, name, String.valueOf(ilosc), active));
+                    data.add(new Elementy(used, name, String.valueOf(ilosc), active));
                 }
             }
 

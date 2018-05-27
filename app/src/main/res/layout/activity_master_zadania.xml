@@ -7,7 +7,7 @@
     android:background="@color/color_1">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_mp"
+        android:id="@+id/toolbar_mz"
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:background="@color/color_1"
@@ -18,33 +18,38 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView_mp_back1"
+        android:id="@+id/imageView_mz_back1"
         android:layout_width="15dp"
         android:layout_height="15dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="back"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_mz"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back"
         tools:ignore="VectorDrawableCompat" />
 
     <ImageView
-        android:id="@+id/imageView_mp2"
+        android:id="@+id/imageView_mz2"
         android:layout_width="15dp"
         android:layout_height="15dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:onClick="new_task"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_mz"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_add"
         tools:ignore="VectorDrawableCompat" />
 
     <TextView
-        android:id="@+id/textView_mp_back2"
+        android:id="@+id/textView_mz_back2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical|center_horizontal"
@@ -53,11 +58,12 @@
         android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView_mp_back1"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_mz"
+        app:layout_constraintStart_toEndOf="@+id/imageView_mz_back1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_mp2"
+        android:id="@+id/textView_mz2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -71,20 +77,33 @@
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_mp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_mz"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/charts_mz_id"
+        android:layout_width="0dp"
+        android:layout_height="230dp"
+        android:background="@android:color/background_light"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_mz">
+
+    </com.github.mikephil.charting.charts.BarChart>
+
     <ListView
-        android:id="@+id/listView_mp"
+        android:id="@+id/listView_mz"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_mp">
+        app:layout_constraintTop_toBottomOf="@+id/charts_mz_id">
 
     </ListView>
 

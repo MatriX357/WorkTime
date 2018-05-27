@@ -1,7 +1,11 @@
 package pl.maciejnalewajka.worktime;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +29,7 @@ public class ElementyProjektow extends ArrayAdapter<Elementy> {
         this.context = context;
     }
 
+    @SuppressLint("NewApi")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
@@ -43,6 +48,7 @@ public class ElementyProjektow extends ArrayAdapter<Elementy> {
             holder = (ElementyHolder) row.getTag();
         }
         holder.progres.setProgress(data.get(position).getProgres());
+        holder.progres.setProgressTintList(ColorStateList.valueOf(Color.rgb(189, 228, 244)));
         holder.name.setText(data.get(position).getName());
         holder.procent.setText(data.get(position).getProcent());
         holder.active.setText(data.get(position).getActive());

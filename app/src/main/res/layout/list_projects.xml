@@ -17,7 +17,8 @@
         <TextView
             android:id="@+id/l_nazwa"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center|start"
             android:paddingBottom="2dip"
             android:text="Maciek: Zadanie1"
@@ -26,13 +27,11 @@
 
         <ProgressBar
             android:id="@+id/l_progressBar"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="100"
-            android:progress="50"
-
-            />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:max="100" />
 
     </LinearLayout>
 
@@ -44,22 +43,25 @@
         android:padding="5dp">
 
         <TextView
+            android:id="@+id/l_active"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center|end"
+            android:text="Aktywne"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/l_procent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center|end"
             android:text="56%"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/l_active"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|end"
-            android:text="Aktywne"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

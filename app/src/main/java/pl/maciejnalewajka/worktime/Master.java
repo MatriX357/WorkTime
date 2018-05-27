@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class Master extends AppCompatActivity implements AdapterView.OnItemClickListener{
     ListView lv;
+    ArrayList<String> projekty_lista;
     ArrayList<Elementy> data;
     ArrayAdapter<Elementy> adapter;
     Dane dane;
@@ -28,13 +29,15 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
         super.onResume();
         dane = new Dane();
         myID = dane.getMy_hash().get("user_id").toString();
+        projekty();
         elementy();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        data.get(position).setProgres(data.get(position).getProgres()+2);
-        adapter.notifyDataSetChanged();
+        task(position);
+        Intent intent_master_zadania = new Intent(this, MasterZadania.class);
+        startActivity(intent_master_zadania);
     }
 
     @Override
@@ -53,16 +56,18 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
 
     public void elementy(){
         String active, name;
-        int pro;
+        int pro, time;
         data = new ArrayList<Elementy>();
         for(int i = 0; i< Dane.projects_list.size(); i++){
             if(Dane.projects_list.get(i).get("user_master_id").toString().equals(myID)){
-                pro = 0;
+                pro = 0; time = 0;
                 for (int j=0; j<Dane.tasks_list.size(); j++){
                     if(Dane.tasks_list.get(j).get("project_id").toString().equals(Dane.projects_list.get(i).get("project_id").toString())){
                         pro += Integer.parseInt(Dane.tasks_list.get(j).get("used_time").toString());
+                        time += Integer.parseInt(Dane.tasks_list.get(j).get("time").toString());
                     }
                 }
+                if(pro != 0){pro  = (pro*100/time);}
                 if(Integer.parseInt(Dane.projects_list.get(i).get("time").toString())>pro){
                     active = "Aktywne";
                 }
@@ -75,4 +80,24 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
     }                   // Pokazywanie projektów
+
+    public void projekty(){
+        projekty_lista = new ArrayList<String>();
+        int i;
+        for(i=0;i<Dane.projects_list.size();i++){
+            if(Dane.projects_list.get(i).get("user_master_id").toString().equals(myID)){
+                projekty_lista.add(Dane.projects_list.get(i).get("project_id").toString());
+            }
+        }
+    }
+
+    public void task(int pozycja){
+        MasterZadania.task_lista.clear();
+        String id = projekty_lista.get(pozycja);
+        for(int i =0;i<Dane.tasks_list.size();i++){
+            if(Dane.tasks_list.get(i).get("project_id").equals(id)){
+                MasterZadania.task_lista.add(Dane.tasks_list.get(i).get("task_id").toString());
+            }
+        }
+    }
 }
