@@ -35,7 +35,9 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        task(position);
+        MasterZadania.id = projekty_lista.get(position);
+        NoweZadanie.idP = projekty_lista.get(position);
+        MasterOsoba.idP = projekty_lista.get(position);
         Intent intent_master_zadania = new Intent(this, MasterZadania.class);
         startActivity(intent_master_zadania);
     }
@@ -89,15 +91,5 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
                 projekty_lista.add(Dane.projects_list.get(i).get("project_id").toString());
             }
         }
-    }
-
-    public void task(int pozycja){
-        MasterZadania.task_lista.clear();
-        String id = projekty_lista.get(pozycja);
-        for(int i =0;i<Dane.tasks_list.size();i++){
-            if(Dane.tasks_list.get(i).get("project_id").equals(id)){
-                MasterZadania.task_lista.add(Dane.tasks_list.get(i).get("task_id").toString());
-            }
-        }
-    }
+    }                   // Szukanie projektów
 }

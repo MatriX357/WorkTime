@@ -42,13 +42,13 @@ public class NowyProjekt extends AppCompatActivity {
         else{
             new_project_uuid = UUID.randomUUID().toString();
             HashMap<String, Object> project_map = new HashMap<>();
-            project_map.put("project_id", new_project_uuid.toString());
+            project_map.put("project_id", new_project_uuid);
             project_map.put("name", name.getText().toString());
             project_map.put("client", client.getText().toString());
             project_map.put("platform", platform.getText().toString());
             project_map.put("api", api.getText().toString());
             project_map.put("time", time.getText().toString());
-//            project_map.put("project_date", project_date);
+            project_map.put("project_date", "22.12.19");
             project_map.put("info", info.getText().toString());
             project_map.put("extra_info", extraInfo.getText().toString());
             project_map.put("user_master_id", myID);

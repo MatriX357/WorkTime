@@ -19,7 +19,9 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 
 public class MasterZadania extends AppCompatActivity implements AdapterView.OnItemClickListener{
-    static ArrayList<String> task_lista = new ArrayList<String>();
+    ArrayList<String> task_lista;
+    static String id="";
+    ArrayList<String> users_lista;
     Dane dane;
     BarChart barChart;
     ListView lv;
@@ -38,11 +40,17 @@ public class MasterZadania extends AppCompatActivity implements AdapterView.OnIt
     protected void onResume() {
         super.onResume();
         dane = new Dane();
+        tasklista();
+        String myID = dane.getMy_hash().get("user_id").toString();
         elementy();
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        MasterOsoba.idO = users_lista.get(position);
+        Intent intent_master_osoba = new Intent(this, MasterOsoba.class);
+        startActivity(intent_master_osoba);
     }
 
     public void back(View view) {
@@ -56,16 +64,18 @@ public class MasterZadania extends AppCompatActivity implements AdapterView.OnIt
 
     public void elementy(){
         String priority, name, procent, osoba = "";
+        users_lista = new ArrayList<String>();
         data = new ArrayList<Elementy>();
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         for(int i=0;i<Dane.tasks_list.size();i++){
             for(int j=0; j<task_lista.size();j++){
                 if(Dane.tasks_list.get(i).get("task_id").equals(task_lista.get(j))){
-                    name = Dane.tasks_list.get(i).get("name").toString();
+                    name = Dane.tasks_list.get(i).get("task").toString();
                     priority = Dane.tasks_list.get(i).get("priority").toString();
                     for(int l=0;l<Dane.users_list.size();l++){
                         if(Dane.users_list.get(l).get("user_id").equals(Dane.tasks_list.get(i).get("user_id"))){
                             osoba = Dane.users_list.get(l).get("name").toString();
+                            users_lista.add(Dane.users_list.get(l).get("user_id").toString());
                         }
                     }
                     procent = String.valueOf((Integer.parseInt(Dane.tasks_list.get(i).get("used_time").toString())*100)/
@@ -93,4 +103,13 @@ public class MasterZadania extends AppCompatActivity implements AdapterView.OnIt
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
     }                       // Zadania i wykres
+
+    public void tasklista(){
+        task_lista = new ArrayList<String>();
+        for(int i =0;i<Dane.tasks_list.size();i++){
+            if(Dane.tasks_list.get(i).get("project_id").equals(id)){
+                task_lista.add(Dane.tasks_list.get(i).get("task_id").toString());
+            }
+        }
+    }                   // Lista tasków do wyświetlenia
 }

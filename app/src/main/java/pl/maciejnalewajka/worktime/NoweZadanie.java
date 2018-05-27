@@ -9,12 +9,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import java.util.HashMap;
 import java.util.UUID;
 
 public class NoweZadanie extends AppCompatActivity {
+    String[] userss;
     static TextView user, priority;
     static EditText task, time, info;
     static String new_task_uuid;
+    static String idP = "";
+    String userid;
+    Dane dane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,25 +31,26 @@ public class NoweZadanie extends AppCompatActivity {
         task = (EditText)findViewById(R.id.editText_z_task);
         time = (EditText)findViewById(R.id.editText_z_time);
         info = (EditText)findViewById(R.id.editText_z_info);
+        users();
     }
 
     public void back(View view) {
         finish();
-    }
+    }       // przycisk wstecz
 
     public void setUser(View view){
-        final String[] users = {"Maciej Nalewajka", "Szymon Szysz", "Mateusz Brodziak"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Osoby");
-        builder.setItems(users, new DialogInterface.OnClickListener() {
+        builder.setItems(users(), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                user.setText(users[item]);
+                user.setText(users()[item]);
+                userid = Dane.users_list.get(item).get("user_id").toString();
             }
         }).getContext().setTheme(R.style.AppTheme);
         builder.create();
         builder.show();
-    }
+    }               // Ustawia usera
 
     public void setPriority(View view){
         final String[] priorities = {"Brak", "Niski", "Normalny", "Wysoki"};
@@ -57,13 +64,35 @@ public class NoweZadanie extends AppCompatActivity {
         }).getContext().setTheme(R.style.AppTheme);
         builder.create();
         builder.show();
-    }
+    }        // Ustawia priority
 
     public void add(View view){
-        if(task.getText().toString() != "" && Integer.parseInt(time.getText().toString()) != 0){
-            Toast.makeText(this, "Dodano nowe zadanie!", Toast.LENGTH_SHORT).show();
+        if(!task.getText().toString().equals("") && !time.getText().toString().equals("") &&
+                !user.getText().toString().equals("") && !priority.getText().toString().equals("")){
             new_task_uuid = UUID.randomUUID().toString();
+            HashMap<String, Object> task_map = new HashMap<>();
+            task_map.put("task_id", new_task_uuid);
+            task_map.put("name", user.getText().toString());
+            task_map.put("task", task.getText().toString());
+            task_map.put("time", time.getText().toString());
+            task_map.put("used_time", "0");
+            task_map.put("task_date", "22.10.19");
+            task_map.put("priority", priority.getText().toString());
+            task_map.put("extra_info", info.getText().toString());
+            task_map.put("project_id", idP);
+            task_map.put("user_id", userid);
+            Dane.tasks_list.add(task_map);
+            Toast.makeText(this, "Dodano nowe zadanie!", Toast.LENGTH_SHORT).show();
+            finish();
         }
         else{Toast.makeText(this, "Wprowadź poprawne dane!", Toast.LENGTH_SHORT).show();}
-    }
+    }               // Dodaj zadanie
+
+    public final String[] users(){
+        userss = new String[Dane.users_list.size()];
+        for(int i=0;i<Dane.users_list.size();i++){
+            userss[i] = Dane.users_list.get(i).get("name").toString();
+        }
+        return userss;
+    }           // Tworzy listę Userów
 }

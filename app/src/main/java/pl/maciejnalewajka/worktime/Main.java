@@ -45,7 +45,7 @@ public class Main extends AppCompatActivity {
     public void logIn(View view) {
 
 
-        if(spr() == true && search() == true){
+        if(search()){
             save_data();
             if(dane.getMy_hash().get("type").toString().equals("Master")){
                 Intent intent_zaloguj = new Intent(this, Master.class);
@@ -56,7 +56,7 @@ public class Main extends AppCompatActivity {
                 startActivity(intent_zaloguj);
             } }
         else{
-        } }
+        } }         // Przycisk do logowania
 
     public void register(View view){
         Intent intent_re = new Intent(this, Rejestracja.class);
@@ -64,10 +64,11 @@ public class Main extends AppCompatActivity {
     }       // Przenosi do rejestracji
 
     private boolean search(){
+
         try {
             for (int i = 0; i < dane.users_list.size(); i++) {
                 if (dane.users_list.get(i).get("email").equals(text_login.getText().toString())) {
-                    if (dane.users_list.get(i).get("password").toString().equals(text_haslo.getText().toString())) {
+                    if (dane.users_list.get(i).get("password").toString().equals(revers())) {
                         dane.setMy_hash(dane.users_list.get(i));
                         return true;
                     } } }
@@ -77,38 +78,6 @@ public class Main extends AppCompatActivity {
         catch (Exception e){
             return false;
         } }               // Uzupełnia dane z logowania
-
-    private boolean spr(){
-        //login
-        boolean l = false;
-        //boolean h = false;
-        int cyfry = 0;
-        char[] znaki = text_login.getText().toString().toCharArray();
-        for (char znak : znaki) {
-            if (znak == '@') {
-                l = true;
-            } }
-        //hasło
-        char[] znaki2 = text_haslo.getText().toString().toCharArray();
-        for(int i=0; i<text_haslo.getText().toString().length(); i++){
-            char znak = znaki2[i];
-            if(znak=='0' && znak=='9')
-            {
-                cyfry ++;
-            }}
-        //Sprawdzenie
-        if(!l){
-            Toast.makeText(this, "Podaj poprawny e-mail!", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            if (text_haslo.getText().toString().length() < 8 && cyfry < 2) {
-                Toast.makeText(this, "Podaj poprawne hasło!", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                return true;
-            } }
-        return false;
-    }               // Sprawdza czy email i hasła są prawidłowe
 
     private void restoreData() {
         String saved_l = sharedPreferences.getString(LOGIN, "");
@@ -129,8 +98,8 @@ public class Main extends AppCompatActivity {
     public void onBackPressed() {
     }           // Wyłączenie przycisku wstecz
 
-
-    public void revers(){
-        new StringBuilder("lolek").reverse().toString();
-    }
+    public String revers(){
+        String nowy = new StringBuilder(text_haslo.getText().toString()).reverse().toString();
+        return nowy;
+    }               // Rozkodowanie hasła
 }
