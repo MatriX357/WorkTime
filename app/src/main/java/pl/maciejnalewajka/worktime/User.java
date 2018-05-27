@@ -37,7 +37,8 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        task(position);
+        UserZadania.id = projekty_lista.get(position);
+        UserZadanie.idMaster = projekty_lista.get(position);
         Intent intent_user_zadania = new Intent(this, UserZadania.class);
         startActivity(intent_user_zadania);
     }
@@ -82,7 +83,7 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
         adapter = new ElementyProjektow(this, data);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
-    }
+    }               // Wykresy i projekty
 
     public void projekty(){
         projekty_lista = new ArrayList<String>();
@@ -94,15 +95,5 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
                 }
             }
         }
-    }
-
-    public void task(int pozycja){
-        UserZadania.task_lista.clear();
-        String id = projekty_lista.get(pozycja);
-        for(int i =0;i<Dane.tasks_list.size();i++){
-            if(Dane.tasks_list.get(i).get("project_id").equals(id) && Dane.tasks_list.get(i).get("user_id").equals(myID)){
-                UserZadania.task_lista.add(Dane.tasks_list.get(i).get("task_id").toString());
-            }
-        }
-    }
+    }               // Tworzy listę projektów
 }

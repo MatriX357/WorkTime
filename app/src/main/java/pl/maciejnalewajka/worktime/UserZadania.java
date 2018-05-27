@@ -1,5 +1,6 @@
 package pl.maciejnalewajka.worktime;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +19,9 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 
 public class UserZadania extends AppCompatActivity implements AdapterView.OnItemClickListener{
-    static ArrayList<String> task_lista = new ArrayList<String>();
+    ArrayList<String> task_lista;
+    static String id = "";
+    String myID;
     Dane dane;
     BarChart barChart;
     ListView lv;
@@ -38,11 +41,16 @@ public class UserZadania extends AppCompatActivity implements AdapterView.OnItem
     protected void onResume() {
         super.onResume();
         dane = new Dane();
+        myID = dane.getMy_hash().get("user_id").toString();
+        task();
         elementy();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        UserZadanie.task_id = task_lista.get(position);
+        Intent intent_user_zadanie = new Intent(this, UserZadanie.class);
+        startActivity(intent_user_zadanie);
     }
 
     public void back(View view) {
@@ -84,4 +92,13 @@ public class UserZadania extends AppCompatActivity implements AdapterView.OnItem
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
     }                       // Zadania i wykres
+
+    public void task(){
+        task_lista = new ArrayList<String>();
+        for(int i =0;i<Dane.tasks_list.size();i++){
+            if(Dane.tasks_list.get(i).get("project_id").equals(id) && Dane.tasks_list.get(i).get("user_id").equals(myID)){
+                task_lista.add(Dane.tasks_list.get(i).get("task_id").toString());
+            }
+        }
+    }                       // Tworzy liste tssków
 }
