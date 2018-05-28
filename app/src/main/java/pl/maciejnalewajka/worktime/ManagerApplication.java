@@ -145,7 +145,7 @@ public class ManagerApplication extends Application {
         insertTask();
     }
     private void insertUser() {
-        
+
         for(int i = 0; i < users_list_lokal.size(); ++i){
             users_id.add(users_list_lokal.get(i).get("user_id"));
             users_name.add(users_list_lokal.get(i).get("name"));
