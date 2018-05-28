@@ -5,20 +5,19 @@ import android.os.AsyncTask;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PobieranieTaskow extends AsyncTask<Void, Void, Void> {
     // Klasa pobierania tasków
 
-    Dane dane;
+    static Dane dane;
     String tasks = "http://155.158.135.197/WorkTime/JSON.php?Tasks";
     String data = "";
 

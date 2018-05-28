@@ -14,7 +14,8 @@ import java.util.HashMap;
 
 public class PobieranieUserow extends AsyncTask<Void, Void, Void> {
     // Klasa pobierania userów
-    Dane dane;
+
+    static Dane dane;
 
     String data = "";
     String users = "http://155.158.135.197/WorkTime/JSON.php?Users";
