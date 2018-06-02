@@ -10,10 +10,14 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import pl.maciejnalewajka.worktime.Elements.Elements;
+import pl.maciejnalewajka.worktime.Elements.ProjectsElements;
+
 public class User extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private ListView lv;
     private ArrayList<String> projects_list;
     private String myID;
+    static Data data = new Data();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +31,15 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
         super.onResume();
         Data data = new Data();
         myID = data.getMy_hash().get("user_id").toString();
-        projekty();
+        projects();
         elementy();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        UserZadania.id = projects_list.get(position);
-        UserZadanie.idMaster = projects_list.get(position);
-        Intent intent_user_zadania = new Intent(this, UserZadania.class);
+        UserTasks.id = projects_list.get(position);
+        UserTask.idMaster = projects_list.get(position);
+        Intent intent_user_zadania = new Intent(this, UserTasks.class);
         startActivity(intent_user_zadania);
     }
 
@@ -51,17 +55,17 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
     private void elementy(){
         String active, name;
         int pro, used, amount;
-        ArrayList<Elements> data = new ArrayList<>();
+        ArrayList<Elements> data_S = new ArrayList<>();
 
-        for(int i = 0; i< Data.projects_list.size(); i++){
+        for(int i = 0; i< data.projects_list.size(); i++){
             for(int k = 0; k< projects_list.size(); k++){
-                if(projects_list.get(k).equals(Data.projects_list.get(i).get("project_id").toString())){
+                if(projects_list.get(k).equals(data.projects_list.get(i).get("project_id").toString())){
                     pro = 0; used = 0; amount = 0;
-                    for (int j = 0; j< Data.tasks_list.size(); j++){
-                        if(Data.tasks_list.get(j).get("project_id").toString().equals(Data.projects_list.get(i).get("project_id").toString()) &&
-                                Data.tasks_list.get(j).get("user_id").toString().equals(myID)){
-                            pro += Integer.parseInt(Data.tasks_list.get(j).get("time").toString());
-                            used += Integer.parseInt(Data.tasks_list.get(j).get("used_time").toString());
+                    for (int j = 0; j< data.tasks_list.size(); j++){
+                        if(data.tasks_list.get(j).get("project_id").toString().equals(data.projects_list.get(i).get("project_id").toString()) &&
+                                data.tasks_list.get(j).get("user_id").toString().equals(myID)){
+                            pro += Integer.parseInt(data.tasks_list.get(j).get("time").toString());
+                            used += Integer.parseInt(data.tasks_list.get(j).get("used_time").toString());
                             amount +=1;
                         }
                     }
@@ -70,24 +74,24 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
                         active = "Aktywne";
                     }
                     else{active = "Nieaktywne";}
-                    name = Data.projects_list.get(i).get("name").toString();
-                    data.add(new Elements(used, name, String.valueOf(amount), active));
+                    name = data.projects_list.get(i).get("name").toString();
+                    data_S.add(new Elements(used, name, String.valueOf(amount), active));
                 }
             }
 
         }
-        ArrayAdapter<Elements> adapter = new ProjectsElements(this, data);
+        ArrayAdapter<Elements> adapter = new ProjectsElements(this, data_S);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
-    }               // Wykresy i projekty
+    }               // Wykresy i projects
 
-    private void projekty(){
+    private void projects(){
         projects_list = new ArrayList<>();
         int i;
-        for(i=0; i< Data.tasks_list.size(); i++){
-            if(Data.tasks_list.get(i).get("user_id").toString().equals(myID)){
-                if(!projects_list.contains(Data.tasks_list.get(i).get("project_id")))
-                    projects_list.add(Data.tasks_list.get(i).get("project_id").toString());
+        for(i=0; i< data.tasks_list.size(); i++){
+            if(data.tasks_list.get(i).get("user_id").toString().equals(myID)){
+                if(!projects_list.contains(data.tasks_list.get(i).get("project_id")))
+                    projects_list.add(data.tasks_list.get(i).get("project_id").toString());
             }
         }
     }               // Tworzy listę projektów

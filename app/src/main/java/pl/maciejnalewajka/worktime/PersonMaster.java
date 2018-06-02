@@ -16,7 +16,13 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
+import pl.maciejnalewajka.worktime.Elements.Elements;
+import pl.maciejnalewajka.worktime.Elements.ProjectsElements;
+
 public class PersonMaster extends AppCompatActivity{
+
+    static Data data;
+
     static String idO = "";
     static String idP = "";
     private BarChart barChart;
@@ -35,6 +41,7 @@ public class PersonMaster extends AppCompatActivity{
         phone = findViewById(R.id.textView_mo_phone);
         barChart = findViewById(R.id.charts_mo_id);
         lv = findViewById(R.id.list_view_mo);
+        data = ManagerApplication.data;
     }
 
     @Override
@@ -51,15 +58,15 @@ public class PersonMaster extends AppCompatActivity{
 
     private void elementy(){
         String priority, name2, percent;
-        ArrayList<Elements> data = new ArrayList<>();
+        ArrayList<Elements> data_A = new ArrayList<>();
         ArrayList<BarEntry> barEntries = new ArrayList<>();
-        for(int i = 0; i< Data.tasks_list.size(); i++){
-            if(Data.tasks_list.get(i).get("user_id").equals(idO) && Data.tasks_list.get(i).get("project_id").equals(idP)){
-                name2 = Data.tasks_list.get(i).get("task").toString();
-                priority = Data.tasks_list.get(i).get("priority").toString();
-                percent = String.valueOf((Integer.parseInt(Data.tasks_list.get(i).get("used_time").toString())*100)/
-                        Integer.parseInt(Data.tasks_list.get(i).get("time").toString()));
-                data.add(new Elements(Integer.parseInt(percent), name2, percent + "%", priority));
+        for(int i = 0; i< data.tasks_list.size(); i++){
+            if(data.tasks_list.get(i).get("user_id").equals(idO) && data.tasks_list.get(i).get("project_id").equals(idP)){
+                name2 = data.tasks_list.get(i).get("task").toString();
+                priority = data.tasks_list.get(i).get("priority").toString();
+                percent = String.valueOf((Integer.parseInt(data.tasks_list.get(i).get("used_time").toString())*100)/
+                        Integer.parseInt(data.tasks_list.get(i).get("time").toString()));
+                data_A.add(new Elements(Integer.parseInt(percent), name2, percent + "%", priority));
                 barEntries.add(new BarEntry(i,Integer.parseInt(percent)));
             }
         }
@@ -77,17 +84,17 @@ public class PersonMaster extends AppCompatActivity{
         barChart.setData(barData);
         barChart.animateXY(100, 1000);
         barChart.invalidate();
-        ArrayAdapter<Elements> adapter = new ProjectsElements(this, data);
+        ArrayAdapter<Elements> adapter = new ProjectsElements(this, data_A);
         lv.setAdapter(adapter);
     }                       // Zadania i wykres
 
     private void user(){
-        for(int i = 0; i< Data.users_list.size(); i++){
-            if(Data.users_list.get(i).get("user_id").equals(idO)){
-                name.setText(Data.users_list.get(i).get("name").toString());
-                email.setText(Data.users_list.get(i).get("email").toString());
-                phone.setText(Data.users_list.get(i).get("phone").toString());
+        for(int i = 0; i< data.users_list.size(); i++){
+            if(data.users_list.get(i).get("user_id").equals(idO)){
+                name.setText(data.users_list.get(i).get("name").toString());
+                email.setText(data.users_list.get(i).get("email").toString());
+                phone.setText(data.users_list.get(i).get("phone").toString());
             }
         }
-    }                           // Szuka i ustawia data Usera
+    }                           // Szuka i ustawia data_S Usera
 }

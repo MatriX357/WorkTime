@@ -1,4 +1,4 @@
-package pl.maciejnalewajka.worktime;
+package pl.maciejnalewajka.worktime.Elements;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,12 +17,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-class ProjectsElements extends ArrayAdapter<Elements> {
+import pl.maciejnalewajka.worktime.R;
+
+
+public class ProjectsElements extends ArrayAdapter<Elements> {
 
     private final Context context;
     private final List<Elements> data;
 
-    ProjectsElements(Context context, ArrayList<Elements> data) {
+    public ProjectsElements(Context context, ArrayList<Elements> data) {
         super(context, R.layout.list_projects);
         this.data = data;
         this.context = context;

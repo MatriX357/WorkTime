@@ -6,7 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class UserZadanie extends AppCompatActivity {
+public class UserTask extends AppCompatActivity {
+
+    Data data;
+
     static String task_id, idMaster;
     private Button button;
     private TextView name;
@@ -26,13 +29,12 @@ public class UserZadanie extends AppCompatActivity {
         extraInfo = findViewById(R.id.textView_us_extra_info);
         master = findViewById(R.id.textView_us_master);
         button = findViewById(R.id.button_us);
+        data = ManagerApplication.data;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Data data = new Data();
-        String myID = data.getMy_hash().get("user_id").toString();
         task();
     }
 
@@ -45,24 +47,24 @@ public class UserZadanie extends AppCompatActivity {
     }       // Przycisk wstecz
 
     private void task(){
-        for(int i = 0; i< Data.tasks_list.size(); i++){
-            if(Data.tasks_list.get(i).get("task_id").equals(task_id)) {
-                name.setText(String.format("Nazwa: %s", Data.tasks_list.get(i).get("task").toString()));
-                time.setText(String.format("Czas: %s", Data.tasks_list.get(i).get("time").toString()));
-                priority.setText(String.format("Priorytet: %s", Data.tasks_list.get(i).get("priority").toString()));
-                extraInfo.setText(String.format("Info: %s", Data.tasks_list.get(i).get("extra_info").toString()));
+        for(int i = 0; i< data.tasks_list.size(); i++){
+            if(data.tasks_list.get(i).get("task_id").equals(task_id)) {
+                name.setText(String.format("Nazwa: %s", data.tasks_list.get(i).get("task").toString()));
+                time.setText(String.format("Czas: %s", data.tasks_list.get(i).get("time").toString()));
+                priority.setText(String.format("Priorytet: %s", data.tasks_list.get(i).get("priority").toString()));
+                extraInfo.setText(String.format("Info: %s", data.tasks_list.get(i).get("extra_info").toString()));
             }
         }
-        for(int i = 0; i< Data.projects_list.size(); i++){
-            if(Data.projects_list.get(i).get("project_id").equals(idMaster)){
-                for(int j = 0; j< Data.users_list.size(); j++){
-                    if(Data.users_list.get(j).get("user_id").equals(Data.projects_list.get(i).get("user_master_id").toString())){
-                        master.setText(String.format("Master: %s", Data.users_list.get(j).get("name").toString()));
+        for(int i = 0; i< data.projects_list.size(); i++){
+            if(data.projects_list.get(i).get("project_id").equals(idMaster)){
+                for(int j = 0; j< data.users_list.size(); j++){
+                    if(data.users_list.get(j).get("user_id").equals(data.projects_list.get(i).get("user_master_id").toString())){
+                        master.setText(String.format("Master: %s", data.users_list.get(j).get("name").toString()));
                     }
                 }
             }
         }
-    }                         // Uzupełnia data
+    }                         // Uzupełnia data_S
 
     private void buttonCondition(){
         if(button.getText().equals("Rozpocznij Zadanie")){

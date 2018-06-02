@@ -17,7 +17,7 @@ public class NewProject extends AppCompatActivity {
     private EditText time;
     private EditText info;
     private EditText extraInfo;
-    private Data data;
+    Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class NewProject extends AppCompatActivity {
         time = findViewById(R.id.editText_n_time);
         info = findViewById(R.id.editText_n_info);
         extraInfo = findViewById(R.id.editText_n_extraInfo);
-        data = new Data();
+        data = ManagerApplication.data;
     }
 
     public void back(View view) {
@@ -57,7 +57,7 @@ public class NewProject extends AppCompatActivity {
             project_map.put("info", info.getText().toString());
             project_map.put("extra_info", extraInfo.getText().toString());
             project_map.put("user_master_id", myID);
-            Data.projects_list.add(project_map);
+            data.projects_list.add(project_map);
             Toast.makeText(this, "Dodano nowy projekt!", Toast.LENGTH_SHORT).show();
             finish();
         }

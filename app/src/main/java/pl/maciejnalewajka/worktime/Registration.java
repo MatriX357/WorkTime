@@ -15,6 +15,7 @@ public class Registration extends AppCompatActivity {
     private EditText password;
     private EditText password2;
     private EditText phone;
+    Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class Registration extends AppCompatActivity {
         password = findViewById(R.id.editText_r_password);
         password2 = findViewById(R.id.editText_r_password2);
         phone = findViewById(R.id.editText_r_phone);
+        data = ManagerApplication.data;
     }
 
     public void register(View view) {
@@ -40,7 +42,7 @@ public class Registration extends AppCompatActivity {
             user_map.put("phone", phone.getText().toString());
             user_map.put("type", "User");
             user_map.put("company_id", "414dfebc-5bb1-11e8-9566-a01d48a8405c");
-            Data.projects_list.add(user_map);
+            data.projects_list.add(user_map);
             Toast.makeText(this, "Zarejestrowano!", Toast.LENGTH_SHORT).show();
             back(view);
         }
@@ -86,7 +88,7 @@ public class Registration extends AppCompatActivity {
             }
         }
         return false;
-    }             // Sprawdza wpisane data
+    }             // Sprawdza wpisane data_S
 
     private String revers() {
         return new StringBuilder(password.getText().toString()).reverse().toString();

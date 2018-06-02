@@ -32,6 +32,7 @@ public class NewTask extends AppCompatActivity {
         task = findViewById(R.id.editText_z_task);
         time = findViewById(R.id.editText_z_time);
         info = findViewById(R.id.editText_z_info);
+        data = ManagerApplication.data;
         users();
     }
 
@@ -46,7 +47,7 @@ public class NewTask extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 user.setText(users()[item]);
-                userID = Data.users_list.get(item).get("user_id").toString();
+                userID = data.users_list.get(item).get("user_id").toString();
             }
         }).getContext().setTheme(R.style.AppTheme);
         builder.create();
@@ -82,17 +83,17 @@ public class NewTask extends AppCompatActivity {
             task_map.put("extra_info", info.getText().toString());
             task_map.put("project_id", idP);
             task_map.put("user_id", userID);
-            Data.tasks_list.add(task_map);
+            data.tasks_list.add(task_map);
             Toast.makeText(this, "Dodano nowe zadanie!", Toast.LENGTH_SHORT).show();
             finish();
         }
-        else{Toast.makeText(this, "Wprowadź poprawne data!", Toast.LENGTH_SHORT).show();}
+        else{Toast.makeText(this, "Wprowadź poprawne data_S!", Toast.LENGTH_SHORT).show();}
     }               // Dodaj zadanie
 
     private String[] users(){
-        String[] userss = new String[Data.users_list.size()];
-        for(int i = 0; i< Data.users_list.size(); i++){
-            userss[i] = Data.users_list.get(i).get("name").toString();
+        String[] userss = new String[data.users_list.size()];
+        for(int i = 0; i< data.users_list.size(); i++){
+            userss[i] = data.users_list.get(i).get("name").toString();
         }
         return userss;
     }           // Tworzy listę Userów

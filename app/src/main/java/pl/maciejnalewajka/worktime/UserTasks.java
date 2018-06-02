@@ -17,12 +17,17 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-public class UserZadania extends AppCompatActivity implements AdapterView.OnItemClickListener{
+import pl.maciejnalewajka.worktime.Elements.Elements;
+import pl.maciejnalewajka.worktime.Elements.ProjectsElements;
+
+public class UserTasks extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private ArrayList<String> task_list;
     static String id = "";
     private String myID;
     private BarChart barChart;
     private ListView lv;
+    ManagerApplication app;
+    Data data;
 
 
     @Override
@@ -31,6 +36,8 @@ public class UserZadania extends AppCompatActivity implements AdapterView.OnItem
         setContentView(R.layout.activity_user_zadania);
         barChart = findViewById(R.id.charts_uz_id);
         lv = findViewById(R.id.listView_uz);
+        app = (ManagerApplication) getApplication();
+        data = ManagerApplication.data;
     }
 
     @Override
@@ -44,8 +51,8 @@ public class UserZadania extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        UserZadanie.task_id = task_list.get(position);
-        Intent intent_user_zadanie = new Intent(this, UserZadanie.class);
+        UserTask.task_id = task_list.get(position);
+        Intent intent_user_zadanie = new Intent(this, UserTask.class);
         startActivity(intent_user_zadanie);
     }
 
@@ -55,17 +62,17 @@ public class UserZadania extends AppCompatActivity implements AdapterView.OnItem
 
     private void elements(){
         String priority, name, percent;
-        ArrayList<Elements> data = new ArrayList<>();
+        ArrayList<Elements> data_A = new ArrayList<>();
         ArrayList<BarEntry> barEntries = new ArrayList<>();
 
-        for(int i = 0; i< Data.tasks_list.size(); i++){
+        for(int i = 0; i< data.tasks_list.size(); i++){
             for(int j = 0; j< task_list.size(); j++){
-                if(Data.tasks_list.get(i).get("task_id").equals(task_list.get(j))){
-                    name = Data.tasks_list.get(i).get("name").toString();
-                    priority = Data.tasks_list.get(i).get("priority").toString();
-                    percent = String.valueOf((Integer.parseInt(Data.tasks_list.get(i).get("used_time").toString())*100)/
-                            Integer.parseInt(Data.tasks_list.get(i).get("time").toString()));
-                    data.add(new Elements(Integer.parseInt(percent), name, percent + "%", priority));
+                if(data.tasks_list.get(i).get("task_id").equals(task_list.get(j))){
+                    name = data.tasks_list.get(i).get("name").toString();
+                    priority = data.tasks_list.get(i).get("priority").toString();
+                    percent = String.valueOf((Integer.parseInt(data.tasks_list.get(i).get("used_time").toString())*100)/
+                            Integer.parseInt(data.tasks_list.get(i).get("time").toString()));
+                    data_A.add(new Elements(Integer.parseInt(percent), name, percent + "%", priority));
                     barEntries.add(new BarEntry(i+0.0f,Integer.parseInt(percent)));
                 }
             }
@@ -84,16 +91,16 @@ public class UserZadania extends AppCompatActivity implements AdapterView.OnItem
         barChart.setData(barData);
         barChart.animateXY(100, 1000);
         barChart.invalidate();
-        ArrayAdapter<Elements> adapter = new ProjectsElements(this, data);
+        ArrayAdapter<Elements> adapter = new ProjectsElements(this, data_A);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
     }                       // Zadania i wykres
 
     private void task(){
         task_list = new ArrayList<>();
-        for(int i = 0; i< Data.tasks_list.size(); i++){
-            if(Data.tasks_list.get(i).get("project_id").equals(id) && Data.tasks_list.get(i).get("user_id").equals(myID)){
-                task_list.add(Data.tasks_list.get(i).get("task_id").toString());
+        for(int i = 0; i< data.tasks_list.size(); i++){
+            if(data.tasks_list.get(i).get("project_id").equals(id) && data.tasks_list.get(i).get("user_id").equals(myID)){
+                task_list.add(data.tasks_list.get(i).get("task_id").toString());
             }
         }
     }                       // Tworzy liste tasków

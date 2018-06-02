@@ -27,7 +27,7 @@ public class ProfilEdit extends AppCompatActivity {
         name.setText(profil.name.getText().toString());
         email.setText(profil.email.getText().toString());
         phone.setText(profil.phone.getText().toString());
-        data = new Data();
+        data = ManagerApplication.data;
     }
 
     public void back(View view) {
@@ -83,5 +83,5 @@ public class ProfilEdit extends AppCompatActivity {
                 finish();
             }
         }
-    }           // Zmienia data jeżeli poprawne
+    }           // Zmienia data_S jeżeli poprawne
 }

@@ -1,12 +1,12 @@
-package pl.maciejnalewajka.worktime;
+package pl.maciejnalewajka.worktime.Elements;
 
-class Elements {
+public class Elements {
     private int progress;
     private String name;
     private String active;
     private String percent;
 
-    Elements(int progress, String name, String percent, String active) {
+    public Elements(int progress, String name, String percent, String active) {
         this.progress = progress;
         this.name = name;
         this.percent = percent;

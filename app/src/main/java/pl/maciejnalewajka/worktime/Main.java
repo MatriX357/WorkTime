@@ -18,6 +18,7 @@ public class Main extends AppCompatActivity {
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
     private Data data;
+    private ManagerApplication app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,24 +30,19 @@ public class Main extends AppCompatActivity {
         editor = sharedPreferences.edit();
         editor.apply();
         restoreData();
+        app = (ManagerApplication) getApplication();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        UsersDownload users_download = new UsersDownload();
-        users_download.execute();
-        ProjectsDownload projects_download = new ProjectsDownload();
-        projects_download.execute();
-        TasksDownload tasks_download = new TasksDownload();
-        tasks_download.execute();
-        data = new Data();
+        data = ManagerApplication.data;
+        app.downloadData();
     }
 
     public void logIn(View view) {
-
-
+        app.checkData();
         if(search()){
             save_data();
             if(data.getMy_hash().get("type").toString().equals("Master")){
@@ -67,18 +63,19 @@ public class Main extends AppCompatActivity {
     private boolean search(){
 
         try {
-            for (int i = 0; i < Data.users_list.size(); i++) {
-                if (Data.users_list.get(i).get("email").equals(text_login.getText().toString())) {
-                    if (Data.users_list.get(i).get("password").toString().equals(revers())) {
-                        data.setMy_hash(Data.users_list.get(i));
+            for (int i = 0; i < data.users_list.size(); i++) {
+                System.out.println(i+"for");
+                if (data.users_list.get(i).get("email").equals(text_login.getText().toString())) {
+                    if (data.users_list.get(i).get("password").toString().equals(revers())) {
+                        data.setMy_hash(data.users_list.get(i));
                         return true;
                     } } }
-            Toast.makeText(this, "Błędne data!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Błędne dane!", Toast.LENGTH_SHORT).show();
             return false;
         }
         catch (Exception e){
             return false;
-        } }               // Uzupełnia data z logowania
+        } }               // Uzupełnia data_S z logowania
 
     private void restoreData() {
         String saved_l = sharedPreferences.getString(LOGIN, "");

@@ -9,22 +9,29 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
 
+import pl.maciejnalewajka.worktime.Elements.Elements;
+import pl.maciejnalewajka.worktime.Elements.ProjectsElements;
+
 public class Master extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private ListView lv;
     private ArrayList<String> projects_list;
     private String myID;
+    private Data data;
+    ManagerApplication app;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
         lv = findViewById(R.id.list_view_m);
+        app = (ManagerApplication) getApplication();
+        data = ManagerApplication.data;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Data data = new Data();
         myID = data.getMy_hash().get("user_id").toString();
         projects();
         elements();
@@ -56,26 +63,26 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
     private void elements(){
         String active, name;
         int pro, time;
-        ArrayList<Elements> data = new ArrayList<>();
-        for(int i = 0; i< Data.projects_list.size(); i++){
-            if(Data.projects_list.get(i).get("user_master_id").toString().equals(myID)){
+        ArrayList<Elements> data_S = new ArrayList<>();
+        for(int i = 0; i< data.projects_list.size(); i++){
+            if(data.projects_list.get(i).get("user_master_id").toString().equals(myID)){
                 pro = 0; time = 0;
-                for (int j = 0; j< Data.tasks_list.size(); j++){
-                    if(Data.tasks_list.get(j).get("project_id").toString().equals(Data.projects_list.get(i).get("project_id").toString())){
-                        pro += Integer.parseInt(Data.tasks_list.get(j).get("used_time").toString());
-                        time += Integer.parseInt(Data.tasks_list.get(j).get("time").toString());
+                for (int j = 0; j< data.tasks_list.size(); j++){
+                    if(data.tasks_list.get(j).get("project_id").toString().equals(data.projects_list.get(i).get("project_id").toString())){
+                        pro += Integer.parseInt(data.tasks_list.get(j).get("used_time").toString());
+                        time += Integer.parseInt(data.tasks_list.get(j).get("time").toString());
                     }
                 }
                 if(pro != 0){pro  = (pro*100/time);}
-                if(Integer.parseInt(Data.projects_list.get(i).get("time").toString())>pro){
+                if(Integer.parseInt(data.projects_list.get(i).get("time").toString())>pro){
                     active = "Aktywne";
                 }
                 else{active = "Nieaktywne";}
-                name = Data.projects_list.get(i).get("name").toString();
-                data.add(new Elements(pro, name, String.valueOf(pro) + "%", active));
+                name = data.projects_list.get(i).get("name").toString();
+                data_S.add(new Elements(pro, name, String.valueOf(pro) + "%", active));
             }
         }
-        ArrayAdapter<Elements> adapter = new ProjectsElements(this, data);
+        ArrayAdapter<Elements> adapter = new ProjectsElements(this, data_S);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
     }                   // Pokazywanie projektów
@@ -83,9 +90,9 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
     private void projects(){
         projects_list = new ArrayList<>();
         int i;
-        for(i=0; i< Data.projects_list.size(); i++){
-            if(Data.projects_list.get(i).get("user_master_id").toString().equals(myID)){
-                projects_list.add(Data.projects_list.get(i).get("project_id").toString());
+        for(i=0; i< data.projects_list.size(); i++){
+            if(data.projects_list.get(i).get("user_master_id").toString().equals(myID)){
+                projects_list.add(data.projects_list.get(i).get("project_id").toString());
             }
         }
     }                   // Szukanie projektów
