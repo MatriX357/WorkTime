@@ -3,23 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_1">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView_m_profil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
-        android:onClick="profil"
-        android:text="@string/profil"
+        android:onClick="profile"
+        android:text="@string/profile"
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/listview_m"
+        app:layout_constraintBottom_toTopOf="@+id/list_view_m"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,7 +30,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="@string/projekt"
+        android:text="@string/project"
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
@@ -42,21 +40,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView_m"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:onClick="new_project"
-        app:layout_constraintBottom_toTopOf="@+id/listview_m"
+        app:layout_constraintBottom_toTopOf="@+id/list_view_m"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_add"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="VectorDrawableCompat"
+        android:contentDescription="@string/todo" />
 
     <ListView
-        android:id="@+id/listview_m"
+        android:id="@+id/list_view_m"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

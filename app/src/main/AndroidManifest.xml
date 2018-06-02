@@ -5,11 +5,13 @@
 
     <application
         android:name=".ManagerApplication"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo_1"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="false"
+        android:allowBackup="false">
         <activity android:name=".Main"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait">
@@ -19,50 +21,56 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Rejestracja"
+        <activity
+            android:name=".Registration"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".Master"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Master"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".Profil"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Profil"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
         </activity>
-        <activity android:name=".ProfilEdit"
+        <activity
+            android:name=".ProfilEdit"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".MasterOsoba"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PersonMaster"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".MasterZadania"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TasksMaster"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".User"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".User"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".UserZadania"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserZadania"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".UserZadanie"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserZadanie"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".NowyProjekt"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewProject"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".NoweZadanie"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewTask"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Data" />
+        <activity android:name=".Reminding" />
     </application>
 
 </manifest>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/okno1"
+    android:background="@drawable/window1"
     tools:context=".Main">
 
     <ImageView
@@ -16,7 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/logo_1a" />
+        app:srcCompat="@mipmap/logo_1a"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/textView_main"
@@ -39,7 +40,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/okno5"
+        android:background="@drawable/window5"
         android:translationX="-10dp"
         android:translationY="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,12 +49,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_main" />
 
     <View
-        android:id="@+id/view_main2"
         android:layout_width="200dp"
         android:layout_height="255dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        android:background="@drawable/okno2"
+        android:background="@drawable/window2"
         app:layout_constraintBottom_toBottomOf="@+id/view_main1"
         app:layout_constraintEnd_toEndOf="@+id/view_main1"
         app:layout_constraintHorizontal_bias="1.0"
@@ -69,11 +69,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:accessibilityLiveRegion="polite"
-        android:background="@drawable/zaloguj"
+        android:background="@drawable/login"
         android:fontFamily="serif"
         android:onClick="logIn"
         android:padding="3dp"
-        android:text="@string/zaloguj"
+        android:text="@string/login"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@android:color/background_light"
@@ -83,18 +83,17 @@
         app:layout_constraintTop_toBottomOf="@+id/editText_main_password" />
 
     <Button
-        android:id="@+id/button_main_register"
         android:layout_width="102dp"
         android:layout_height="26dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:accessibilityLiveRegion="polite"
-        android:background="@drawable/zaloguj"
+        android:background="@drawable/login"
         android:fontFamily="serif"
         android:onClick="register"
         android:padding="3dp"
-        android:text="@string/rejestracja"
+        android:text="@string/registration"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@android:color/background_light"
@@ -112,11 +111,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/wpisz_email"
+        android:background="@drawable/enter_email"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:paddingLeft="5dp"
+        android:paddingStart="@dimen/EditText5dp"
+        android:paddingEnd="@dimen/EditText5dp"
         android:singleLine="true"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
@@ -136,11 +136,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="44dp"
-        android:background="@drawable/wpisz_email"
+        android:background="@drawable/enter_email"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:paddingLeft="5dp"
+        android:paddingStart="@dimen/EditText5dp"
+        android:paddingEnd="@dimen/EditText5dp"
         android:singleLine="true"
         android:textAlignment="viewStart"
         android:textAllCaps="false"

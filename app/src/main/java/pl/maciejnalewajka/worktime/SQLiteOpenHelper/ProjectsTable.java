@@ -17,7 +17,7 @@ public class ProjectsTable extends android.database.sqlite.SQLiteOpenHelper {
     public static final String TIME = "time";
     public static final String PROJECT_DATA = "project_data";
     public static final String INFO = "info";
-    public static final String EXTRAINFO = "extra_info";
+    public static final String EXTRA_INFO = "extra_info";
     public static final String USER_MASTER_ID = "user_master_id";
 
     public ProjectsTable(Context context) {
@@ -30,7 +30,7 @@ public class ProjectsTable extends android.database.sqlite.SQLiteOpenHelper {
 
     }
 
-    public void createTable(SQLiteDatabase db) {
+    private void createTable(SQLiteDatabase db) {
         db.execSQL("create table " + PROJECTS_TABLE + " ( " +
                 PROJECT_ID + " text primary key not null, " +
                 NAME + " text, " +
@@ -40,7 +40,7 @@ public class ProjectsTable extends android.database.sqlite.SQLiteOpenHelper {
                 TIME + " integer, " +
                 PROJECT_DATA + " text, " +
                 INFO + " text, " +
-                EXTRAINFO + " text, " +
+                EXTRA_INFO + " text, " +
                 USER_MASTER_ID + " text " +
                 ");"
         );

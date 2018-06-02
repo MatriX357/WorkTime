@@ -9,36 +9,32 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class User extends AppCompatActivity implements AdapterView.OnItemClickListener{
-    ListView lv;
-    ArrayList<String> projekty_lista;
-    ArrayList<Elementy> data;
-    ArrayAdapter<Elementy> adapter;
-    Dane dane;
-    String myID;
+    private ListView lv;
+    private ArrayList<String> projects_list;
+    private String myID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        lv = (ListView) findViewById(R.id.listview_u);
+        lv = findViewById(R.id.list_view_u);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        dane = new Dane();
-        myID = dane.getMy_hash().get("user_id").toString();
+        Data data = new Data();
+        myID = data.getMy_hash().get("user_id").toString();
         projekty();
         elementy();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        UserZadania.id = projekty_lista.get(position);
-        UserZadanie.idMaster = projekty_lista.get(position);
+        UserZadania.id = projects_list.get(position);
+        UserZadanie.idMaster = projects_list.get(position);
         Intent intent_user_zadania = new Intent(this, UserZadania.class);
         startActivity(intent_user_zadania);
     }
@@ -47,26 +43,26 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
     public void onBackPressed() {
     }                 // Przycisk wstecz zablokowany
 
-    public void profil(View view) {
+    public void profile(View view) {
         Intent intent_profil = new Intent(this, Profil.class);
         startActivity(intent_profil);
-    }       // Pzrycisk profil
+    }       // Pzrycisk profile
 
-    public void elementy(){
+    private void elementy(){
         String active, name;
-        int pro, used, ilosc;
-        data = new ArrayList<Elementy>();
+        int pro, used, amount;
+        ArrayList<Elements> data = new ArrayList<>();
 
-        for(int i = 0; i< Dane.projects_list.size(); i++){
-            for(int k=0;k<projekty_lista.size();k++){
-                if(projekty_lista.get(k).equals(Dane.projects_list.get(i).get("project_id").toString())){
-                    pro = 0; used = 0; ilosc = 0;
-                    for (int j=0; j<Dane.tasks_list.size(); j++){
-                        if(Dane.tasks_list.get(j).get("project_id").toString().equals(Dane.projects_list.get(i).get("project_id").toString()) &&
-                                Dane.tasks_list.get(j).get("user_id").toString().equals(myID)){
-                            pro += Integer.parseInt(Dane.tasks_list.get(j).get("time").toString());
-                            used += Integer.parseInt(Dane.tasks_list.get(j).get("used_time").toString());
-                            ilosc +=1;
+        for(int i = 0; i< Data.projects_list.size(); i++){
+            for(int k = 0; k< projects_list.size(); k++){
+                if(projects_list.get(k).equals(Data.projects_list.get(i).get("project_id").toString())){
+                    pro = 0; used = 0; amount = 0;
+                    for (int j = 0; j< Data.tasks_list.size(); j++){
+                        if(Data.tasks_list.get(j).get("project_id").toString().equals(Data.projects_list.get(i).get("project_id").toString()) &&
+                                Data.tasks_list.get(j).get("user_id").toString().equals(myID)){
+                            pro += Integer.parseInt(Data.tasks_list.get(j).get("time").toString());
+                            used += Integer.parseInt(Data.tasks_list.get(j).get("used_time").toString());
+                            amount +=1;
                         }
                     }
                     if(used != 0){used = (used*100)/pro;}
@@ -74,25 +70,24 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
                         active = "Aktywne";
                     }
                     else{active = "Nieaktywne";}
-                    name = Dane.projects_list.get(i).get("name").toString();
-                    data.add(new Elementy(used, name, String.valueOf(ilosc), active));
+                    name = Data.projects_list.get(i).get("name").toString();
+                    data.add(new Elements(used, name, String.valueOf(amount), active));
                 }
             }
 
         }
-        adapter = new ElementyProjektow(this, data);
+        ArrayAdapter<Elements> adapter = new ProjectsElements(this, data);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
     }               // Wykresy i projekty
 
-    public void projekty(){
-        projekty_lista = new ArrayList<String>();
+    private void projekty(){
+        projects_list = new ArrayList<>();
         int i;
-        for(i=0;i<Dane.tasks_list.size();i++){
-            if(Dane.tasks_list.get(i).get("user_id").toString().equals(myID)){
-                if(!projekty_lista.contains(Dane.tasks_list.get(i).get("project_id"))){
-                    projekty_lista.add(Dane.tasks_list.get(i).get("project_id").toString());
-                }
+        for(i=0; i< Data.tasks_list.size(); i++){
+            if(Data.tasks_list.get(i).get("user_id").toString().equals(myID)){
+                if(!projects_list.contains(Data.tasks_list.get(i).get("project_id")))
+                    projects_list.add(Data.tasks_list.get(i).get("project_id").toString());
             }
         }
     }               // Tworzy listę projektów

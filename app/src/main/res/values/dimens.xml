@@ -1,3 +1,4 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="textSize">10sp</dimen>
+    <dimen name="EditText5dp">5dp</dimen>
 </resources>

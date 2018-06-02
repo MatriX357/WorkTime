@@ -16,8 +16,8 @@ public class TasksTable extends android.database.sqlite.SQLiteOpenHelper{
     public static final String USED_TIME = "used_time";
     public static final String TASK_DATA = "task_data";
     public static final String PRIORITY = "priority";
-    public static final String EXTRAINFO = "extra_info";
-    public static String PROJECT_ID = "project_id";
+    public static final String EXTRA_INFO = "extra_info";
+    public static final String PROJECT_ID = "project_id";
     public static final String USER_ID = "user_id";
 
 
@@ -32,7 +32,7 @@ public class TasksTable extends android.database.sqlite.SQLiteOpenHelper{
 
     }
 
-    public void createTable(SQLiteDatabase db) {
+    private void createTable(SQLiteDatabase db) {
         db.execSQL("create table " + TASKS_TABLE + " ( " +
                 TASK_ID + " text primary key not null, " +
                 TASK_NAME + " text, " +
@@ -41,7 +41,7 @@ public class TasksTable extends android.database.sqlite.SQLiteOpenHelper{
                 USED_TIME + " integer, " +
                 TASK_DATA + " text, " +
                 PRIORITY + " text, " +
-                EXTRAINFO + " text, " +
+                EXTRA_INFO + " text, " +
                 PROJECT_ID + "text" +
                 USER_ID + " text " +
                 ");"

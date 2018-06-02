@@ -3,16 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_1">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_us"
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:background="@color/color_1"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,10 +27,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back"
         tools:ignore="VectorDrawableCompat"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/todo" />
 
     <TextView
-        android:id="@+id/textView_us_back2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -41,7 +37,7 @@
         android:fontFamily="sans-serif"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="back"
-        android:text="@string/zadania"
+        android:text="@string/tasks"
         android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
         android:textSize="14sp"
@@ -51,7 +47,6 @@
         app:layout_constraintVertical_bias="0.444" />
 
     <TextView
-        android:id="@+id/textView_us"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -60,7 +55,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="@string/zadanie"
+        android:text="@string/task"
         android:textAlignment="gravity"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
@@ -87,7 +82,7 @@
             android:layout_height="19dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="88dp"
-            android:text="TextView"
+            android:text=""
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="32dp"
-            android:text="TextView"
+            android:text=""
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="32dp"
-            android:text="TextView"
+            android:text=""
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="32dp"
-            android:text="TextView"
+            android:text=""
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="32dp"
-            android:text="TextView"
+            android:text=""
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -148,11 +143,11 @@
             android:layout_height="45dp"
             android:layout_marginTop="32dp"
             android:accessibilityLiveRegion="polite"
-            android:background="@drawable/zaloguj"
+            android:background="@drawable/login"
             android:fontFamily="serif"
             android:onClick="start"
             android:padding="5dp"
-            android:text="Rozpocznij Zadanie"
+            android:text="@string/start_the_task"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@android:color/background_dark"

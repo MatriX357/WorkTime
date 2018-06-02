@@ -9,37 +9,39 @@ import android.view.View;
 import android.widget.TextView;
 
 public class Profil extends AppCompatActivity {
-    static TextView name, email, password, phone;
-    Dane dane;
-    private SharedPreferences sharedPreferences;
+    TextView name;
+    TextView email;
+    private TextView password;
+    TextView phone;
     private SharedPreferences.Editor editor;
-    public static final String NAME = "name";
-    public static final String LOGIN = "login";
-    public static final String PASSWORD = "password";
+    private static final String NAME = "name";
+    private static final String LOGIN = "login";
+    private static final String PASSWORD = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
-        name = (TextView)findViewById(R.id.editText_p_name);
-        email = (TextView)findViewById(R.id.editText_p_email);
-        password = (TextView)findViewById(R.id.editText_p_password);
-        phone = (TextView)findViewById(R.id.editText_p_phone);
-        sharedPreferences = getSharedPreferences(NAME, Context.MODE_PRIVATE);
+        name = findViewById(R.id.editText_p_name);
+        email = findViewById(R.id.editText_p_email);
+        password = findViewById(R.id.editText_p_password);
+        phone = findViewById(R.id.editText_p_phone);
+        SharedPreferences sharedPreferences = getSharedPreferences(NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        editor.apply();
         }
 
     @Override
     protected void onResume() {
         super.onResume();
-        dane = new Dane();
-        name.setText(dane.getMy_hash().get("name").toString());
-        email.setText(dane.getMy_hash().get("email").toString());
-        phone.setText(dane.getMy_hash().get("phone").toString());
-        String g = "";
-        for(int i=0; i<dane.getMy_hash().get("password").toString().length(); i++){
-            g += "*";}
-        password.setText(g);
+        Data data = new Data();
+        name.setText(data.getMy_hash().get("name").toString());
+        email.setText(data.getMy_hash().get("email").toString());
+        phone.setText(data.getMy_hash().get("phone").toString());
+        StringBuilder g = new StringBuilder();
+        for(int i = 0; i< data.getMy_hash().get("password").toString().length(); i++){
+            g.append("*");}
+        password.setText(g.toString());
     }
 
     public void back(View view) {

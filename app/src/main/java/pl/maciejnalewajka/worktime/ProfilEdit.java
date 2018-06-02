@@ -7,23 +7,27 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class ProfilEdit extends AppCompatActivity {
-    static EditText name, email, password, password2, phone;
-    public Profil profil = new Profil();
-    Dane dane;
+    private final Profil profil = new Profil();
+    private EditText name;
+    private EditText email;
+    private EditText password;
+    private EditText password2;
+    private EditText phone;
+    private Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil_edit);
-        name = (EditText) findViewById(R.id.editText_pe_name);
-        email = (EditText) findViewById(R.id.editText_pe_email);
-        password = (EditText) findViewById(R.id.editText_pe_password);
-        password2 = (EditText) findViewById(R.id.editText_pe_password2);
-        phone = (EditText) findViewById(R.id.editText_pe_phone);
+        name = findViewById(R.id.editText_pe_name);
+        email = findViewById(R.id.editText_pe_email);
+        password = findViewById(R.id.editText_pe_password);
+        password2 = findViewById(R.id.editText_pe_password2);
+        phone = findViewById(R.id.editText_pe_phone);
         name.setText(profil.name.getText().toString());
         email.setText(profil.email.getText().toString());
         phone.setText(profil.phone.getText().toString());
-        dane = new Dane();
+        data = new Data();
     }
 
     public void back(View view) {
@@ -32,24 +36,24 @@ public class ProfilEdit extends AppCompatActivity {
 
     public void change(View view){
         boolean a = false;
-        char[] znaki = email.getText().toString().toCharArray();
-        for(int i=0; i<znaki.length; i++){
-            char znak = znaki[i];
-            if (znak == '@') {
+        char[] marks = email.getText().toString().toCharArray();
+        for (char mark : marks) {
+            if (mark == '@') {
                 a = true;
-            } }
-        int cyfry = 0;
-        char[] znaki2 = password.getText().toString().toCharArray();
+            }
+        }
+        int digits = 0;
+        char[] marks2 = password.getText().toString().toCharArray();
         for(int i=0; i<password.getText().toString().length(); i++){
-            char znak = znaki2[i];
-            if(znak>='0' && znak<='9')
+            char mark = marks2[i];
+            if(mark>='0' && mark<='9')
             {
-                cyfry ++;
+                digits ++;
             } }
-        if(a == false){Toast.makeText(this, "Podaj poprawny e-mail!", Toast.LENGTH_SHORT).show();}
+        if(!a){Toast.makeText(this, "Podaj poprawny e-mail!", Toast.LENGTH_SHORT).show();}
         else{
             if(!password.getText().toString().equals("") || !password2.getText().toString().equals("")) {
-                if((znaki2.length < 8 || cyfry < 2)) {
+                if((marks2.length < 8 || digits < 2)) {
                     Toast.makeText(this, "Podaj poprawne hasło!", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -57,31 +61,27 @@ public class ProfilEdit extends AppCompatActivity {
                         Toast.makeText(this, "Podane hasła nie są takie same!", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        String g = "";
-                        for(int i=0; i<password.getText().toString().length(); i++){
-                            g += "*";
-                        }
-                        dane.getMy_hash().remove("password");
-                        dane.getMy_hash().put("password", password.getText().toString());
-                        dane.getMy_hash().remove("name");
-                        dane.getMy_hash().put("name", name.getText().toString());
-                        dane.getMy_hash().remove("email");
-                        dane.getMy_hash().put("email", email.getText().toString());
-                        dane.getMy_hash().remove("phone");
-                        dane.getMy_hash().put("phone", phone.getText().toString());
+                        data.getMy_hash().remove("password");
+                        data.getMy_hash().put("password", password.getText().toString());
+                        data.getMy_hash().remove("name");
+                        data.getMy_hash().put("name", name.getText().toString());
+                        data.getMy_hash().remove("email");
+                        data.getMy_hash().put("email", email.getText().toString());
+                        data.getMy_hash().remove("phone");
+                        data.getMy_hash().put("phone", phone.getText().toString());
                         finish();
                     }
                 }
             }
             else{
-                dane.getMy_hash().remove("name");
-                dane.getMy_hash().put("name", name.getText().toString());
-                dane.getMy_hash().remove("email");
-                dane.getMy_hash().put("email", email.getText().toString());
-                dane.getMy_hash().remove("phone");
-                dane.getMy_hash().put("phone", phone.getText().toString());
+                data.getMy_hash().remove("name");
+                data.getMy_hash().put("name", name.getText().toString());
+                data.getMy_hash().remove("email");
+                data.getMy_hash().put("email", email.getText().toString());
+                data.getMy_hash().remove("phone");
+                data.getMy_hash().put("phone", phone.getText().toString());
                 finish();
             }
         }
-    }           // Zmienia dane jeżeli poprawne
+    }           // Zmienia data jeżeli poprawne
 }

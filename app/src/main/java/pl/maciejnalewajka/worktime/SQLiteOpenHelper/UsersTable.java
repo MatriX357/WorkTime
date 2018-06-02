@@ -28,7 +28,7 @@ public class UsersTable extends android.database.sqlite.SQLiteOpenHelper {
         createTable(db);
     }
 
-    public void createTable(SQLiteDatabase db) {
+    private void createTable(SQLiteDatabase db) {
         db.execSQL("create table " + USERS_TABLE + " ( " +
                 USER_ID + " text primary key not null, " +
                 USER_NAME + " text, " +

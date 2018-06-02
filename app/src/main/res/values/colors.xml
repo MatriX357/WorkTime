@@ -4,12 +4,9 @@
     <color name="colorPrimaryDark">#bde4f4</color>
     <color name="colorAccent">#bde4f4</color>
     <color name="color_1">#bde4f4</color>
-    <color name="color_2">#fcc418</color>
     <color name="color_3">#9d202120</color>
-    <color name="color_4">#E0FCFF</color>
     <color name="color_5">#e3e3e3</color>
     <color name="color_6">#FF7F50</color>
-    <color name="color_bialy">#ffffff</color>
-    <color name="przeźroczysty">#003f403f</color>
+    <color name="white_color">#ffffff</color>
     <color name="greyer">#8a353333</color>
 </resources>

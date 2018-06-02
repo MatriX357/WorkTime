@@ -10,13 +10,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Main extends AppCompatActivity {
-    static EditText text_login, text_haslo;
+    private EditText text_login;
+    private EditText text_haslo;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    public static final String NAME = "name";
-    public static final String LOGIN = "login";
-    public static final String PASSWORD = "password";
-    Dane dane;
+    private static final String NAME = "name";
+    private static final String LOGIN = "login";
+    private static final String PASSWORD = "password";
+    private Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class Main extends AppCompatActivity {
         text_haslo = findViewById(R.id.editText_main_password);
         sharedPreferences = getSharedPreferences(NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        editor.apply();
         restoreData();
 
     }
@@ -33,13 +35,13 @@ public class Main extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        PobieranieUserow pobierz_userow = new PobieranieUserow();
-        pobierz_userow.execute();
-        PobieranieProjektow pobierz_projekty = new PobieranieProjektow();
-        pobierz_projekty.execute();
-        PobieranieTaskow pobierz_taski = new PobieranieTaskow();
-        pobierz_taski.execute();
-        dane = new Dane();
+        UsersDownload users_download = new UsersDownload();
+        users_download.execute();
+        ProjectsDownload projects_download = new ProjectsDownload();
+        projects_download.execute();
+        TasksDownload tasks_download = new TasksDownload();
+        tasks_download.execute();
+        data = new Data();
     }
 
     public void logIn(View view) {
@@ -47,37 +49,36 @@ public class Main extends AppCompatActivity {
 
         if(search()){
             save_data();
-            if(dane.getMy_hash().get("type").toString().equals("Master")){
-                Intent intent_zaloguj = new Intent(this, Master.class);
-                startActivity(intent_zaloguj);
+            if(data.getMy_hash().get("type").toString().equals("Master")){
+                Intent intent_login = new Intent(this, Master.class);
+                startActivity(intent_login);
             }
             else{
-                Intent intent_zaloguj = new Intent(this, User.class);
-                startActivity(intent_zaloguj);
+                Intent intent_login = new Intent(this, User.class);
+                startActivity(intent_login);
             } }
-        else{
-        } }         // Przycisk do logowania
+    }         // Przycisk do logowania
 
     public void register(View view){
-        Intent intent_re = new Intent(this, Rejestracja.class);
+        Intent intent_re = new Intent(this, Registration.class);
         startActivity(intent_re);
     }       // Przenosi do rejestracji
 
     private boolean search(){
 
         try {
-            for (int i = 0; i < dane.users_list.size(); i++) {
-                if (dane.users_list.get(i).get("email").equals(text_login.getText().toString())) {
-                    if (dane.users_list.get(i).get("password").toString().equals(revers())) {
-                        dane.setMy_hash(dane.users_list.get(i));
+            for (int i = 0; i < Data.users_list.size(); i++) {
+                if (Data.users_list.get(i).get("email").equals(text_login.getText().toString())) {
+                    if (Data.users_list.get(i).get("password").toString().equals(revers())) {
+                        data.setMy_hash(Data.users_list.get(i));
                         return true;
                     } } }
-            Toast.makeText(this, "Błędne dane!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Błędne data!", Toast.LENGTH_SHORT).show();
             return false;
         }
         catch (Exception e){
             return false;
-        } }               // Uzupełnia dane z logowania
+        } }               // Uzupełnia data z logowania
 
     private void restoreData() {
         String saved_l = sharedPreferences.getString(LOGIN, "");
@@ -98,8 +99,7 @@ public class Main extends AppCompatActivity {
     public void onBackPressed() {
     }           // Wyłączenie przycisku wstecz
 
-    public String revers(){
-        String nowy = new StringBuilder(text_haslo.getText().toString()).reverse().toString();
-        return nowy;
+    private String revers(){
+        return new StringBuilder(text_haslo.getText().toString()).reverse().toString();
     }               // Rozkodowanie hasła
 }

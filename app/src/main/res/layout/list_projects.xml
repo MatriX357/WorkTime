@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="3dp"
     android:background="@android:color/background_light"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:baselineAligned="false">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -21,7 +21,7 @@
             android:layout_weight="1"
             android:gravity="center|start"
             android:paddingBottom="2dip"
-            android:text="Maciek: Zadanie1"
+            android:text=""
             android:textColor="@android:color/black"
             android:textStyle="bold" />
 
@@ -48,17 +48,17 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center|end"
-            android:text="Aktywne"
+            android:text=""
             android:textColor="@android:color/black"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/l_procent"
+            android:id="@+id/l_percent"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center|end"
-            android:text="56%"
+            android:text=""
             android:textColor="@android:color/black"
             android:textStyle="bold" />
 
