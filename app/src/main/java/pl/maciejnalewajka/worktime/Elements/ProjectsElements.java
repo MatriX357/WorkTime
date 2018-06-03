@@ -39,7 +39,7 @@ public class ProjectsElements extends ArrayAdapter<Elements> {
         ElementsHolder holder;
         if (row == null){
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            row = inflater.inflate(R.layout.list_projects, parent);
+            row = inflater.inflate(R.layout.list_projects, null);
             holder = new ElementsHolder();
             holder.progress = row.findViewById(R.id.l_progressBar);
             holder.name = row.findViewById(R.id.l_nazwa);

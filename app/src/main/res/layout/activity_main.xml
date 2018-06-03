@@ -27,7 +27,7 @@
         android:layout_marginStart="8dp"
         android:text="@string/worktime"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="#00ff00"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +111,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/enter_email"
+        android:background="@drawable/enter_name"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
@@ -127,18 +127,18 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view_main1"
         app:layout_constraintStart_toStartOf="@+id/view_main1"
-        app:layout_constraintTop_toBottomOf="@+id/editText_main_email" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_main_name" />
 
     <EditText
-        android:id="@+id/editText_main_email"
+        android:id="@+id/editText_main_name"
         android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="44dp"
-        android:background="@drawable/enter_email"
+        android:background="@drawable/enter_name"
         android:ems="10"
-        android:hint="@string/email"
+        android:hint="@string/log_name"
         android:inputType="textEmailAddress"
         android:paddingStart="@dimen/EditText5dp"
         android:paddingEnd="@dimen/EditText5dp"
@@ -153,6 +153,30 @@
         app:layout_constraintEnd_toEndOf="@+id/view_main1"
         app:layout_constraintStart_toStartOf="@+id/view_main1"
         app:layout_constraintTop_toTopOf="@+id/view_main1" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="92dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="340dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_main"
+        app:srcCompat="@mipmap/matrix" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="91dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="396dp"
+        android:text="@string/matrixEdition"
+        android:textAlignment="center"
+        android:textColor="#00ff00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_main" />
 
 
 </android.support.constraint.ConstraintLayout>

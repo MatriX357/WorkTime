@@ -54,6 +54,13 @@ import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHel
 public class ManagerApplication extends Application {
 
     static final Data data = new Data();
+    static String user_name = "";
+    static String user_uuid = "";
+    static String project_uuid = "";
+    static String task_uuid = "";
+    static String user_type = "";
+    static String password = "";
+    static Boolean ES = true;
     
     private SQLiteDatabase database;
 
@@ -168,7 +175,7 @@ public class ManagerApplication extends Application {
 
         for(int i = 0; i < users_list_local.size(); ++i){
             users_id.add(users_list_local.get(i).get("user_id"));
-            users_name.add(users_list_local.get(i).get("name"));
+            users_name.add(users_list_local.get(i).get("user_name"));
             users_email.add(users_list_local.get(i).get("email"));
             users_password.add(users_list_local.get(i).get("password"));
             users_phone.add(users_list_local.get(i).get("phone"));
@@ -188,7 +195,7 @@ public class ManagerApplication extends Application {
 
         for(int i = 0; i < projects_list_local.size(); ++i){
             project_id.add(projects_list_local.get(i).get("project_id"));
-            project_name.add(projects_list_local.get(i).get("name"));
+            project_name.add(projects_list_local.get(i).get("user_name"));
             client.add(projects_list_local.get(i).get("client"));
             platform.add(projects_list_local.get(i).get("platform"));
             api.add(projects_list_local.get(i).get("api"));
@@ -212,7 +219,7 @@ public class ManagerApplication extends Application {
 
         for(int i = 0; i < tasks_list_local.size(); ++i){
             task_id.add(tasks_list_local.get(i).get("task_id"));
-            task_name.add(tasks_list_local.get(i).get("name"));
+            task_name.add(tasks_list_local.get(i).get("user_name"));
             task.add(tasks_list_local.get(i).get("task"));
             task_time.add(tasks_list_local.get(i).get("task_time"));
             used_time.add(tasks_list_local.get(i).get("used_time"));
@@ -239,7 +246,7 @@ public class ManagerApplication extends Application {
 
         HashMap<String, Object> user_map = new HashMap<>();
         user_map.put("user_id", id);
-        user_map.put("name", name);
+        user_map.put("user_name", name);
         user_map.put("email", email);
         user_map.put("password", password);
         user_map.put("phone", phone);
@@ -259,7 +266,7 @@ public class ManagerApplication extends Application {
 
         HashMap<String, Object> project_map = new HashMap<>();
         project_map.put("project_id", id);
-        project_map.put("name", name);
+        project_map.put("user_name", name);
         project_map.put("client", client);
         project_map.put("platform", platform);
         project_map.put("api", api);
@@ -280,7 +287,7 @@ public class ManagerApplication extends Application {
 
         HashMap<String, Object> task_map = new HashMap<>();
         task_map.put("task_id", id);
-        task_map.put("name", name);
+        task_map.put("user_name", name);
         task_map.put("task", task);
         task_map.put("time", task_time);
         task_map.put("used_time", used_time);
@@ -429,7 +436,7 @@ public class ManagerApplication extends Application {
             user = (String) USI.next();
             if (UsersLocal.contains(user)){
                 ArrayList<String> user_IC = userLoad(user);
-                URL url = new URL("http://155.158.135.197/worktime/edit.php?Users&user_id="+user_IC.get(0)+"&name="+user_IC.get(1)
+                URL url = new URL("http://155.158.135.197/worktime/edit.php?Users&user_id="+user_IC.get(0)+"&user_name="+user_IC.get(1)
                         +"&email="+user_IC.get(2)+"&password="+user_IC.get(3)+"&phone="+user_IC.get(4)+"&type="+user_IC.get(5)
                         +"&company_id="+user_IC.get(6));
                 url.openConnection();
@@ -445,7 +452,7 @@ public class ManagerApplication extends Application {
         while(ULI.hasNext()) {
             user = (String) ULI.next();
             ArrayList<String> user_IC = userLoad(user);
-            URL url = new URL("http://155.158.135.197/worktime/add.php?Users&user_id="+user_IC.get(0)+"&name="+user_IC.get(1)
+            URL url = new URL("http://155.158.135.197/worktime/add.php?Users&user_id="+user_IC.get(0)+"&user_name="+user_IC.get(1)
                     +"&email="+user_IC.get(2)+"&password="+user_IC.get(3)+"&phone="+user_IC.get(4)+"&type="+user_IC.get(5)
                     +"&company_id="+user_IC.get(6));
             url.openConnection();
@@ -472,7 +479,7 @@ public class ManagerApplication extends Application {
             project = (String) PSI.next();
             if (ProjectsLocal.contains(project)){
                 ArrayList<String> project_IC = projectsLoad(project);
-                URL url = new URL("http://155.158.135.197/worktime/edit.php?Projects&project_id="+project_IC.get(0)+"&name="+project_IC.get(1)
+                URL url = new URL("http://155.158.135.197/worktime/edit.php?Projects&project_id="+project_IC.get(0)+"&user_name="+project_IC.get(1)
                         +"&client="+project_IC.get(2)+"&platform="+project_IC.get(3)+"&api="+project_IC.get(4)+"&time="+project_IC.get(5)
                         +"&project_data="+project_IC.get(6)+"&info="+project_IC.get(7)+"&extra_info="+project_IC.get(8)+"user_master_id="+project_IC.get(9));
                 url.openConnection();
@@ -488,7 +495,7 @@ public class ManagerApplication extends Application {
         while(PLI.hasNext()) {
             project = (String) PLI.next();
             ArrayList<String>  project_IC = projectsLoad(project);
-            URL url = new URL("http://155.158.135.197/worktime/add.php?Projects&project_id="+project_IC.get(0)+"&name="+project_IC.get(1)
+            URL url = new URL("http://155.158.135.197/worktime/add.php?Projects&project_id="+project_IC.get(0)+"&user_name="+project_IC.get(1)
                     +"&client="+project_IC.get(2)+"&platform="+project_IC.get(3)+"&api="+project_IC.get(4)+"&time="+project_IC.get(5)
                     +"&project_data="+project_IC.get(6)+"&info="+project_IC.get(7)+"&extra_info="+project_IC.get(8)+"user_master_id="+project_IC.get(9));
             url.openConnection();
@@ -515,7 +522,7 @@ public class ManagerApplication extends Application {
             task = (String) TSI.next();
             if (TasksLocal.contains(task)){
                 ArrayList<String> tasks = tasksLoad(task);
-                URL url = new URL("http://155.158.135.197/worktime/edit.php?Tasks&task_id="+tasks.get(0)+"&name="+tasks.get(1)
+                URL url = new URL("http://155.158.135.197/worktime/edit.php?Tasks&task_id="+tasks.get(0)+"&user_name="+tasks.get(1)
                         +"&task="+tasks.get(2)+"&time="+tasks.get(3)+"&used_time="+tasks.get(4)+"&task_data="+tasks.get(5)
                         +"&priority="+tasks.get(6)+"&extra_info="+tasks.get(7)+"&project_id="+tasks.get(8)+"user_id="+tasks.get(9));
                 url.openConnection();
@@ -531,30 +538,24 @@ public class ManagerApplication extends Application {
         while(TLI.hasNext()) {
             task = (String) TLI.next();
             ArrayList<String>  tasks_IC = projectsLoad(task);
-            URL url = new URL("http://155.158.135.197/worktime/add.php?Tasks&task_id=" + tasks_IC.get(0) + "&name=" + tasks_IC.get(1)
+            URL url = new URL("http://155.158.135.197/worktime/add.php?Tasks&task_id=" + tasks_IC.get(0) + "&user_name=" + tasks_IC.get(1)
                     + "&task=" + tasks_IC.get(2) + "&time=" + tasks_IC.get(3) + "&used_time=" + tasks_IC.get(4) + "&task_data=" + tasks_IC.get(5)
                     + "&priority=" + tasks_IC.get(6) + "&extra_info=" + tasks_IC.get(7) + "&project_id=" + tasks_IC.get(8) + "user_id=" + tasks_IC.get(9));
             url.openConnection();
         }
     }
-    public void downloadData(){
 
-        TasksDownload tasksDownload = new TasksDownload();
-        tasksDownload.execute();
-        ProjectsDownload projectsDownload = new ProjectsDownload();
-        projectsDownload.execute();
-        UsersDownload usersDownload = new UsersDownload();
+
+    public void downloadData(){
+        DownloadUsers usersDownload = new DownloadUsers();
         usersDownload.execute();
     }
-
-    static class UsersDownload extends AsyncTask<Void, Void, Void> {
-
+    static class DownloadUsers extends AsyncTask<Void, Void, Void> {
         String data_S = "";
-        final String users = "http://155.158.135.197/WorkTime/JSON.php?Users";
+        final String users = "http://155.158.135.197/WorkTime/JSON.php?Users&name="+user_name;
 
         @Override
         protected Void doInBackground(Void... voids) {
-            // Wykonaj w tle
             try {
                 URL url = new URL(users);
                 HttpURLConnection myConn = (HttpURLConnection) url.openConnection();
@@ -566,48 +567,69 @@ public class ManagerApplication extends Application {
                     data_S = String.format("%s%s", data_S, line);
                 }
                 JSONArray JAr = new JSONArray(data_S);
-                data.users_list.clear();
-                for(int i=0; i<JAr.length(); i++){
-                    JSONObject JOb = JAr.getJSONObject(i);
-                    String user_id = JOb.getString("user_id");
-                    String name = JOb.getString("name");
-                    String email = JOb.getString("email");
-                    String password = JOb.getString("password");
-                    String phone = JOb.getString("phone");
-                    String type = JOb.getString("type");
-                    String company_id = JOb.getString("company_id");
-                    HashMap<String, Object> user_map = new HashMap<>();
-                    user_map.put("user_id", user_id);
-                    user_map.put("name", name);
-                    user_map.put("email", email);
-                    user_map.put("password", password);
-                    user_map.put("phone", phone);
-                    user_map.put("type", type);
-                    user_map.put("company_id", company_id);
-                    data.users_list.add(user_map);
+                JSONObject JOb = JAr.getJSONObject(0);
+                String user_id = JOb.getString("user_id");
+                String name = JOb.getString("name");
+                String email = JOb.getString("email");
+                String password = JOb.getString("password");
+                String phone = JOb.getString("phone");
+                String type = JOb.getString("type");
+                String company_id = JOb.getString("company_id");
+                HashMap<String, Object> user_map = new HashMap<>();
+                user_map.put("user_id", user_id);
+                user_map.put("name", name);
+                user_map.put("email", email);
+                user_map.put("password", password);
+                user_map.put("phone", phone);
+                user_map.put("type", type);
+                user_map.put("company_id", company_id);
+                data.users_list.add(user_map);
+                ManagerApplication.user_uuid = user_id;
+                ManagerApplication.user_type = type;
+                ManagerApplication.password = password;
+                switch (user_type) {
+                    case "User":
+                        TasksDownload tasksDownload = new TasksDownload();
+                        tasksDownload.execute();
+                        break;
+                    case "Master":
+                        ProjectsDownload projectsDownload = new ProjectsDownload();
+                        projectsDownload.execute();
+                        break;
+                    default:
+                        break;
                 }
             }
-            catch (JSONException | IOException e) {e.printStackTrace();}
+            catch (JSONException | IOException e) {ManagerApplication.ES = false;}
             return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
         }
     }
 
     static class TasksDownload extends AsyncTask<Void, Void, Void> {
         // Klasa pobierania tasków
 
-        final String tasks = "http://155.158.135.197/WorkTime/JSON.php?Tasks";
+
+        final String tasks = "http://155.158.135.197/WorkTime/JSON.php?Tasks&user_id=" + user_uuid;
+        final String tasks2 = "http://155.158.135.197/WorkTime/JSON.php?Tasks&project_id=" + project_uuid;
         String data_s = "";
 
         @Override
         protected Void doInBackground(Void... voids) {
             // Wykonaj w tle
             try {
-                URL url = new URL(tasks);
+                URL url;
+                switch (user_type) {
+                    case "User":
+                        url = new URL(tasks);
+                        break;
+                    case "Master":
+                        url = new URL(tasks2);
+                        break;
+                    default:
+                        url = new URL(tasks);
+                        break;
+                }
+
                 HttpURLConnection myConn = (HttpURLConnection) url.openConnection();
                 InputStream resBody = myConn.getInputStream();
                 BufferedReader buffRead = new BufferedReader(new InputStreamReader(resBody));
@@ -643,6 +665,14 @@ public class ManagerApplication extends Application {
                     task_map.put("user_id", user_id);
                     data.tasks_list.add(task_map);
                 }
+                switch (user_type) {
+                    case "User":
+                        ProjectsDownload projectsDownload = new ProjectsDownload();
+                        projectsDownload.execute();
+                        break;
+                    default:
+                        break;
+                }
             }
             catch (JSONException | IOException e) {e.printStackTrace();}
             return null;
@@ -657,14 +687,28 @@ public class ManagerApplication extends Application {
     static class ProjectsDownload extends AsyncTask<Void, Void, Void> {
         // Klasa pobierania projektów
 
-        final String projects = "http://155.158.135.197/WorkTime/JSON.php?Projects";
+        final String projects = "http://155.158.135.197/WorkTime/JSON.php?Projects&user_master_id=" + user_uuid;
+        final String projects2 = "http://155.158.135.197/WorkTime/JSON.php?Projects&task_id=" + task_uuid;
+
         String data_S = "";
 
         @Override
         protected Void doInBackground(Void... voids) {
             // Wykonaj w tle
             try {
-                URL url = new URL(projects);
+                URL url;
+                switch (user_type) {
+                    case "Master":
+                        url = new URL(projects);
+                        break;
+                    case "User":
+                        url = new URL(projects2);
+                        break;
+                    default:
+                        url = new URL(projects);
+                        break;
+                }
+
                 HttpURLConnection myConn = (HttpURLConnection) url.openConnection();
                 InputStream resBody = myConn.getInputStream();
                 BufferedReader buffRead = new BufferedReader(new InputStreamReader(resBody));
@@ -699,6 +743,14 @@ public class ManagerApplication extends Application {
                     project_map.put("extra_info", extraInfo);
                     project_map.put("user_master_id", user_master_id);
                     data.projects_list.add(project_map);
+                }
+                switch (user_type) {
+                    case "Master":
+                        TasksDownload tasksDownload = new TasksDownload();
+                        tasksDownload.execute();
+                        break;
+                    default:
+                        break;
                 }
             }
             catch (JSONException | IOException e) {e.printStackTrace();}

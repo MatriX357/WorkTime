@@ -19,7 +19,7 @@
     <string name="tasks">Zadania</string>
     <string name="edit">Edytuj</string>
     <string name="name">Name</string>
-    <string name="email">Email</string>
+    <string name="log_name">Nazwa użytkownika</string>
     <string name="password">Password</string>
     <string name="phone">Phone</string>
     <string name="profile_edition">Edycja profilu</string>
@@ -34,4 +34,5 @@
     <string name="todo">TODO</string>
     <string name="time">Czas</string>
     <string name="logout">Wyloguj</string>
+    <string name="matrixEdition">M@triX Edition</string>
 </resources>

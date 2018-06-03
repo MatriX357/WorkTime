@@ -14,7 +14,7 @@ public class Main extends AppCompatActivity {
     private EditText text_haslo;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private static final String NAME = "name";
+    private static final String NAME = "user_name";
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
     private Data data;
@@ -24,7 +24,7 @@ public class Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        text_login = findViewById(R.id.editText_main_email);
+        text_login = findViewById(R.id.editText_main_name);
         text_haslo = findViewById(R.id.editText_main_password);
         sharedPreferences = getSharedPreferences(NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -32,27 +32,32 @@ public class Main extends AppCompatActivity {
         restoreData();
         app = (ManagerApplication) getApplication();
 
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         data = ManagerApplication.data;
-        app.downloadData();
     }
 
     public void logIn(View view) {
-        app.checkData();
-        if(search()){
-            save_data();
-            if(data.getMy_hash().get("type").toString().equals("Master")){
-                Intent intent_login = new Intent(this, Master.class);
-                startActivity(intent_login);
-            }
-            else{
-                Intent intent_login = new Intent(this, User.class);
-                startActivity(intent_login);
-            } }
+        ManagerApplication.user_name = text_login.getText().toString();
+        app.downloadData();
+        if (ManagerApplication.ES){
+            if(checkPassword()){
+                save_data();
+                if(ManagerApplication.user_type.equals("Master")){
+                    Intent intent_login = new Intent(this, Master.class);
+                    startActivity(intent_login);
+                }
+                else if(ManagerApplication.user_type.equals("User")){
+                    Intent intent_login = new Intent(this, User.class);
+                    startActivity(intent_login);
+                } } }
+                else{
+            Toast.makeText(this, "Nie ma takiego użytkownika!", Toast.LENGTH_SHORT).show();
+        }
     }         // Przycisk do logowania
 
     public void register(View view){
@@ -60,15 +65,12 @@ public class Main extends AppCompatActivity {
         startActivity(intent_re);
     }       // Przenosi do rejestracji
 
-    private boolean search(){
+    private boolean checkPassword(){
 
         try {
-            for (int i = 0; i < data.users_list.size(); i++) {
-                if (data.users_list.get(i).get("email").equals(text_login.getText().toString())) {
-                    if (data.users_list.get(i).get("password").toString().equals(revers())) {
-                        data.setMy_hash(data.users_list.get(i));
-                        return true;
-                    } } }
+            if (ManagerApplication.password.equals(text_haslo.getText().toString())) {
+                data.setMy_hash(data.users_list.get(0));
+                return true; }
             Toast.makeText(this, "Błędne dane!", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -81,6 +83,8 @@ public class Main extends AppCompatActivity {
         String saved_p = sharedPreferences.getString(PASSWORD, "");
         text_login.setText(saved_l);
         text_haslo.setText(saved_p);
+        ManagerApplication.user_name = saved_l;
+        ManagerApplication.password = saved_p;
     }           // Ustawia Login i hasło z pamięci
 
     private void save_data(){
@@ -94,8 +98,4 @@ public class Main extends AppCompatActivity {
     @Override
     public void onBackPressed() {
     }           // Wyłączenie przycisku wstecz
-
-    private String revers(){
-        return new StringBuilder(text_haslo.getText().toString()).reverse().toString();
-    }               // Rozkodowanie hasła
 }
