@@ -17,7 +17,6 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
     private ArrayList<String> projects_list;
     private String myID;
     private Data data;
-    ManagerApplication app;
 
 
     @Override
@@ -25,7 +24,6 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
         lv = findViewById(R.id.list_view_m);
-        app = (ManagerApplication) getApplication();
         data = ManagerApplication.data;
     }
 

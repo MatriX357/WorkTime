@@ -21,7 +21,7 @@ import pl.maciejnalewajka.worktime.Elements.ProjectsElements;
 
 public class PersonMaster extends AppCompatActivity{
 
-    static Data data;
+    private static Data data;
 
     static String idO = "";
     static String idP = "";

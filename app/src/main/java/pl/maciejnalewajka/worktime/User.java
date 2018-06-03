@@ -17,13 +17,14 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
     private ListView lv;
     private ArrayList<String> projects_list;
     private String myID;
-    static Data data = new Data();
+    private static Data data = new Data();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         lv = findViewById(R.id.list_view_u);
+        data = ManagerApplication.data;
     }
 
     @Override

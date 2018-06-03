@@ -21,7 +21,7 @@ public class NewTask extends AppCompatActivity {
     private EditText info;
     static String idP = "";
     private String userID;
-    Data data;
+    private Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

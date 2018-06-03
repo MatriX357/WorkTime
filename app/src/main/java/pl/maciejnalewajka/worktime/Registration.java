@@ -15,7 +15,7 @@ public class Registration extends AppCompatActivity {
     private EditText password;
     private EditText password2;
     private EditText phone;
-    Data data;
+    private Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

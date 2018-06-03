@@ -26,7 +26,7 @@ public class TasksMaster extends AppCompatActivity implements AdapterView.OnItem
     private ArrayList<String> users_list;
     private BarChart barChart;
     private ListView lv;
-    Data data;
+    private Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

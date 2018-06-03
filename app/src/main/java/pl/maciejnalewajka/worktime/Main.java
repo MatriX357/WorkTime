@@ -64,7 +64,6 @@ public class Main extends AppCompatActivity {
 
         try {
             for (int i = 0; i < data.users_list.size(); i++) {
-                System.out.println(i+"for");
                 if (data.users_list.get(i).get("email").equals(text_login.getText().toString())) {
                     if (data.users_list.get(i).get("password").toString().equals(revers())) {
                         data.setMy_hash(data.users_list.get(i));

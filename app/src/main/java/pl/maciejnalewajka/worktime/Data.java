@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Data extends AppCompatActivity{
-    ArrayList<HashMap<String, Object>> users_list = new ArrayList<>();
-    ArrayList<HashMap<String, Object>> projects_list = new ArrayList<>();
-    ArrayList<HashMap<String, Object>> tasks_list = new ArrayList<>();
+    final ArrayList<HashMap<String, Object>> users_list = new ArrayList<>();
+    final ArrayList<HashMap<String, Object>> projects_list = new ArrayList<>();
+    final ArrayList<HashMap<String, Object>> tasks_list = new ArrayList<>();
     private static HashMap<String, Object> my_hash = new HashMap<>();
 
     public HashMap<String, Object> getMy_hash() {

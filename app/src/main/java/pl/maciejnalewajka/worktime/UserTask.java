@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class UserTask extends AppCompatActivity {
 
-    Data data;
+    private Data data;
 
     static String task_id, idMaster;
     private Button button;

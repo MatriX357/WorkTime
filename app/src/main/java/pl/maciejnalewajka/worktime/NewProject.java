@@ -17,7 +17,7 @@ public class NewProject extends AppCompatActivity {
     private EditText time;
     private EditText info;
     private EditText extraInfo;
-    Data data;
+    private Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

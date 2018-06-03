@@ -20,22 +20,42 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import pl.maciejnalewajka.worktime.SQLiteOpenHelper.ProjectsTable;
-import pl.maciejnalewajka.worktime.SQLiteOpenHelper.TasksTable;
-import pl.maciejnalewajka.worktime.SQLiteOpenHelper.UsersTable;
+import pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper;
 
-import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.ProjectsTable.PROJECTS_TABLE;
-import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.TasksTable.TASKS_TABLE;
-import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.UsersTable.USERS_TABLE;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.API;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.CLIENT;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.EXTRA_INFO;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.INFO;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.NAME;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PLATFORM;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PRIORITY;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PROJECTS_TABLE;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PROJECT_DATA;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PROJECT_ID;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASKS_TABLE;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK_DATA;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK_ID;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK_NAME;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK_TIME;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TIME;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.USED_TIME;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.USERS_TABLE;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.USER_COMPANY_ID;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.USER_EMAIL;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.USER_ID;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.USER_MASTER_ID;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.USER_NAME;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.USER_PASSWORD;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.USER_PHONE;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.USER_TYPE;
 
 
 public class ManagerApplication extends Application {
 
-    static Data data = new Data();
-
-    private SQLiteDatabase database_users;
-    private SQLiteDatabase database_projects;
-    private SQLiteDatabase database_tasks;
+    static final Data data = new Data();
+    
+    private SQLiteDatabase database;
 
     private final ArrayList<HashMap<String, Object>> users_list_local = new ArrayList<>(7);
     private final ArrayList<HashMap<String, Object>> projects_list_local = new ArrayList<>(10);
@@ -75,12 +95,8 @@ public class ManagerApplication extends Application {
 
     public void onCreate(){
         super.onCreate();
-        UsersTable users = new UsersTable(this);
-        ProjectsTable projects = new ProjectsTable(this);
-        TasksTable tasks = new TasksTable(this);
-        database_users = users.getWritableDatabase();
-        database_projects = projects.getWritableDatabase();
-        database_tasks = tasks.getWritableDatabase();
+        WorkTimeSQLiteOpenHelper helper = new WorkTimeSQLiteOpenHelper(this);
+        database = helper.getWritableDatabase();
     }
 
 
@@ -91,20 +107,19 @@ public class ManagerApplication extends Application {
     }
 
     private void checkUserData(){
-        System.out.println(data.users_list.size());
         if(users_list_local.size() < data.users_list.size()){
             users_list_local.clear();
-            database_users.execSQL("delete from " + USERS_TABLE + ";");
+            database.execSQL("delete from " + USERS_TABLE + ";");
             assignUser();
         }
         else if(users_list_local.size() > data.users_list.size()){
             users_list_local.clear();
-            database_users.execSQL("delete from " + USERS_TABLE + ";");
+            database.execSQL("delete from " + USERS_TABLE + ";");
             assignUser();
         }
         else {
             users_list_local.clear();
-            database_users.execSQL("delete from " + USERS_TABLE + ";");
+            database.execSQL("delete from " + USERS_TABLE + ";");
             assignUser();
         }
     }
@@ -117,40 +132,36 @@ public class ManagerApplication extends Application {
     private void checkProjectData(){
         if(projects_list_local.size() < data.projects_list.size()){
             projects_list_local.clear();
-            database_projects.execSQL("delete from " + PROJECTS_TABLE + ";");
+            database.execSQL("delete from " + PROJECTS_TABLE + ";");
             assignProject();
         }
         else if(projects_list_local.size() > data.projects_list.size()){
             projects_list_local.clear();
-            database_projects.execSQL("delete from " + PROJECTS_TABLE + ";");
+            database.execSQL("delete from " + PROJECTS_TABLE + ";");
             assignProject();
         }
     }
 
     private void assignProject(){
-        for(int i = 0; i < data.projects_list.size(); ++i){
-            projects_list_local.set(i, data.projects_list.get(i));
-        }
+        projects_list_local.addAll(data.projects_list);
         insertProject();
     }
 
     private void checkDataTask(){
         if(tasks_list_local.size() < data.tasks_list.size()){
             tasks_list_local.clear();
-            database_tasks.execSQL("delete from " + TASKS_TABLE + ";");
+            database.execSQL("delete from " + TASKS_TABLE + ";");
             assignTask();
         }
         else if(tasks_list_local.size() > data.tasks_list.size()){
             tasks_list_local.clear();
-            database_tasks.execSQL("delete from " + TASKS_TABLE + ";");
+            database.execSQL("delete from " + TASKS_TABLE + ";");
             assignTask();
         }
     }
 
     private void assignTask(){
-        for(int i = 0; i < data.tasks_list.size(); ++i){
-            tasks_list_local.set(i,data.tasks_list.get(i));
-        }
+        tasks_list_local.addAll(data.tasks_list);
         insertTask();
     }
     private void insertUser() {
@@ -167,7 +178,7 @@ public class ManagerApplication extends Application {
 
 
         for(int i = 0; i < users_list_local.size(); ++i){
-            database_users.execSQL("insert into " + USERS_TABLE + " values ( '" + users_id.get(i) + "','" + users_name.get(i) + "','" + users_email.get(i)
+            database.execSQL("insert into " + USERS_TABLE + " values ( '" + users_id.get(i) + "','" + users_name.get(i) + "','" + users_email.get(i)
                     + "','" + users_password.get(i) + "','" + users_phone.get(i) + "','" + users_type.get(i) + "','" +  users_company_id.get(i) + "');");
         }
     }
@@ -190,7 +201,7 @@ public class ManagerApplication extends Application {
 
 
         for(int i = 0; i < projects_list_local.size(); ++i){
-            database_projects.execSQL("insert into " + PROJECTS_TABLE + " values ( '" + project_id.get(i) + "','" + project_name.get(i) + "','" + client.get(i)
+            database.execSQL("insert into " + PROJECTS_TABLE + " values ( '" + project_id.get(i) + "','" + project_name.get(i) + "','" + client.get(i)
                     + "','" + platform.get(i) + "','" + api.get(i) + "','" + time.get(i) + "','" +  project_data.get(i) + "','" +  info.get(i)
                     + "','" +  extra_info.get(i) + "','" +  user_master_id.get(i) + "');");
         }
@@ -214,7 +225,7 @@ public class ManagerApplication extends Application {
 
 
         for(int i = 0; i < tasks_list_local.size(); ++i){
-            database_users.execSQL("insert into " + TASKS_TABLE + " values ( '" + task_id.get(i) + "','" + task_name.get(i) + "','" + task.get(i)
+            database.execSQL("insert into " + TASKS_TABLE + " values ( '" + task_id.get(i) + "','" + task_name.get(i) + "','" + task.get(i)
                     + "','" + task_time.get(i) + "','" + used_time.get(i) + "','" + task_data.get(i) + "','" +  priority.get(i) + "','" +  extra_info2.get(i)
                     + "','" +  project_id2.get(i) + "','" +  user_id.get(i) + "');");
         }
@@ -223,7 +234,7 @@ public class ManagerApplication extends Application {
     public void addUser(String id, String name, String email, String password,
                                String phone, String type, String company_id)
     {
-        database_users.execSQL("insert into " + USERS_TABLE + " values ( " + id + "','" + name + "','" + email
+        database.execSQL("insert into " + USERS_TABLE + " values ( " + id + "','" + name + "','" + email
                 + "','" + password + "','" + phone + "','" + type + "','" +  company_id + ");");
 
         HashMap<String, Object> user_map = new HashMap<>();
@@ -242,7 +253,7 @@ public class ManagerApplication extends Application {
                                   String api, int time, String project_data, String info, String extra_info, String user_master_id)
     {
 
-        database_projects.execSQL("insert into " + PROJECTS_TABLE + " values ( '" + id + "','" + name + "','" + client
+        database.execSQL("insert into " + PROJECTS_TABLE + " values ( '" + id + "','" + name + "','" + client
                 + "','" + platform + "','" + api + "','" + time + "','" +  project_data + "','" +  info
                 + "','" +  extra_info + "','" +  user_master_id + "');");
 
@@ -263,7 +274,7 @@ public class ManagerApplication extends Application {
     public void addTask(String id, String name, String task, int task_time,
                                int used_time, String task_data, String priority, String extra_info, String project_id, String user_id)
     {
-        database_tasks.execSQL("insert into " + TASKS_TABLE + " values ( '" + id + "','" + name + "','" + task
+        database.execSQL("insert into " + TASKS_TABLE + " values ( '" + id + "','" + name + "','" + task
                 + "','" + task_time + "','" + used_time + "','" + task_data + "','" +  priority + "','" +  extra_info
                 + "','" +  project_id + "','" +  user_id + ")';");
 
@@ -282,56 +293,56 @@ public class ManagerApplication extends Application {
     }
 
     public void deleteUser(String id){
-        database_users.execSQL("delete from " + USERS_TABLE + " where " + UsersTable.USER_ID + " = '" + id + "';");
+        database.execSQL("delete from " + USERS_TABLE + " where " + USER_ID + " = '" + id + "';");
 
     }
 
     public void deleteProject(String id){
-        database_projects.execSQL("delete from " + PROJECTS_TABLE + " where " + ProjectsTable.PROJECT_ID + " = '" + id + "';");
+        database.execSQL("delete from " + PROJECTS_TABLE + " where " + PROJECT_ID + " = '" + id + "';");
     }
 
     public void deleteTask(String id){
-        database_tasks.execSQL("delete from " + TASKS_TABLE + " where " + TasksTable.TASK_ID + " = '" + id + "';");
+        database.execSQL("delete from " + TASKS_TABLE + " where " + TASK_ID + " = '" + id + "';");
     }
 
     public void updateUser(String id, String name, String email, String password,
                            String phone, String type, String company_id, String idd)
     {
-        database_users.execSQL("update " + USERS_TABLE + " set " + UsersTable.USER_ID + " = '" + id + "', "
-                + UsersTable.USER_NAME + " = '" + name + "', " + UsersTable.USER_EMAIL + " = '" + email + "', "
-                + UsersTable.USER_PASSWORD + " = '" + password + "', " + UsersTable.USER_PHONE + " = '" + phone + "', "
-                + UsersTable.USER_TYPE + " = '" + type + "', " + UsersTable.USER_COMPANY_ID + " = '" + company_id
-                + "' where " + UsersTable.USER_ID + " = '" + idd + "';");
+        database.execSQL("update " + USERS_TABLE + " set " + USER_ID + " = '" + id + "', "
+                + USER_NAME + " = '" + name + "', " + USER_EMAIL + " = '" + email + "', "
+                + USER_PASSWORD + " = '" + password + "', " + USER_PHONE + " = '" + phone + "', "
+                + USER_TYPE + " = '" + type + "', " + USER_COMPANY_ID + " = '" + company_id
+                + "' where " + USER_ID + " = '" + idd + "';");
     }
 
     public void updateProject(String id, String name, String client, String platform,
                                      String api, int time, String project_data, String info,
                                      String extra_info, String user_master_id, String idd)
     {
-        database_projects.execSQL("update " + PROJECTS_TABLE + " set " + ProjectsTable.PROJECT_ID + " = '" + id + "', "
-                + ProjectsTable.NAME + " = '" + name + "', " + ProjectsTable.CLIENT + " = '" + client + "', "
-                + ProjectsTable.PLATFORM + " = '" + platform + "', " + ProjectsTable.API + " = '" + api + "', "
-                + ProjectsTable.TIME + " = " + time + ", " + ProjectsTable.PROJECT_DATA + " = '" + project_data + "', "
-                + ProjectsTable.INFO + " = '" + info + "', " + ProjectsTable.EXTRA_INFO + " = '" + extra_info + "', "
-                + ProjectsTable.USER_MASTER_ID + " = '" + user_master_id + "' where " + ProjectsTable.PROJECT_ID + " = '" + idd + "';");
+        database.execSQL("update " + PROJECTS_TABLE + " set " + PROJECT_ID + " = '" + id + "', "
+                + NAME + " = '" + name + "', " + CLIENT + " = '" + client + "', "
+                + PLATFORM + " = '" + platform + "', " + API + " = '" + api + "', "
+                + TIME + " = " + time + ", " + PROJECT_DATA + " = '" + project_data + "', "
+                + INFO + " = '" + info + "', " + EXTRA_INFO + " = '" + extra_info + "', "
+                + USER_MASTER_ID + " = '" + user_master_id + "' where " + PROJECT_ID + " = '" + idd + "';");
     }
 
     public void updateTask(String id, String name, String task, int task_time,
                                   int used_time, String task_data, String priority, String extra_info,
                                   String project_id, String user_id, String idd)
     {
-        database_tasks.execSQL("update " + TASKS_TABLE + " set " + TasksTable.TASK_ID + " = '" + id + "', "
-                + TasksTable.TASK_NAME + " = '" + name + "', " + TasksTable.TASK + " = '" + task + "', "
-                + TasksTable.TASK_TIME + " = " + task_time + ", " + TasksTable.USED_TIME + " = " + used_time + ", "
-                + TasksTable.TASK_DATA + " = '" + task_data + "', " + TasksTable.PRIORITY + " = '" + priority + "', "
-                + TasksTable.EXTRA_INFO + " = '" + extra_info + "', " + TasksTable.PROJECT_ID + " = '" + project_id + "' , "
-                + TasksTable.USER_ID + " = '" + user_id + "' where " + TasksTable.TASK_ID + " = '" + idd + "';");
+        database.execSQL("update " + TASKS_TABLE + " set " + TASK_ID + " = '" + id + "', "
+                + TASK_NAME + " = '" + name + "', " + TASK + " = '" + task + "', "
+                + TASK_TIME + " = " + task_time + ", " + USED_TIME + " = " + used_time + ", "
+                + TASK_DATA + " = '" + task_data + "', " + PRIORITY + " = '" + priority + "', "
+                + EXTRA_INFO + " = '" + extra_info + "', " + PROJECT_ID + " = '" + project_id + "' , "
+                + USER_ID + " = '" + user_id + "' where " + TASK_ID + " = '" + idd + "';");
     }
 
 
     private ArrayList<String> userLoad(String user){
         ArrayList<String> listU;
-        try (Cursor cursor = database_users.rawQuery("select * from " + USERS_TABLE + " where user_id = '" + user + "'", null)) {
+        try (Cursor cursor = database.rawQuery("select * from " + USERS_TABLE + " where user_id = '" + user + "'", null)) {
             cursor.moveToFirst();
             listU = new ArrayList<>();
             if (!cursor.isAfterLast()) {
@@ -352,7 +363,7 @@ public class ManagerApplication extends Application {
 
     private ArrayList<String> projectsLoad(String project){
         ArrayList<String> listP;
-        try (Cursor cursor = database_projects.rawQuery("select * from " + PROJECTS_TABLE + " where project_id = '" + project + "'", null)) {
+        try (Cursor cursor = database.rawQuery("select * from " + PROJECTS_TABLE + " where project_id = '" + project + "'", null)) {
             cursor.moveToFirst();
             listP = new ArrayList<>();
             if (!cursor.isAfterLast()) {
@@ -376,7 +387,7 @@ public class ManagerApplication extends Application {
 
     private ArrayList<String> tasksLoad(String task){
         ArrayList<String> listT;
-        try (Cursor cursor = database_tasks.rawQuery("select * from " + TASKS_TABLE + " where task_id = '" + task + "'", null)) {
+        try (Cursor cursor = database.rawQuery("select * from " + TASKS_TABLE + " where task_id = '" + task + "'", null)) {
             cursor.moveToFirst();
             listT = new ArrayList<>();
             if (!cursor.isAfterLast()) {
@@ -404,7 +415,7 @@ public class ManagerApplication extends Application {
         Iterator USI;
         String user;
         Iterator ULI;
-        try (Cursor cursor = database_users.rawQuery("select user_id from " + USERS_TABLE, null)) {
+        try (Cursor cursor = database.rawQuery("select user_id from " + USERS_TABLE, null)) {
             cursor.moveToFirst();
             if (!cursor.isAfterLast()) {
                 do {
@@ -447,7 +458,7 @@ public class ManagerApplication extends Application {
         Iterator PSI;
         String project;
         Iterator PLI;
-        try (Cursor cursor = database_projects.rawQuery("select project_id from " + PROJECTS_TABLE, null)) {
+        try (Cursor cursor = database.rawQuery("select project_id from " + PROJECTS_TABLE, null)) {
             cursor.moveToFirst();
             if (!cursor.isAfterLast()) {
                 do {
@@ -490,7 +501,7 @@ public class ManagerApplication extends Application {
         Iterator TSI;
         String task;
         Iterator TLI;
-        try (Cursor cursor = database_tasks.rawQuery("select task_id from " + TASKS_TABLE, null)) {
+        try (Cursor cursor = database.rawQuery("select task_id from " + TASKS_TABLE, null)) {
             cursor.moveToFirst();
             if (!cursor.isAfterLast()) {
                 do {
@@ -631,7 +642,6 @@ public class ManagerApplication extends Application {
                     task_map.put("project_id", project_id);
                     task_map.put("user_id", user_id);
                     data.tasks_list.add(task_map);
-                    System.out.println(data.tasks_list.size());
                 }
             }
             catch (JSONException | IOException e) {e.printStackTrace();}

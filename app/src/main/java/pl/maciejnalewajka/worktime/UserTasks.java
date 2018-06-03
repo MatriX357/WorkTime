@@ -26,8 +26,7 @@ public class UserTasks extends AppCompatActivity implements AdapterView.OnItemCl
     private String myID;
     private BarChart barChart;
     private ListView lv;
-    ManagerApplication app;
-    Data data;
+    private Data data;
 
 
     @Override
@@ -36,7 +35,6 @@ public class UserTasks extends AppCompatActivity implements AdapterView.OnItemCl
         setContentView(R.layout.activity_user_zadania);
         barChart = findViewById(R.id.charts_uz_id);
         lv = findViewById(R.id.listView_uz);
-        app = (ManagerApplication) getApplication();
         data = ManagerApplication.data;
     }
 
