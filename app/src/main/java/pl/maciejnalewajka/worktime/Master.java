@@ -15,7 +15,6 @@ import pl.maciejnalewajka.worktime.Elements.ProjectsElements;
 public class Master extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private ListView lv;
     private ArrayList<String> projects_list;
-    private String myID;
     private Data data;
 
 
@@ -25,13 +24,12 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
         setContentView(R.layout.activity_master);
         lv = findViewById(R.id.list_view_m);
         data = ManagerApplication.data;
+        projects_list = ManagerApplication.project_list;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        myID = data.getMy_hash().get("user_id").toString();
-        projects();
         elements();
     }
 
@@ -62,36 +60,30 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
         String active, name;
         int pro, time;
         ArrayList<Elements> data_S = new ArrayList<>();
-        for(int i = 0; i< data.projects_list.size(); i++){
-            if(data.projects_list.get(i).get("user_master_id").toString().equals(myID)){
-                pro = 0; time = 0;
-                for (int j = 0; j< data.tasks_list.size(); j++){
-                    if(data.tasks_list.get(j).get("project_id").toString().equals(data.projects_list.get(i).get("project_id").toString())){
-                        pro += Integer.parseInt(data.tasks_list.get(j).get("used_time").toString());
-                        time += Integer.parseInt(data.tasks_list.get(j).get("time").toString());
-                    }
+        try {
+            for (int i = 0; i < data.projects_list.size(); i++) {
+                pro = 0;
+                time = 0;
+                for (int j = 0; j < data.tasks_list.size(); j++) {
+                    pro += Integer.parseInt(data.tasks_list.get(j).get("used_time").toString());
+                    time += Integer.parseInt(data.tasks_list.get(j).get("time").toString());
                 }
-                if(pro != 0){pro  = (pro*100/time);}
-                if(Integer.parseInt(data.projects_list.get(i).get("time").toString())>pro){
+                if (pro != 0) {
+                    pro = (pro * 100) / time;
+                }
+                if (pro < 100) {
                     active = "Aktywne";
+                } else {
+                    active = "Nieaktywne";
                 }
-                else{active = "Nieaktywne";}
                 name = data.projects_list.get(i).get("name").toString();
                 data_S.add(new Elements(pro, name, String.valueOf(pro) + "%", active));
             }
+            ArrayAdapter<Elements> adapter = new ProjectsElements(this, data_S);
+            lv.setAdapter(adapter);
+            lv.setOnItemClickListener(this);
+        }catch (IndexOutOfBoundsException e){
+            elements();
         }
-        ArrayAdapter<Elements> adapter = new ProjectsElements(this, data_S);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(this);
-    }                   // Pokazywanie projektów
-
-    private void projects(){
-        projects_list = new ArrayList<>();
-        int i;
-        for(i=0; i< data.projects_list.size(); i++){
-            if(data.projects_list.get(i).get("user_master_id").toString().equals(myID)){
-                projects_list.add(data.projects_list.get(i).get("project_id").toString());
-            }
-        }
-    }                   // Szukanie projektów
+    }                   // Pokazywanie projektów// Szukanie projektów
 }
