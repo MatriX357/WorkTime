@@ -12,11 +12,6 @@ import android.widget.Toast;
 public class Main extends AppCompatActivity {
     private EditText text_login;
     private EditText text_haslo;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-    private static final String NAME = "user_name";
-    private static final String LOGIN = "login";
-    private static final String PASSWORD = "password";
     private Data data;
     private ManagerApplication app;
 
@@ -26,10 +21,8 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         text_login = findViewById(R.id.editText_main_name);
         text_haslo = findViewById(R.id.editText_main_password);
-        sharedPreferences = getSharedPreferences(NAME, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        editor.apply();
-        restoreData();
+        text_login.setText(ManagerApplication.user_name);
+        text_haslo.setText(ManagerApplication.password);
         app = (ManagerApplication) getApplication();
 
 
@@ -46,7 +39,7 @@ public class Main extends AppCompatActivity {
         app.downloadData();
         if (ManagerApplication.ES){
             if(checkPassword()){
-                save_data();
+                app.save_data();
                 if(ManagerApplication.user_type.equals("Master")){
                     Intent intent_login = new Intent(this, Master.class);
                     startActivity(intent_login);
@@ -55,7 +48,7 @@ public class Main extends AppCompatActivity {
                     Intent intent_login = new Intent(this, User.class);
                     startActivity(intent_login);
                 } } }
-                else{
+        else{
             Toast.makeText(this, "Nie ma takiego użytkownika!", Toast.LENGTH_SHORT).show();
         }
     }         // Przycisk do logowania
@@ -78,22 +71,6 @@ public class Main extends AppCompatActivity {
             return false;
         } }               // Uzupełnia data_S z logowania
 
-    private void restoreData() {
-        String saved_l = sharedPreferences.getString(LOGIN, "");
-        String saved_p = sharedPreferences.getString(PASSWORD, "");
-        text_login.setText(saved_l);
-        text_haslo.setText(saved_p);
-        ManagerApplication.user_name = saved_l;
-        ManagerApplication.password = saved_p;
-    }           // Ustawia Login i hasło z pamięci
-
-    private void save_data(){
-        String text_l = text_login.getText().toString();
-        String text_h = text_haslo.getText().toString();
-        editor.putString(LOGIN, text_l);
-        editor.putString(PASSWORD, text_h);
-        editor.commit();
-    }               // Zapisuje login i hasło w pamięci
 
     @Override
     public void onBackPressed() {

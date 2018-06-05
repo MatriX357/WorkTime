@@ -59,28 +59,24 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
                 used = 0;
                 amount = 0;
                 for (int j = 0; j < data.tasks_list.size(); j++) {
-                    pro += Integer.parseInt(data.tasks_list.get(j).get("time").toString());
-                    used += Integer.parseInt(data.tasks_list.get(j).get("used_time").toString());
-                    amount += 1;
+                    if(data.tasks_list.get(j).get("project_id").toString().equals(data.projects_list.get(k).get("project_id").toString())){
+                        pro += Integer.parseInt(data.tasks_list.get(j).get("time").toString());
+                        used += Integer.parseInt(data.tasks_list.get(j).get("used_time").toString());
+                        amount += 1;
+                    }
                 }
-                if (used != 0) {
-                    used = (used * 100) / pro;
-                }
-                if (used < 100) {
-                    active = "Aktywne";
-                } else {
-                    active = "Nieaktywne";
-                }
+                if (used != 0) used = (used * 100) / pro;
+                if (used < 100) active = "Aktywne";
+                else active = "Nieaktywne";
                 name = data.projects_list.get(k).get("name").toString();
                 data_S.add(new Elements(used, name, String.valueOf(amount), active));
-                ArrayAdapter<Elements> adapter = new ProjectsElements(this, data_S);
-                lv.setAdapter(adapter);
-                lv.setOnItemClickListener(this);
+
             }
         }catch (IndexOutOfBoundsException e ) {
             elements();
         }
-
-
+        ArrayAdapter<Elements> adapter = new ProjectsElements(this, data_S);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(this);
     }               // Wykresy i projects
 }

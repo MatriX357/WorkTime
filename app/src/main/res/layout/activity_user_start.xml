@@ -86,8 +86,7 @@
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Nazwa" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_us_time"
@@ -152,6 +151,17 @@
             android:textAllCaps="false"
             android:textColor="@android:color/background_dark"
             android:textStyle="bold"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_us_master" />
+
+        <TextView
+            android:id="@+id/stopwatch"
+            android:layout_width="152dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="88dp"
+            android:text=""
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -20,7 +20,7 @@ public class WorkTimeSQLiteOpenHelper extends android.database.sqlite.SQLiteOpen
     public static final String PROJECT_ID = "project_id";
     public static final String USER_ID = "user_id";
     public static final String PROJECTS_TABLE = "projects";
-    public static final String NAME = "name";
+    public static final String P_NAME = "name";
     public static final String CLIENT = "client";
     public static final String PLATFORM = "platform";
     public static final String API = "api";
@@ -69,7 +69,7 @@ public class WorkTimeSQLiteOpenHelper extends android.database.sqlite.SQLiteOpen
     private void createTableProjects(SQLiteDatabase db) {
         db.execSQL("create table " + PROJECTS_TABLE + " ( " +
                 PROJECT_ID + " text primary key not null, " +
-                NAME + " text, " +
+                P_NAME + " text, " +
                 CLIENT + " text, " +
                 PLATFORM + " text, " +
                 API + " text, " +

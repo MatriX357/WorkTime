@@ -1,6 +1,8 @@
 package pl.maciejnalewajka.worktime;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -24,7 +26,7 @@ import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHel
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.CLIENT;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.EXTRA_INFO;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.INFO;
-import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.NAME;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.P_NAME;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PLATFORM;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PRIORITY;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PROJECTS_TABLE;
@@ -48,7 +50,6 @@ import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHel
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.USER_PHONE;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.USER_TYPE;
 
-
 public class ManagerApplication extends Application {
 
     static final Data data = new Data();
@@ -65,6 +66,15 @@ public class ManagerApplication extends Application {
     static ArrayList<String> project_list = new ArrayList<>();
     static String data_S = "";
     static JSONArray JAr;
+    public static long startTime;
+    public static String startedTask;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private static final String NAME = "user_name";
+    private static final String LOGIN = "login";
+    private static final String STARTTIME = "start";
+    private static final String PASSWORD = "password";
+    private static final String STARTEDTASK = "task";
 
     private SQLiteDatabase database;
 
@@ -107,6 +117,10 @@ public class ManagerApplication extends Application {
     public void onCreate(){
         super.onCreate();
         WorkTimeSQLiteOpenHelper helper = new WorkTimeSQLiteOpenHelper(this);
+        sharedPreferences = getSharedPreferences(NAME, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.apply();
+        restoreData();
         database = helper.getWritableDatabase();
     }
 
@@ -243,7 +257,7 @@ public class ManagerApplication extends Application {
     }
 
     public void addUser(String id, String name, String email, String password,
-                               String phone, String type, String company_id)
+                        String phone, String type, String company_id)
     {
         database.execSQL("insert into " + USERS_TABLE + " values ( " + id + "','" + name + "','" + email
                 + "','" + password + "','" + phone + "','" + type + "','" +  company_id + ");");
@@ -261,7 +275,7 @@ public class ManagerApplication extends Application {
     }
 
     public void addProject(String id, String name, String client, String platform,
-                                  String api, int time, String project_data, String info, String extra_info, String user_master_id)
+                           String api, int time, String project_data, String info, String extra_info, String user_master_id)
     {
 
         database.execSQL("insert into " + PROJECTS_TABLE + " values ( '" + id + "','" + name + "','" + client
@@ -283,7 +297,7 @@ public class ManagerApplication extends Application {
     }
 
     public void addTask(String id, String name, String task, int task_time,
-                               int used_time, String task_data, String priority, String extra_info, String project_id, String user_id)
+                        int used_time, String task_data, String priority, String extra_info, String project_id, String user_id)
     {
         database.execSQL("insert into " + TASKS_TABLE + " values ( '" + id + "','" + name + "','" + task
                 + "','" + task_time + "','" + used_time + "','" + task_data + "','" +  priority + "','" +  extra_info
@@ -327,11 +341,11 @@ public class ManagerApplication extends Application {
     }
 
     public void updateProject(String id, String name, String client, String platform,
-                                     String api, int time, String project_data, String info,
-                                     String extra_info, String user_master_id, String idd)
+                              String api, int time, String project_data, String info,
+                              String extra_info, String user_master_id, String idd)
     {
         database.execSQL("update " + PROJECTS_TABLE + " set " + PROJECT_ID + " = '" + id + "', "
-                + NAME + " = '" + name + "', " + CLIENT + " = '" + client + "', "
+                + P_NAME + " = '" + name + "', " + CLIENT + " = '" + client + "', "
                 + PLATFORM + " = '" + platform + "', " + API + " = '" + api + "', "
                 + TIME + " = " + time + ", " + PROJECT_DATA + " = '" + project_data + "', "
                 + INFO + " = '" + info + "', " + EXTRA_INFO + " = '" + extra_info + "', "
@@ -339,8 +353,8 @@ public class ManagerApplication extends Application {
     }
 
     public void updateTask(String id, String name, String task, int task_time,
-                                  int used_time, String task_data, String priority, String extra_info,
-                                  String project_id, String user_id, String idd)
+                           int used_time, String task_data, String priority, String extra_info,
+                           String project_id, String user_id, String idd)
     {
         database.execSQL("update " + TASKS_TABLE + " set " + TASK_ID + " = '" + id + "', "
                 + TASK_NAME + " = '" + name + "', " + TASK + " = '" + task + "', "
@@ -548,7 +562,20 @@ public class ManagerApplication extends Application {
             url.openConnection();
         }
     }
+    public void save_data(){
+        editor.putString(LOGIN, user_name);
+        editor.putString(PASSWORD, password);
+        editor.putLong(STARTTIME, startTime);
+        editor.putString(STARTEDTASK,startedTask);
+        editor.commit();
+    }
 
+    public void restoreData() {
+        ManagerApplication.startTime = sharedPreferences.getLong(STARTTIME,0);
+        ManagerApplication.user_name = sharedPreferences.getString(LOGIN, "");
+        ManagerApplication.password = sharedPreferences.getString(PASSWORD, "");
+        ManagerApplication.startedTask = sharedPreferences.getString(STARTEDTASK, "");
+    }
 
     public void downloadData(){
         new DownloadUser().execute();
@@ -567,7 +594,7 @@ public class ManagerApplication extends Application {
         }
         else {
             JAr = new JSONArray(data_S);
-            }
+        }
         buffRead.close();
     }
 
@@ -762,3 +789,4 @@ public class ManagerApplication extends Application {
         }
     }
 }
+
