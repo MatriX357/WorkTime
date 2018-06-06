@@ -13,11 +13,13 @@
         android:layout_height="131dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/todo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/logo_1a"
-        android:contentDescription="@string/todo" />
+        app:srcCompat="@mipmap/logo_1a" />
 
     <TextView
         android:id="@+id/textView_main"
@@ -25,7 +27,7 @@
         android:layout_height="41dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="@string/worktime"
+        android:text="@string/sesame"
         android:textAlignment="center"
         android:textColor="#00ff00"
         android:textSize="24sp"
@@ -158,9 +160,10 @@
         android:id="@+id/imageView"
         android:layout_width="92dp"
         android:layout_height="57dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="344dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_main"
         app:srcCompat="@mipmap/matrix" />
@@ -168,15 +171,42 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="91dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="396dp"
-        android:text="@string/matrixEdition"
+        android:layout_height="49dp"
+        android:layout_marginTop="340dp"
+        android:text="@string/worktime_edition"
         android:textAlignment="center"
         android:textColor="#00ff00"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_main" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="91dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="388dp"
+        android:text="@string/matrix"
+        android:textAlignment="center"
+        android:textColor="#00ff00"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_main" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_marginTop="376dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_main"
+        app:srcCompat="@mipmap/mbro" />
+
 
 
 </android.support.constraint.ConstraintLayout>

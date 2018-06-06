@@ -34,5 +34,9 @@
     <string name="todo">TODO</string>
     <string name="time">Czas</string>
     <string name="logout">Wyloguj</string>
-    <string name="matrixEdition">M@triX Edition</string>
+    <string name="matrix">M@triX</string>
+    <string name="sesame">Sesame</string>
+    <string name="worktime_edition">WorkTime Edition</string>
+
+
 </resources>
