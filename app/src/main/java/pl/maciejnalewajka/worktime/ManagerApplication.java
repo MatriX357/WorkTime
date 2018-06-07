@@ -189,8 +189,8 @@ public class ManagerApplication extends Application {
     public void addUser(String id, String name, String email, String password,
                         String phone, String type, String company_id)
     {
-        database.execSQL("insert into " + USERS_TABLE + " values ( " + id + "','" + name + "','" + email
-                + "','" + password + "','" + phone + "','" + type + "','" +  company_id + ");");
+        database.execSQL("insert into " + USERS_TABLE + " values ( '" + id + "','" + name + "','" + email
+                + "','" + password + "','" + phone + "','" + type + "','" +  company_id + "');");
 
         HashMap<String, Object> user_map = new HashMap<>();
         user_map.put("name", name);
@@ -229,7 +229,7 @@ public class ManagerApplication extends Application {
     {
         database.execSQL("insert into " + TASKS_TABLE + " values ( '" + id + "','" + name + "','" + task
                 + "','" + task_time + "','" + used_time + "','" + task_data + "','" +  priority + "','" +  extra_info
-                + "','" +  project_id + "','" +  user_id + ")';");
+                + "','" +  project_id + "','" +  user_id + "');");
 
         HashMap<String, Object> task_map = new HashMap<>();
         task_map.put("name", name);

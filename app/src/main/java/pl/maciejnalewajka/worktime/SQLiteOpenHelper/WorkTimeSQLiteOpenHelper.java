@@ -8,7 +8,7 @@ public class WorkTimeSQLiteOpenHelper extends android.database.sqlite.SQLiteOpen
     private static final String name = "WorkTime.sqllite";
     private static final int version = 1;
 
-    public static final String TASKS_TABLE = "tasks";
+    public static final String TASKS_TABLE = "Tasks";
     public static final String TASK_ID = "task_id";
     public static final String TASK_NAME = "name";
     public static final String TASK = "task";
@@ -19,7 +19,7 @@ public class WorkTimeSQLiteOpenHelper extends android.database.sqlite.SQLiteOpen
     public static final String EXTRA_INFO = "extra_info";
     public static final String PROJECT_ID = "project_id";
     public static final String USER_ID = "user_id";
-    public static final String PROJECTS_TABLE = "projects";
+    public static final String PROJECTS_TABLE = "Projects";
     public static final String P_NAME = "name";
     public static final String CLIENT = "client";
     public static final String PLATFORM = "platform";
@@ -28,7 +28,7 @@ public class WorkTimeSQLiteOpenHelper extends android.database.sqlite.SQLiteOpen
     public static final String PROJECT_DATE = "project_date";
     public static final String INFO = "info";
     public static final String USER_MASTER_ID = "user_master_id";
-    public static final String USERS_TABLE = "users";
+    public static final String USERS_TABLE = "Users";
     public static final String USER_NAME = "name";
     public static final String USER_EMAIL = "email";
     public static final String USER_PASSWORD = "password";
