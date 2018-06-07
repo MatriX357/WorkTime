@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class Registration extends AppCompatActivity {
@@ -15,35 +14,25 @@ public class Registration extends AppCompatActivity {
     private EditText password;
     private EditText password2;
     private EditText phone;
-    private Data data;
+    private ManagerApplication app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = (ManagerApplication) getApplication();
         setContentView(R.layout.activity_rejestracja);
         name = findViewById(R.id.editText_r_name);
         email = findViewById(R.id.editText_r_email);
         password = findViewById(R.id.editText_r_password);
         password2 = findViewById(R.id.editText_r_password2);
         phone = findViewById(R.id.editText_r_phone);
-        data = ManagerApplication.data;
     }
 
     public void register(View view) {
         boolean s = check();
         if (s) {
             String register_uuid = UUID.randomUUID().toString();
-            String nowe_haslo = revers();
-            HashMap<String, Object> user_map = new HashMap<>();
-            user_map.put("user_id", register_uuid);
-            user_map.put("name", name.getText().toString());
-            user_map.put("email", email.getText().toString());
-            user_map.put("password", nowe_haslo);
-            user_map.put("phone", phone.getText().toString());
-            user_map.put("type", "User");
-            user_map.put("company_id", "414dfebc-5bb1-11e8-9566-a01d48a8405c");
-            data.projects_list.add(user_map);
-            Toast.makeText(this, "Zarejestrowano!", Toast.LENGTH_SHORT).show();
+            app.addUser(register_uuid,name.getText().toString(), email.getText().toString(),  password.getText().toString(),phone.getText().toString(),"User","414dfebc-5bb1-11e8-9566-a01d48a8405c");
             back(view);
         }
     }         // Registration
@@ -89,9 +78,4 @@ public class Registration extends AppCompatActivity {
         }
         return false;
     }             // Sprawdza wpisane data_S
-
-    private String revers() {
-        return new StringBuilder(password.getText().toString()).reverse().toString();
-    }               // Kodowanie hasła
-
 }

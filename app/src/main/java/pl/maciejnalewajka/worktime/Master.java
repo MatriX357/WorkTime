@@ -3,6 +3,7 @@ package pl.maciejnalewajka.worktime;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,8 +15,7 @@ import pl.maciejnalewajka.worktime.Elements.ProjectsElements;
 
 public class Master extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private ListView lv;
-    private ArrayList<String> projects_list;
-    private Data data;
+    private SparseArray<String> projects_map = new SparseArray<>();
 
 
     @Override
@@ -23,8 +23,6 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
         lv = findViewById(R.id.list_view_m);
-        data = ManagerApplication.data;
-        projects_list = ManagerApplication.project_list;
     }
 
     @Override
@@ -35,9 +33,8 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TasksMaster.id = projects_list.get(position);
-        NewTask.idP = projects_list.get(position);
-        PersonMaster.idP = projects_list.get(position);
+        System.out.println(position+" "+id);
+        ManagerApplication.idP = projects_map.get(position);
         Intent intent_master_zadania = new Intent(this, TasksMaster.class);
         startActivity(intent_master_zadania);
     }
@@ -61,12 +58,17 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
         int pro, time;
         ArrayList<Elements> data_S = new ArrayList<>();
         try {
-            for (int i = 0; i < data.projects_list.size(); i++) {
-                pro = 0;
-                time = 0;
-                for (int j = 0; j < data.tasks_list.size(); j++) {
-                    pro += Integer.parseInt(data.tasks_list.get(j).get("used_time").toString());
-                    time += Integer.parseInt(data.tasks_list.get(j).get("time").toString());
+            int position = 0;
+            for (String i : ManagerApplication.projects_list.keySet()) {
+                projects_map.put(position, i);
+                pro = 0;time = 0;
+                System.out.println(i+" p");
+                for (String j : ManagerApplication.tasks_list.keySet()) {
+                    System.out.println(j+" "+i);
+                    if (ManagerApplication.tasks_list.get(j).get("project_id").toString().equals(i)) {
+                        pro += Integer.parseInt(ManagerApplication.tasks_list.get(j).get("used_time").toString());
+                        time += Integer.parseInt(ManagerApplication.tasks_list.get(j).get("time").toString());
+                    }
                 }
                 if (pro != 0) {
                     pro = (pro * 100) / time;
@@ -76,14 +78,16 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
                 } else {
                     active = "Nieaktywne";
                 }
-                name = data.projects_list.get(i).get("name").toString();
+                name = ManagerApplication.projects_list.get(i).get("name").toString();
                 data_S.add(new Elements(pro, name, String.valueOf(pro) + "%", active));
+                position = position + 1;
+                System.out.println(i+" k");
             }
-            ArrayAdapter<Elements> adapter = new ProjectsElements(this, data_S);
-            lv.setAdapter(adapter);
-            lv.setOnItemClickListener(this);
         }catch (IndexOutOfBoundsException e){
             elements();
         }
+        ArrayAdapter<Elements> adapter = new ProjectsElements(this, data_S);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(this);
     }                   // Pokazywanie projektów// Szukanie projektów
 }

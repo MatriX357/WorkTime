@@ -70,8 +70,6 @@
             android:name=".NewTask"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".Data" />
-        <activity android:name=".Reminding" />
     </application>
 
 </manifest>

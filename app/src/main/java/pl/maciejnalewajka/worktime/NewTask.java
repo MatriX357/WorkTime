@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import java.util.HashMap;
 import java.util.UUID;
 
 public class NewTask extends AppCompatActivity {
@@ -21,18 +19,20 @@ public class NewTask extends AppCompatActivity {
     private EditText info;
     static String idP = "";
     private String userID;
-    private Data data;
+    private ManagerApplication app;
+    String[] user_id;
+    String[] user_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = (ManagerApplication) getApplication();
         setContentView(R.layout.activity_nowe_zadanie);
         user = findViewById(R.id.editText_z_user);
         priority = findViewById(R.id.editText_z_priority);
         task = findViewById(R.id.editText_z_task);
         time = findViewById(R.id.editText_z_time);
         info = findViewById(R.id.editText_z_info);
-        data = ManagerApplication.data;
         users();
     }
 
@@ -47,7 +47,7 @@ public class NewTask extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 user.setText(users()[item]);
-                userID = data.users_list.get(item).get("user_id").toString();
+                userID = ManagerApplication.users_list.get(user_id[item]).get("user_id").toString();
             }
         }).getContext().setTheme(R.style.AppTheme);
         builder.create();
@@ -72,29 +72,22 @@ public class NewTask extends AppCompatActivity {
         if(!task.getText().toString().equals("") && !time.getText().toString().equals("") &&
                 !user.getText().toString().equals("") && !priority.getText().toString().equals("")){
             String new_task_uuid = UUID.randomUUID().toString();
-            HashMap<String, Object> task_map = new HashMap<>();
-            task_map.put("task_id", new_task_uuid);
-            task_map.put("name", user.getText().toString());
-            task_map.put("task", task.getText().toString());
-            task_map.put("time", time.getText().toString());
-            task_map.put("used_time", "0");
-            task_map.put("task_date", "22.10.19");
-            task_map.put("priority", priority.getText().toString());
-            task_map.put("extra_info", info.getText().toString());
-            task_map.put("project_id", idP);
-            task_map.put("user_id", userID);
-            data.tasks_list.add(task_map);
-            Toast.makeText(this, "Dodano nowe zadanie!", Toast.LENGTH_SHORT).show();
+            app.addTask(new_task_uuid,user.getText().toString(),task.getText().toString(),Integer.parseInt(time.getText().toString()),0,"22.10.19",priority.getText().toString(),info.getText().toString(),idP,userID);
             finish();
         }
         else{Toast.makeText(this, "Wprowadź poprawne data_S!", Toast.LENGTH_SHORT).show();}
     }               // Dodaj zadanie
 
     private String[] users(){
-        String[] userss = new String[data.users_list.size()];
-        for(int i = 0; i< data.users_list.size(); i++){
-            userss[i] = data.users_list.get(i).get("name").toString();
+        user_id = new String[ManagerApplication.users_list.size()];
+        user_name = new String[ManagerApplication.users_list.size()];
+        int position = 1;
+        for(String i:ManagerApplication.users_list.keySet()){
+            user_id[position] = i;
+            user_name[position] = (String) ManagerApplication.users_list.get(i).get("name");
+
+            position = position + 1;
         }
-        return userss;
+        return user_name;
     }           // Tworzy listę Userów
 }

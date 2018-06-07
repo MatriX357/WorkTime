@@ -18,7 +18,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper;
 
@@ -26,12 +25,12 @@ import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHel
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.CLIENT;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.EXTRA_INFO;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.INFO;
-import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.P_NAME;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PLATFORM;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PRIORITY;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PROJECTS_TABLE;
-import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PROJECT_DATA;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PROJECT_DATE;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.PROJECT_ID;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.P_NAME;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASKS_TABLE;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK_DATA;
@@ -52,10 +51,6 @@ import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHel
 
 public class ManagerApplication extends Application {
 
-    static final Data data = new Data();
-    static boolean ULD = false;
-    static boolean TLD = false;
-    static boolean PLD = false;
     static String user_name = "";
     static String user_uuid = "";
     static String project_uuid = "";
@@ -63,7 +58,13 @@ public class ManagerApplication extends Application {
     static String user_type = "";
     static String password = "";
     static Boolean ES = true;
-    static ArrayList<String> project_list = new ArrayList<>();
+    static String idO = "";
+    static String idP = "";
+    static String idT = "";
+    static HashMap<String, HashMap<String, Object>> users_list = new HashMap<>();
+    static HashMap<String, HashMap<String, Object>> projects_list = new HashMap<>();
+    static HashMap<String, HashMap<String, Object>> tasks_list = new HashMap<>();
+    static ArrayList<String> id_projects_list = new ArrayList<>();
     static String data_S = "";
     static JSONArray JAr;
     public static long startTime;
@@ -78,41 +79,9 @@ public class ManagerApplication extends Application {
 
     private SQLiteDatabase database;
 
-    private final ArrayList<HashMap<String, Object>> users_list_local = new ArrayList<>(7);
-    private final ArrayList<HashMap<String, Object>> projects_list_local = new ArrayList<>(10);
-    private final ArrayList<HashMap<String, Object>> tasks_list_local = new ArrayList<>(10);
-
-    private final List<Object> users_id = new ArrayList<>();
-    private final List<Object> users_name = new ArrayList<>();
-    private final List<Object> users_email = new ArrayList<>();
-    private final List<Object> users_password = new ArrayList<>();
-    private final List<Object> users_phone = new ArrayList<>();
-    private final List<Object> users_type = new ArrayList<>();
-    private final List<Object> users_company_id = new ArrayList<>();
-
-    private final List<Object> project_id = new ArrayList<>();
-    private final List<Object> project_name = new ArrayList<>();
-    private final List<Object> client = new ArrayList<>();
-    private final List<Object> platform = new ArrayList<>();
-    private final List<Object> api = new ArrayList<>();
-    private final List<Object> time = new ArrayList<>();
-    private final List<Object> project_data = new ArrayList<>();
-    private final List<Object> info = new ArrayList<>();
-    private final List<Object> extra_info = new ArrayList<>();
-    private final List<Object> user_master_id = new ArrayList<>();
-
-    private final List<Object> task_id = new ArrayList<>();
-    private final List<Object> task_name = new ArrayList<>();
-    private final List<Object> task = new ArrayList<>();
-    private final List<Object> task_time = new ArrayList<>();
-    private final List<Object> used_time = new ArrayList<>();
-    private final List<Object> task_data = new ArrayList<>();
-    private final List<Object> priority = new ArrayList<>();
-    private final List<Object> extra_info2 = new ArrayList<>();
-    private final List<Object> project_id2 = new ArrayList<>();
-    private final List<Object> user_id = new ArrayList<>();
-
-
+    static HashMap<String, HashMap<String, Object>> users_list_local = new HashMap<>();
+    static HashMap<String, HashMap<String, Object>> projects_list_local = new HashMap<>();
+    static HashMap<String, HashMap<String, Object>> tasks_list_local = new HashMap<>();
 
     public void onCreate(){
         super.onCreate();
@@ -132,12 +101,12 @@ public class ManagerApplication extends Application {
     }
 
     private void checkUserData(){
-        if(users_list_local.size() < data.users_list.size()){
+        if(users_list_local.size() < users_list.size()){
             users_list_local.clear();
             database.execSQL("delete from " + USERS_TABLE + ";");
             assignUser();
         }
-        else if(users_list_local.size() > data.users_list.size()){
+        else if(users_list_local.size() > users_list.size()){
             users_list_local.clear();
             database.execSQL("delete from " + USERS_TABLE + ";");
             assignUser();
@@ -150,17 +119,17 @@ public class ManagerApplication extends Application {
     }
 
     private void assignUser(){
-        users_list_local.addAll(data.users_list);
+        users_list_local.putAll(users_list);
         insertUser();
     }
 
     private void checkProjectData(){
-        if(projects_list_local.size() < data.projects_list.size()){
+        if(projects_list_local.size() < projects_list.size()){
             projects_list_local.clear();
             database.execSQL("delete from " + PROJECTS_TABLE + ";");
             assignProject();
         }
-        else if(projects_list_local.size() > data.projects_list.size()){
+        else if(projects_list_local.size() > projects_list.size()){
             projects_list_local.clear();
             database.execSQL("delete from " + PROJECTS_TABLE + ";");
             assignProject();
@@ -168,91 +137,52 @@ public class ManagerApplication extends Application {
     }
 
     private void assignProject(){
-        projects_list_local.addAll(data.projects_list);
+        projects_list_local.putAll(projects_list);
         insertProject();
     }
 
     private void checkDataTask(){
-        if(tasks_list_local.size() < data.tasks_list.size()){
+        if(tasks_list_local.size() < tasks_list.size()){
             tasks_list_local.clear();
             database.execSQL("delete from " + TASKS_TABLE + ";");
             assignTask();
         }
-        else if(tasks_list_local.size() > data.tasks_list.size()){
+        else if(tasks_list_local.size() > tasks_list.size()){
             tasks_list_local.clear();
             database.execSQL("delete from " + TASKS_TABLE + ";");
             assignTask();
         }
     }
 
-    private void assignTask(){
-        tasks_list_local.addAll(data.tasks_list);
+    private void assignTask() {
+        tasks_list_local.putAll(tasks_list);
         insertTask();
     }
-    private void insertUser() {
 
-        for(int i = 0; i < users_list_local.size(); ++i){
-            users_id.add(users_list_local.get(i).get("user_id"));
-            users_name.add(users_list_local.get(i).get("name"));
-            users_email.add(users_list_local.get(i).get("email"));
-            users_password.add(users_list_local.get(i).get("password"));
-            users_phone.add(users_list_local.get(i).get("phone"));
-            users_type.add(users_list_local.get(i).get("type"));
-            users_company_id.add(users_list_local.get(i).get("company_id"));
-        }
-
-
-        for(int i = 0; i < users_list_local.size(); ++i){
-            database.execSQL("insert into " + USERS_TABLE + " values ( '" + users_id.get(i) + "','" + users_name.get(i) + "','" + users_email.get(i)
-                    + "','" + users_password.get(i) + "','" + users_phone.get(i) + "','" + users_type.get(i) + "','" +  users_company_id.get(i) + "');");
+    private void insertUser(){
+        for(String i : users_list_local.keySet()){
+            database.execSQL("insert into " + USERS_TABLE + " values ( '" + users_list_local.get(i).get("user_id") + "','" + users_list_local.get(i).get("name") + "','" + users_list_local.get(i).get("email")
+                    + "','" + users_list_local.get(i).get("password") + "','" + users_list_local.get(i).get("phone") + "','" + users_list_local.get(i).get("type") + "','" +  users_list_local.get(i).get("company_id") + "');");
         }
     }
 
 
     private void insertProject() {
 
-        for(int i = 0; i < projects_list_local.size(); ++i){
-            project_id.add(projects_list_local.get(i).get("project_id"));
-            project_name.add(projects_list_local.get(i).get("name"));
-            client.add(projects_list_local.get(i).get("client"));
-            platform.add(projects_list_local.get(i).get("platform"));
-            api.add(projects_list_local.get(i).get("api"));
-            time.add(projects_list_local.get(i).get("time"));
-            project_data.add(projects_list_local.get(i).get("project_data"));
-            info.add(projects_list_local.get(i).get("info"));
-            extra_info.add(projects_list_local.get(i).get("extra_info"));
-            user_master_id.add(projects_list_local.get(i).get("user_master_id"));
-        }
-
-
-        for(int i = 0; i < projects_list_local.size(); ++i){
-            database.execSQL("insert into " + PROJECTS_TABLE + " values ( '" + project_id.get(i) + "','" + project_name.get(i) + "','" + client.get(i)
-                    + "','" + platform.get(i) + "','" + api.get(i) + "','" + time.get(i) + "','" +  project_data.get(i) + "','" +  info.get(i)
-                    + "','" +  extra_info.get(i) + "','" +  user_master_id.get(i) + "');");
+        for(String i : projects_list_local.keySet()){
+            database.execSQL("insert into " + PROJECTS_TABLE + " values ( '" + i + "','" + projects_list_local.get(i).get("name") + "','" + projects_list_local.get(i).get("client")
+                    + "','" + projects_list_local.get(i).get("platform") + "','" + projects_list_local.get(i).get("api") + "'," + projects_list_local.get(i).get("time") + ",'" +  projects_list_local.get(i).get("project_date") + "','" +  projects_list_local.get(i).get("info")
+                    + "','" +  projects_list_local.get(i).get("extra_info") + "','" +  projects_list_local.get(i).get("user_master_id") + "');");
         }
     }
 
 
     private void insertTask() {
 
-        for(int i = 0; i < tasks_list_local.size(); ++i){
-            task_id.add(tasks_list_local.get(i).get("task_id"));
-            task_name.add(tasks_list_local.get(i).get("name"));
-            task.add(tasks_list_local.get(i).get("task"));
-            task_time.add(tasks_list_local.get(i).get("task_time"));
-            used_time.add(tasks_list_local.get(i).get("used_time"));
-            task_data.add(tasks_list_local.get(i).get("task_data"));
-            priority.add(tasks_list_local.get(i).get("priority"));
-            extra_info2.add(tasks_list_local.get(i).get("extra_info"));
-            project_id2.add(tasks_list_local.get(i).get("project_id"));
-            user_id.add(tasks_list_local.get(i).get("user_id"));
-        }
-
-
-        for(int i = 0; i < tasks_list_local.size(); ++i){
-            database.execSQL("insert into " + TASKS_TABLE + " values ( '" + task_id.get(i) + "','" + task_name.get(i) + "','" + task.get(i)
-                    + "','" + task_time.get(i) + "','" + used_time.get(i) + "','" + task_data.get(i) + "','" +  priority.get(i) + "','" +  extra_info2.get(i)
-                    + "','" +  project_id2.get(i) + "','" +  user_id.get(i) + "');");
+        for(String i : tasks_list_local.keySet()){
+            database.execSQL("insert into " + TASKS_TABLE + " values ( '" + tasks_list_local.get(i).get("task_id") + "','" + tasks_list_local.get(i).get("name") + "','" + tasks_list_local.get(i).get("task")
+                    + "'," + tasks_list_local.get(i).get("task_time") + "," + tasks_list_local.get(i).get("used_time") + ",'" + tasks_list_local.get(i).get("task_date") + "','" +  tasks_list_local.get(i).get("priority") + "','" +  tasks_list_local.get(i).get("extra_info")
+                    + "','" +  tasks_list_local.get(i).get("project_id") + "','" +  tasks_list_local.get(i).get("user_id") + "');");
         }
     }
 
@@ -263,14 +193,13 @@ public class ManagerApplication extends Application {
                 + "','" + password + "','" + phone + "','" + type + "','" +  company_id + ");");
 
         HashMap<String, Object> user_map = new HashMap<>();
-        user_map.put("user_id", id);
         user_map.put("name", name);
         user_map.put("email", email);
         user_map.put("password", password);
         user_map.put("phone", phone);
         user_map.put("type", type);
         user_map.put("company_id", company_id);
-        users_list_local.add(user_map);
+        users_list_local.put(id, user_map);
 
     }
 
@@ -283,7 +212,6 @@ public class ManagerApplication extends Application {
                 + "','" +  extra_info + "','" +  user_master_id + "');");
 
         HashMap<String, Object> project_map = new HashMap<>();
-        project_map.put("project_id", id);
         project_map.put("name", name);
         project_map.put("client", client);
         project_map.put("platform", platform);
@@ -293,7 +221,7 @@ public class ManagerApplication extends Application {
         project_map.put("info", info);
         project_map.put("extraInfo", extra_info);
         project_map.put("user_master_id", user_master_id);
-        projects_list_local.add(project_map);
+        projects_list_local.put(id, project_map);
     }
 
     public void addTask(String id, String name, String task, int task_time,
@@ -304,7 +232,6 @@ public class ManagerApplication extends Application {
                 + "','" +  project_id + "','" +  user_id + ")';");
 
         HashMap<String, Object> task_map = new HashMap<>();
-        task_map.put("task_id", id);
         task_map.put("name", name);
         task_map.put("task", task);
         task_map.put("time", task_time);
@@ -314,7 +241,7 @@ public class ManagerApplication extends Application {
         task_map.put("extraInfo", extra_info);
         task_map.put("project_id", project_id);
         task_map.put("user_id", user_id);
-        tasks_list_local.add(task_map);
+        tasks_list_local.put(id, task_map);
     }
 
     public void deleteUser(String id){
@@ -347,7 +274,7 @@ public class ManagerApplication extends Application {
         database.execSQL("update " + PROJECTS_TABLE + " set " + PROJECT_ID + " = '" + id + "', "
                 + P_NAME + " = '" + name + "', " + CLIENT + " = '" + client + "', "
                 + PLATFORM + " = '" + platform + "', " + API + " = '" + api + "', "
-                + TIME + " = " + time + ", " + PROJECT_DATA + " = '" + project_data + "', "
+                + TIME + " = " + time + ", " + PROJECT_DATE + " = '" + project_data + "', "
                 + INFO + " = '" + info + "', " + EXTRA_INFO + " = '" + extra_info + "', "
                 + USER_MASTER_ID + " = '" + user_master_id + "' where " + PROJECT_ID + " = '" + idd + "';");
     }
@@ -449,7 +376,7 @@ public class ManagerApplication extends Application {
                 } while (cursor.moveToNext());
             }
         }
-        USI = user_id.iterator();
+        USI = users_list_local.keySet().iterator();
         while (USI.hasNext()){
             user = (String) USI.next();
             if (UsersLocal.contains(user)){
@@ -492,7 +419,7 @@ public class ManagerApplication extends Application {
                 } while (cursor.moveToNext());
             }
         }
-        PSI = project_id.iterator();
+        PSI = projects_list.keySet().iterator();
         while (PSI.hasNext()){
             project = (String) PSI.next();
             if (ProjectsLocal.contains(project)){
@@ -535,7 +462,7 @@ public class ManagerApplication extends Application {
                 } while (cursor.moveToNext());
             }
         }
-        TSI = task_id.iterator();
+        TSI = tasks_list.keySet().iterator();
         while (TSI.hasNext()){
             task = (String) TSI.next();
             if (TasksLocal.contains(task)){
@@ -603,7 +530,11 @@ public class ManagerApplication extends Application {
         protected Void doInBackground(Void... voids) {
             try {
                 generateJSONArray("http://155.158.135.197/WorkTime/JSON.php?Users&name="+user_name);
-                userJAR();
+                userJAR(0,"USER");
+                generateJSONArray("http://155.158.135.197/WorkTime/JSON.php?Users");
+                for (int i = 0; i < JAr.length(); i++) {
+                    userJAR(i);
+                }
                 switch (user_type) {
                     case "User":
                         new TasksDownload().execute();
@@ -619,13 +550,11 @@ public class ManagerApplication extends Application {
             return null;
         }
 
-        protected void onPostExecute(Void aVoid) {
-            ULD = true;
-
+        private void userJAR(int i) throws JSONException {
+            userJAR(i, "ALL");
         }
-
-        private void userJAR() throws JSONException {
-            JSONObject JOb = JAr.getJSONObject(0);
+        private void userJAR(int i, String Mode) throws JSONException {
+            JSONObject JOb = JAr.getJSONObject(i);
             String user_id = JOb.getString("user_id");
             String name = JOb.getString("name");
             String email = JOb.getString("email");
@@ -634,17 +563,19 @@ public class ManagerApplication extends Application {
             String type = JOb.getString("type");
             String company_id = JOb.getString("company_id");
             HashMap<String, Object> user_map = new HashMap<>();
-            user_map.put("user_id", user_id);
             user_map.put("name", name);
             user_map.put("email", email);
             user_map.put("password", password);
             user_map.put("phone", phone);
             user_map.put("type", type);
             user_map.put("company_id", company_id);
-            data.users_list.add(user_map);
-            ManagerApplication.user_uuid = user_id;
-            ManagerApplication.user_type = type;
-            ManagerApplication.password = password;
+            users_list.put(user_id, user_map);
+            if (Mode.equals("USER")){
+                ManagerApplication.user_uuid = user_id;
+                ManagerApplication.user_type = type;
+                ManagerApplication.password = password;
+            }
+
         }
     }
 
@@ -657,21 +588,16 @@ public class ManagerApplication extends Application {
             try {
                 switch (user_type) {
                     case "User":
+                        tasks_list.clear();
                         generateJSONArray("http://155.158.135.197/WorkTime/JSON.php?Tasks&user_id=" + user_uuid);
-                        data.tasks_list.clear();
-                        for(int i=0; i<JAr.length(); i++) {
-                            String pid = tasksJAR(i);
-                            if (!project_list.contains(pid)) {
-                                project_list.add(pid);
-                            }
+                        for (int i = 0; i < JAr.length(); i++) {
+                            tasksJAR(i);
                         }
                         new ProjectsDownload().execute();
                         break;
                     case "Master":
-                        Iterator TLI = project_list.iterator();
-                        data.projects_list.clear();
-                        while (TLI.hasNext()) {
-                            String project = (String) TLI.next();
+                        tasks_list.clear();
+                        for (Object project : projects_list.keySet()) {
                             generateJSONArray("http://155.158.135.197/WorkTime/JSON.php?Tasks&project_id=" + project);
                             if (!JAr.equals(new JSONArray("[]"))) {
                                 tasksJAR(0);
@@ -682,12 +608,13 @@ public class ManagerApplication extends Application {
                     default:
                         break;
                 }
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
             }
-            catch (JSONException | IOException e) {e.printStackTrace();}
             return null;
         }
 
-        private String tasksJAR(int i) throws JSONException {
+        private void tasksJAR(int i) throws JSONException {
             JSONObject JOb = JAr.getJSONObject(i);
             String task_id = JOb.getString("task_id");
             String name = JOb.getString("name");
@@ -700,7 +627,6 @@ public class ManagerApplication extends Application {
             String project_id = JOb.getString("project_id");
             String user_id = JOb.getString("user_id");
             HashMap<String, Object> task_map = new HashMap<>();
-            task_map.put("task_id", task_id);
             task_map.put("name", name);
             task_map.put("task", task);
             task_map.put("time", time);
@@ -710,13 +636,11 @@ public class ManagerApplication extends Application {
             task_map.put("extra_info", extraInfo);
             task_map.put("project_id", project_id);
             task_map.put("user_id", user_id);
-            data.tasks_list.add(task_map);
-            return project_id;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            TLD = true;
+            System.out.println(task_id + " tJAR");
+            tasks_list.put(task_id, task_map);
+            if (!id_projects_list.contains(project_id)) {
+                id_projects_list.add(project_id);
+            }
         }
     }
 
@@ -729,21 +653,17 @@ public class ManagerApplication extends Application {
             try {
                 switch (user_type) {
                     case "Master":
+                        projects_list.clear();
                         generateJSONArray("http://155.158.135.197/WorkTime/JSON.php?Projects&user_master_id=" + user_uuid);
-                        data.projects_list.clear();
                         for(int i=0; i<JAr.length(); i++){
-                            String pid = projectsJAR(i);
-                            if (!project_list.contains(pid)) {
-                                project_list.add(pid);
-                            }
+                            projectsJAR(i);
                         }
                         new TasksDownload().execute();
                         break;
                     case "User":
-                        Iterator PLI = project_list.iterator();
-                        data.projects_list.clear();
-                        while (PLI.hasNext()){
-                            String project = (String) PLI.next();
+                        projects_list.clear();
+                        for (String project : id_projects_list) {
+                            System.out.println(project);
                             generateJSONArray("http://155.158.135.197/WorkTime/JSON.php?Projects&project_id=" + project);
                             projectsJAR(0);
                         }
@@ -756,7 +676,7 @@ public class ManagerApplication extends Application {
             return null;
         }
 
-        private String projectsJAR(int i) throws JSONException {
+        private void projectsJAR(int i) throws JSONException {
             JSONObject JOb = JAr.getJSONObject(i);
             String project_id = JOb.getString("project_id");
             String name = JOb.getString("name");
@@ -779,13 +699,8 @@ public class ManagerApplication extends Application {
             project_map.put("info", info);
             project_map.put("extra_info", extraInfo);
             project_map.put("user_master_id", user_master_id);
-            data.projects_list.add(project_map);
-            return project_id;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            PLD = true;
+            System.out.println(project_id+" pJAR");
+            projects_list.put(project_id, project_map);
         }
     }
 }

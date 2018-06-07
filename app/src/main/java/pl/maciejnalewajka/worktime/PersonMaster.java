@@ -20,11 +20,6 @@ import pl.maciejnalewajka.worktime.Elements.Elements;
 import pl.maciejnalewajka.worktime.Elements.ProjectsElements;
 
 public class PersonMaster extends AppCompatActivity{
-
-    private static Data data;
-
-    static String idO = "";
-    static String idP = "";
     private BarChart barChart;
     private TextView name;
     private TextView email;
@@ -41,7 +36,6 @@ public class PersonMaster extends AppCompatActivity{
         phone = findViewById(R.id.textView_mo_phone);
         barChart = findViewById(R.id.charts_mo_id);
         lv = findViewById(R.id.list_view_mo);
-        data = ManagerApplication.data;
     }
 
     @Override
@@ -60,14 +54,16 @@ public class PersonMaster extends AppCompatActivity{
         String priority, name2, percent;
         ArrayList<Elements> data_A = new ArrayList<>();
         ArrayList<BarEntry> barEntries = new ArrayList<>();
-        for(int i = 0; i< data.tasks_list.size(); i++){
-            if(data.tasks_list.get(i).get("user_id").equals(idO) && data.tasks_list.get(i).get("project_id").equals(idP)){
-                name2 = data.tasks_list.get(i).get("task").toString();
-                priority = data.tasks_list.get(i).get("priority").toString();
-                percent = String.valueOf((Integer.parseInt(data.tasks_list.get(i).get("used_time").toString())*100)/
-                        Integer.parseInt(data.tasks_list.get(i).get("time").toString()));
+        int position = 1;
+        for(String i : ManagerApplication.tasks_list.keySet()){
+            if(ManagerApplication.tasks_list.get(i).get("user_id").equals(ManagerApplication.idO) && ManagerApplication.tasks_list.get(i).get("project_id").equals(ManagerApplication.idP)){
+                name2 = ManagerApplication.tasks_list.get(i).get("task").toString();
+                priority = ManagerApplication.tasks_list.get(i).get("priority").toString();
+                percent = String.valueOf((Integer.parseInt(ManagerApplication.tasks_list.get(i).get("used_time").toString())*100)/
+                        Integer.parseInt(ManagerApplication.tasks_list.get(i).get("time").toString()));
                 data_A.add(new Elements(Integer.parseInt(percent), name2, percent + "%", priority));
-                barEntries.add(new BarEntry(i,Integer.parseInt(percent)));
+                barEntries.add(new BarEntry(position,Integer.parseInt(percent)));
+                position = position + 1;
             }
         }
         BarDataSet barDataSet = new BarDataSet(barEntries, "Zadania");
@@ -88,13 +84,9 @@ public class PersonMaster extends AppCompatActivity{
         lv.setAdapter(adapter);
     }                       // Zadania i wykres
 
-    private void user(){
-        for(int i = 0; i< data.users_list.size(); i++){
-            if(data.users_list.get(i).get("user_id").equals(idO)){
-                name.setText(data.users_list.get(i).get("name").toString());
-                email.setText(data.users_list.get(i).get("email").toString());
-                phone.setText(data.users_list.get(i).get("phone").toString());
-            }
-        }
-    }                           // Szuka i ustawia data_S Usera
+    private void user() {
+        name.setText(ManagerApplication.users_list.get(ManagerApplication.idO).get("name").toString());
+        email.setText(ManagerApplication.users_list.get(ManagerApplication.idO).get("email").toString());
+        phone.setText(ManagerApplication.users_list.get(ManagerApplication.idO).get("phone").toString());
+    }
 }

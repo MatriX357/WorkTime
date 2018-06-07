@@ -11,15 +11,15 @@ public class Stopwatch{
         start = System.currentTimeMillis();
         ManagerApplication.startTime = start;
         ManagerApplication.startedTask = task_id;
-
     }
 
     public static void  stop(String task_id) {
+        start = ManagerApplication.startTime;
         stop = System.currentTimeMillis();
         ManagerApplication.startedTask = "";
     }
 
-    public static long getTime() {
+    public static long getTime(){
         return stop - start;
     }
 

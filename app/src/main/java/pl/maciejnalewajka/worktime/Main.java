@@ -1,10 +1,8 @@
 package pl.maciejnalewajka.worktime;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,7 +10,6 @@ import android.widget.Toast;
 public class Main extends AppCompatActivity {
     private EditText text_login;
     private EditText text_haslo;
-    private Data data;
     private ManagerApplication app;
 
     @Override
@@ -26,12 +23,6 @@ public class Main extends AppCompatActivity {
         app = (ManagerApplication) getApplication();
 
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        data = ManagerApplication.data;
     }
 
     public void logIn(View view) {
@@ -62,7 +53,6 @@ public class Main extends AppCompatActivity {
 
         try {
             if (ManagerApplication.password.equals(text_haslo.getText().toString())) {
-                data.setMy_hash(data.users_list.get(0));
                 return true; }
             Toast.makeText(this, "Błędne dane!", Toast.LENGTH_SHORT).show();
             return false;

@@ -25,7 +25,7 @@ public class WorkTimeSQLiteOpenHelper extends android.database.sqlite.SQLiteOpen
     public static final String PLATFORM = "platform";
     public static final String API = "api";
     public static final String TIME = "time";
-    public static final String PROJECT_DATA = "project_data";
+    public static final String PROJECT_DATE = "project_date";
     public static final String INFO = "info";
     public static final String USER_MASTER_ID = "user_master_id";
     public static final String USERS_TABLE = "users";
@@ -74,7 +74,7 @@ public class WorkTimeSQLiteOpenHelper extends android.database.sqlite.SQLiteOpen
                 PLATFORM + " text, " +
                 API + " text, " +
                 TIME + " integer, " +
-                PROJECT_DATA + " text, " +
+                PROJECT_DATE + " text, " +
                 INFO + " text, " +
                 EXTRA_INFO + " text, " +
                 USER_MASTER_ID + " text " +

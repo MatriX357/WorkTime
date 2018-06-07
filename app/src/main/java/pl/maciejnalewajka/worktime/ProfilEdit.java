@@ -13,7 +13,6 @@ public class ProfilEdit extends AppCompatActivity {
     private EditText password;
     private EditText password2;
     private EditText phone;
-    private Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,6 @@ public class ProfilEdit extends AppCompatActivity {
         name.setText(profil.name.getText().toString());
         email.setText(profil.email.getText().toString());
         phone.setText(profil.phone.getText().toString());
-        data = ManagerApplication.data;
     }
 
     public void back(View view) {
@@ -52,6 +50,7 @@ public class ProfilEdit extends AppCompatActivity {
             } }
         if(!a){Toast.makeText(this, "Podaj poprawny e-mail!", Toast.LENGTH_SHORT).show();}
         else{
+            String user_id = ManagerApplication.user_uuid;
             if(!password.getText().toString().equals("") || !password2.getText().toString().equals("")) {
                 if((marks2.length < 8 || digits < 2)) {
                     Toast.makeText(this, "Podaj poprawne hasło!", Toast.LENGTH_SHORT).show();
@@ -61,25 +60,25 @@ public class ProfilEdit extends AppCompatActivity {
                         Toast.makeText(this, "Podane hasła nie są takie same!", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        data.getMy_hash().remove("password");
-                        data.getMy_hash().put("password", password.getText().toString());
-                        data.getMy_hash().remove("name");
-                        data.getMy_hash().put("name", name.getText().toString());
-                        data.getMy_hash().remove("email");
-                        data.getMy_hash().put("email", email.getText().toString());
-                        data.getMy_hash().remove("phone");
-                        data.getMy_hash().put("phone", phone.getText().toString());
+                        ManagerApplication.users_list.get(user_id).remove("password");
+                        ManagerApplication.users_list.get(user_id).put("password", password.getText().toString());
+                        ManagerApplication.users_list.get(user_id).remove("name");
+                        ManagerApplication.users_list.get(user_id).put("name", name.getText().toString());
+                        ManagerApplication.users_list.get(user_id).remove("email");
+                        ManagerApplication.users_list.get(user_id).put("email", email.getText().toString());
+                        ManagerApplication.users_list.get(user_id).remove("phone");
+                        ManagerApplication.users_list.get(user_id).put("phone", phone.getText().toString());
                         finish();
                     }
                 }
             }
             else{
-                data.getMy_hash().remove("name");
-                data.getMy_hash().put("name", name.getText().toString());
-                data.getMy_hash().remove("email");
-                data.getMy_hash().put("email", email.getText().toString());
-                data.getMy_hash().remove("phone");
-                data.getMy_hash().put("phone", phone.getText().toString());
+                ManagerApplication.users_list.get(user_id).remove("name");
+                ManagerApplication.users_list.get(user_id).put("name", name.getText().toString());
+                ManagerApplication.users_list.get(user_id).remove("email");
+                ManagerApplication.users_list.get(user_id).put("email", email.getText().toString());
+                ManagerApplication.users_list.get(user_id).remove("phone");
+                ManagerApplication.users_list.get(user_id).put("phone", phone.getText().toString());
                 finish();
             }
         }
