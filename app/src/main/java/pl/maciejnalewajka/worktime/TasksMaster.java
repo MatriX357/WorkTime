@@ -64,12 +64,12 @@ public class TasksMaster extends AppCompatActivity implements AdapterView.OnItem
         int position = 0;
         for(String i : ManagerApplication.tasks_list.keySet()){
             if(ManagerApplication.idP.equals(ManagerApplication.tasks_list.get(i).get("project_id"))) {
-                name = ManagerApplication.tasks_list.get(i).get("task").toString();
-                priority = ManagerApplication.tasks_list.get(i).get("priority").toString();
-                user_id = ManagerApplication.tasks_list.get(i).get("user_id").toString();
-                person = ManagerApplication.users_list.get(user_id).get("name").toString();
+                name = ManagerApplication.tasks_list.get(i).get("task");
+                priority = ManagerApplication.tasks_list.get(i).get("priority");
+                user_id = ManagerApplication.tasks_list.get(i).get("user_id");
+                person = ManagerApplication.users_list.get(user_id).get("name");
                 user_map.put(position, user_id);
-                percent = String.valueOf((Integer.parseInt(ManagerApplication.tasks_list.get(i).get("used_time").toString()) * 100) / Integer.parseInt(ManagerApplication.tasks_list.get(i).get("time").toString()));
+                percent = String.valueOf((Integer.parseInt(ManagerApplication.tasks_list.get(i).get("used_time")) * 100) / Integer.parseInt(ManagerApplication.tasks_list.get(i).get("time").toString()));
                 data_S.add(new Elements(Integer.parseInt(percent), person + ": " + name, percent + "%", priority));
                 barEntries.add(new BarEntry(position - 1 + 0.0f, Integer.parseInt(percent)));
                 position = position + 1;

@@ -63,9 +63,9 @@ public class UserTasks extends AppCompatActivity implements AdapterView.OnItemCl
         for(String i : ManagerApplication.tasks_list.keySet()){
             if(ManagerApplication.idP.equals(ManagerApplication.tasks_list.get(i).get("project_id"))) {
                 task_map.put(position, i);
-                name = ManagerApplication.tasks_list.get(i).get("name").toString();
-                priority = ManagerApplication.tasks_list.get(i).get("priority").toString();
-                percent = String.valueOf((Integer.parseInt(ManagerApplication.tasks_list.get(i).get("used_time").toString()) * 100) / Integer.parseInt(ManagerApplication.tasks_list.get(i).get("time").toString()));
+                name = ManagerApplication.tasks_list.get(i).get("name");
+                priority = ManagerApplication.tasks_list.get(i).get("priority");
+                percent = String.valueOf((Integer.parseInt(ManagerApplication.tasks_list.get(i).get("used_time")) * 100) / Integer.parseInt(ManagerApplication.tasks_list.get(i).get("time").toString()));
                 data_A.add(new Elements(Integer.parseInt(percent), name, percent + "%", priority));
                 barEntries.add(new BarEntry(position - 1 + 0.0f, Integer.parseInt(percent)));
                 position = position + 1;

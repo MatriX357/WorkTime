@@ -14,7 +14,7 @@ import static pl.maciejnalewajka.worktime.Stopwatch.Stopwatch.*;
 
 public class UserTask extends AppCompatActivity {
 
-    static String task_id = ManagerApplication.idT;
+    static String task_id;
     private Button button;
     private TextView name;
     private TextView time;
@@ -23,6 +23,7 @@ public class UserTask extends AppCompatActivity {
     private TextView master;
     private TextView stopwatch;
     private ManagerApplication app;
+    private Long used_time;
 
 
     @Override
@@ -37,6 +38,7 @@ public class UserTask extends AppCompatActivity {
         button = findViewById(R.id.button_us);
         stopwatch = findViewById(R.id.stopwatch);
         app = (ManagerApplication) getApplication();
+        task_id = ManagerApplication.idT;
         if (isStarted(task_id)){
             button.setText(getString(R.string.finish_the_task));
         }
@@ -58,19 +60,19 @@ public class UserTask extends AppCompatActivity {
     }       // Przycisk wstecz
 
     private void task(){
-        name.setText(format("Nazwa: %s", ManagerApplication.tasks_list.get(task_id).get("task").toString()));
-        time.setText(format("Czas: %s", ManagerApplication.tasks_list.get(task_id).get("time").toString()));
-        priority.setText(format("Priorytet: %s", ManagerApplication.tasks_list.get(task_id).get("priority").toString()));
-        extraInfo.setText(format("Info: %s", ManagerApplication.tasks_list.get(task_id).get("extra_info").toString()));
-        String project_id = (String) ManagerApplication.tasks_list.get(task_id).get("project_id");
-        String user_master_id = (String) ManagerApplication.projects_list.get(project_id).get("user_master_id");
-        master.setText(format("Master: %s", ManagerApplication.users_list.get(user_master_id).get("name").toString()));
+        name.setText(format("Nazwa: %s", ManagerApplication.tasks_list.get(task_id).get("task")));
+        time.setText(format("Czas: %s", ManagerApplication.tasks_list.get(task_id).get("time")));
+        priority.setText(format("Priorytet: %s", ManagerApplication.tasks_list.get(task_id).get("priority")));
+        extraInfo.setText(format("Info: %s", ManagerApplication.tasks_list.get(task_id).get("extra_info")));
+        String project_id = ManagerApplication.tasks_list.get(task_id).get("project_id");
+        String user_master_id = ManagerApplication.projects_list.get(project_id).get("user_master_id");
+        master.setText(format("Master: %s", ManagerApplication.users_list.get(user_master_id).get("name")));
+        used_time = Long.valueOf(ManagerApplication.tasks_list.get(task_id).get("used_time"));
     }                         // Uzupełnia data_S
 
     private void buttonCondition(){
         if (button.getText().equals(getString(R.string.start_the_task))) {
-            if (isStarted())
-            {
+            if (isStarted()) {
                 Toast.makeText(this, "Inne zadanie jest rozpoczęte", Toast.LENGTH_SHORT).show();
             }else {
                 button.setText(getString(R.string.finish_the_task));
@@ -79,7 +81,14 @@ public class UserTask extends AppCompatActivity {
         } else if (button.getText().equals(getString(R.string.finish_the_task))){
             button.setText(getString(R.string.start_the_task));
             Stopwatch.stop(task_id);
-            stopwatch.setText(String.valueOf(getTime()));
+            long getTime  = getTime();
+            long milisec = getTime%1000;
+            long sec = getTime/1000%60;
+            long min = getTime/1000/60%60;
+            long h = used_time + getTime/1000/60/60;
+            stopwatch.setText(String.format("%s:%s:%s,%s", String.valueOf(h), String.valueOf(min),String.valueOf(sec),String.valueOf(milisec)));
+            ManagerApplication.tasks_list.get(task_id).remove("used_time");
+            ManagerApplication.tasks_list.get(task_id).put("used_time", String.valueOf(h));
         }
     }                       // Zmienia stan i napis przycisku
 }

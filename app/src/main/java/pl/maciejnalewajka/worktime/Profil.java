@@ -22,17 +22,17 @@ public class Profil extends AppCompatActivity {
         password = findViewById(R.id.editText_p_password);
         phone = findViewById(R.id.editText_p_phone);
         app = (ManagerApplication) getApplication();
-        }
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
         String user_id = ManagerApplication.user_uuid;
-        name.setText(ManagerApplication.users_list.get(user_id).get("name").toString());
-        email.setText(ManagerApplication.users_list.get(user_id).get("email").toString());
-        phone.setText(ManagerApplication.users_list.get(user_id).get("phone").toString());
+        name.setText(ManagerApplication.users_list.get(user_id).get("name"));
+        email.setText(ManagerApplication.users_list.get(user_id).get("email"));
+        phone.setText(ManagerApplication.users_list.get(user_id).get("phone"));
         StringBuilder g = new StringBuilder();
-        for(int i = 0; i< ManagerApplication.users_list.get(user_id).get("password").toString().length(); i++){
+        for(int i = 0; i< ManagerApplication.users_list.get(user_id).get("password").length(); i++){
             g.append("*");}
         password.setText(g.toString());
     }

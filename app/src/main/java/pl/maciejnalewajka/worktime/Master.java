@@ -65,9 +65,9 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
                 System.out.println(i+" p");
                 for (String j : ManagerApplication.tasks_list.keySet()) {
                     System.out.println(j+" "+i);
-                    if (ManagerApplication.tasks_list.get(j).get("project_id").toString().equals(i)) {
-                        pro += Integer.parseInt(ManagerApplication.tasks_list.get(j).get("used_time").toString());
-                        time += Integer.parseInt(ManagerApplication.tasks_list.get(j).get("time").toString());
+                    if (ManagerApplication.tasks_list.get(j).get("project_id").equals(i)) {
+                        pro += Integer.parseInt(ManagerApplication.tasks_list.get(j).get("used_time"));
+                        time += Integer.parseInt(ManagerApplication.tasks_list.get(j).get("time"));
                     }
                 }
                 if (pro != 0) {
@@ -78,7 +78,7 @@ public class Master extends AppCompatActivity implements AdapterView.OnItemClick
                 } else {
                     active = "Nieaktywne";
                 }
-                name = ManagerApplication.projects_list.get(i).get("name").toString();
+                name = ManagerApplication.projects_list.get(i).get("name");
                 data_S.add(new Elements(pro, name, String.valueOf(pro) + "%", active));
                 position = position + 1;
                 System.out.println(i+" k");

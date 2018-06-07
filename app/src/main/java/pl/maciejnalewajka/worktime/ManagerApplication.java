@@ -61,9 +61,9 @@ public class ManagerApplication extends Application {
     static String idO = "";
     static String idP = "";
     static String idT = "";
-    static HashMap<String, HashMap<String, Object>> users_list = new HashMap<>();
-    static HashMap<String, HashMap<String, Object>> projects_list = new HashMap<>();
-    static HashMap<String, HashMap<String, Object>> tasks_list = new HashMap<>();
+    static HashMap<String, HashMap<String, String>> users_list = new HashMap<>();
+    static HashMap<String, HashMap<String, String>> projects_list = new HashMap<>();
+    static HashMap<String, HashMap<String, String>> tasks_list = new HashMap<>();
     static ArrayList<String> id_projects_list = new ArrayList<>();
     static String data_S = "";
     static JSONArray JAr;
@@ -79,9 +79,9 @@ public class ManagerApplication extends Application {
 
     private SQLiteDatabase database;
 
-    static HashMap<String, HashMap<String, Object>> users_list_local = new HashMap<>();
-    static HashMap<String, HashMap<String, Object>> projects_list_local = new HashMap<>();
-    static HashMap<String, HashMap<String, Object>> tasks_list_local = new HashMap<>();
+    static HashMap<String, HashMap<String, String>> users_list_local = new HashMap<>();
+    static HashMap<String, HashMap<String, String>> projects_list_local = new HashMap<>();
+    static HashMap<String, HashMap<String, String>> tasks_list_local = new HashMap<>();
 
     public void onCreate(){
         super.onCreate();
@@ -192,7 +192,7 @@ public class ManagerApplication extends Application {
         database.execSQL("insert into " + USERS_TABLE + " values ( '" + id + "','" + name + "','" + email
                 + "','" + password + "','" + phone + "','" + type + "','" +  company_id + "');");
 
-        HashMap<String, Object> user_map = new HashMap<>();
+        HashMap<String, String> user_map = new HashMap<>();
         user_map.put("name", name);
         user_map.put("email", email);
         user_map.put("password", password);
@@ -200,6 +200,7 @@ public class ManagerApplication extends Application {
         user_map.put("type", type);
         user_map.put("company_id", company_id);
         users_list_local.put(id, user_map);
+        users_list.put(id, user_map);
 
     }
 
@@ -208,40 +209,42 @@ public class ManagerApplication extends Application {
     {
 
         database.execSQL("insert into " + PROJECTS_TABLE + " values ( '" + id + "','" + name + "','" + client
-                + "','" + platform + "','" + api + "','" + time + "','" +  project_data + "','" +  info
+                + "','" + platform + "','" + api + "'," + time + ",'" +  project_data + "','" +  info
                 + "','" +  extra_info + "','" +  user_master_id + "');");
 
-        HashMap<String, Object> project_map = new HashMap<>();
+        HashMap<String, String> project_map = new HashMap<>();
         project_map.put("name", name);
         project_map.put("client", client);
         project_map.put("platform", platform);
         project_map.put("api", api);
-        project_map.put("time", time);
+        project_map.put("time", String.valueOf(time));
         project_map.put("project_date", project_data);
         project_map.put("info", info);
         project_map.put("extraInfo", extra_info);
         project_map.put("user_master_id", user_master_id);
         projects_list_local.put(id, project_map);
+        projects_list.put(id, project_map);
     }
 
     public void addTask(String id, String name, String task, int task_time,
                         int used_time, String task_data, String priority, String extra_info, String project_id, String user_id)
     {
         database.execSQL("insert into " + TASKS_TABLE + " values ( '" + id + "','" + name + "','" + task
-                + "','" + task_time + "','" + used_time + "','" + task_data + "','" +  priority + "','" +  extra_info
+                + "'," + task_time + "," + used_time + ",'" + task_data + "','" +  priority + "','" +  extra_info
                 + "','" +  project_id + "','" +  user_id + "');");
 
-        HashMap<String, Object> task_map = new HashMap<>();
+        HashMap<String, String> task_map = new HashMap<>();
         task_map.put("name", name);
         task_map.put("task", task);
-        task_map.put("time", task_time);
-        task_map.put("used_time", used_time);
+        task_map.put("time", String.valueOf(task_time));
+        task_map.put("used_time", String.valueOf(used_time));
         task_map.put("task_date", task_data);
         task_map.put("priority", priority);
         task_map.put("extraInfo", extra_info);
         task_map.put("project_id", project_id);
         task_map.put("user_id", user_id);
         tasks_list_local.put(id, task_map);
+        tasks_list.put(id,task_map);
     }
 
     public void deleteUser(String id){
@@ -562,7 +565,7 @@ public class ManagerApplication extends Application {
             String phone = JOb.getString("phone");
             String type = JOb.getString("type");
             String company_id = JOb.getString("company_id");
-            HashMap<String, Object> user_map = new HashMap<>();
+            HashMap<String, String> user_map = new HashMap<>();
             user_map.put("name", name);
             user_map.put("email", email);
             user_map.put("password", password);
@@ -626,7 +629,7 @@ public class ManagerApplication extends Application {
             String extraInfo = JOb.getString("extra_info");
             String project_id = JOb.getString("project_id");
             String user_id = JOb.getString("user_id");
-            HashMap<String, Object> task_map = new HashMap<>();
+            HashMap<String, String> task_map = new HashMap<>();
             task_map.put("name", name);
             task_map.put("task", task);
             task_map.put("time", time);
@@ -688,7 +691,7 @@ public class ManagerApplication extends Application {
             String info = JOb.getString("info");
             String extraInfo = JOb.getString("extra_info");
             String user_master_id = JOb.getString("user_master_id");
-            HashMap<String, Object> project_map = new HashMap<>();
+            HashMap<String, String> project_map = new HashMap<>();
             project_map.put("project_id", project_id);
             project_map.put("name", name);
             project_map.put("client", client);
