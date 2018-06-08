@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.util.ConcurrentModificationException;
+
 public class Profil extends AppCompatActivity {
     TextView name;
     TextView email;
@@ -46,9 +49,24 @@ public class Profil extends AppCompatActivity {
         startActivity(intent_edit_pro);
     }           // Przejście do okna edycji
 
-    public void logout(View view) {
+    public void logout(View view) throws IOException {
         app.save_data();
+        ManagerApplication.users_list_local=ManagerApplication.users_list;
+        ManagerApplication.projects_list_local=ManagerApplication.projects_list;
+        ManagerApplication.tasks_list_local=ManagerApplication.projects_list;
+        app.downloadData();
+        sendToServerUser();
         Intent intent_edit_log = new Intent(getApplicationContext(), Main.class);
         startActivity(intent_edit_log);
-    }       // Wylogowanie i usuwanie loginu i hasła z pamięci
+    }// Wylogowanie i usuwanie loginu i hasła z pamięci
+
+    public void sendToServerUser() throws IOException {
+        try {
+            app.sendToServerUser();
+            app.sendToServerProject();
+            app.sendToServerTask();
+        }catch (ConcurrentModificationException|NullPointerException e){
+            sendToServerUser();
+        }
+    }
 }

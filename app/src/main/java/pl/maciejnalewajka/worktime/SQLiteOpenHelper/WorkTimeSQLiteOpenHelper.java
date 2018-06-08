@@ -14,7 +14,7 @@ public class WorkTimeSQLiteOpenHelper extends android.database.sqlite.SQLiteOpen
     public static final String TASK = "task";
     public static final String TASK_TIME = "time";
     public static final String USED_TIME = "used_time";
-    public static final String TASK_DATA = "task_data";
+    public static final String TASK_DATE = "task_data";
     public static final String PRIORITY = "priority";
     public static final String EXTRA_INFO = "extra_info";
     public static final String PROJECT_ID = "project_id";
@@ -57,10 +57,10 @@ public class WorkTimeSQLiteOpenHelper extends android.database.sqlite.SQLiteOpen
                 TASK + " text, " +
                 TASK_TIME + " integer, " +
                 USED_TIME + " integer, " +
-                TASK_DATA + " text, " +
+                TASK_DATE + " text, " +
                 PRIORITY + " text, " +
                 EXTRA_INFO + " text, " +
-                PROJECT_ID + "text," +
+                PROJECT_ID + " text," +
                 USER_ID + " text " +
                 ");"
         );

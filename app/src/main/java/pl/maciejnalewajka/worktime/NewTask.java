@@ -33,6 +33,7 @@ public class NewTask extends AppCompatActivity {
         task = findViewById(R.id.editText_z_task);
         time = findViewById(R.id.editText_z_time);
         info = findViewById(R.id.editText_z_info);
+        idP = ManagerApplication.project_uuid;
         users();
     }
 
@@ -47,7 +48,7 @@ public class NewTask extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 user.setText(users()[item]);
-                userID = ManagerApplication.users_list.get(user_id[item]).get("user_id").toString();
+                userID = user_id[item];
             }
         }).getContext().setTheme(R.style.AppTheme);
         builder.create();
@@ -81,11 +82,10 @@ public class NewTask extends AppCompatActivity {
     private String[] users(){
         user_id = new String[ManagerApplication.users_list.size()];
         user_name = new String[ManagerApplication.users_list.size()];
-        int position = 1;
+        int position = 0;
         for(String i:ManagerApplication.users_list.keySet()){
             user_id[position] = i;
-            user_name[position] = (String) ManagerApplication.users_list.get(i).get("name");
-
+            user_name[position] = ManagerApplication.users_list.get(i).get("name");
             position = position + 1;
         }
         return user_name;

@@ -24,24 +24,34 @@ public class Main extends AppCompatActivity {
 
 
     }
-
-    public void logIn(View view) {
+    public void logIn(){
         ManagerApplication.user_name = text_login.getText().toString();
-        app.downloadData();
-        if (ManagerApplication.ES){
-            if(checkPassword()){
+        try {
+            if (ManagerApplication.ES) {
+                app.loadCheckData();
                 app.save_data();
-                if(ManagerApplication.user_type.equals("Master")){
-                    Intent intent_login = new Intent(this, Master.class);
-                    startActivity(intent_login);
+                if (checkPassword()) {
+                    if (ManagerApplication.user_type.equals("Master")) {
+                        Intent intent_login = new Intent(this, Master.class);
+                        startActivity(intent_login);
+                    } else if (ManagerApplication.user_type.equals("User")) {
+                        Intent intent_login = new Intent(this, User.class);
+                        startActivity(intent_login);
+                    }
                 }
-                else if(ManagerApplication.user_type.equals("User")){
-                    Intent intent_login = new Intent(this, User.class);
-                    startActivity(intent_login);
-                } } }
-        else{
-            Toast.makeText(this, "Nie ma takiego użytkownika!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Nie ma takiego użytkownika!", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            Toast.makeText(this, "Ładowanie danych z serwera", Toast.LENGTH_SHORT).show();
+            logIn();
+            e.printStackTrace();
         }
+
+    }
+    public void logIn(View view) {
+        app.downloadData();
+        logIn();
     }         // Przycisk do logowania
 
     public void register(View view){

@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper;
 
@@ -33,7 +33,7 @@ import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHel
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.P_NAME;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASKS_TABLE;
-import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK_DATA;
+import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK_DATE;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK_ID;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK_NAME;
 import static pl.maciejnalewajka.worktime.SQLiteOpenHelper.WorkTimeSQLiteOpenHelper.TASK_TIME;
@@ -53,14 +53,12 @@ public class ManagerApplication extends Application {
 
     static String user_name = "";
     static String user_uuid = "";
+    static String user_type = "";
     static String project_uuid = "";
     static String task_uuid = "";
-    static String user_type = "";
     static String password = "";
     static Boolean ES = true;
-    static String idO = "";
-    static String idP = "";
-    static String idT = "";
+    static String select_user_uuid = "";
     static HashMap<String, HashMap<String, String>> users_list = new HashMap<>();
     static HashMap<String, HashMap<String, String>> projects_list = new HashMap<>();
     static HashMap<String, HashMap<String, String>> tasks_list = new HashMap<>();
@@ -73,9 +71,9 @@ public class ManagerApplication extends Application {
     private SharedPreferences.Editor editor;
     private static final String NAME = "user_name";
     private static final String LOGIN = "login";
-    private static final String STARTTIME = "start";
+    private static final String START_TIME = "start";
     private static final String PASSWORD = "password";
-    private static final String STARTEDTASK = "task";
+    private static final String STARTED_TASK = "task";
 
     private SQLiteDatabase database;
 
@@ -92,106 +90,132 @@ public class ManagerApplication extends Application {
         restoreData();
         database = helper.getWritableDatabase();
     }
-
-
+    public void loadCheckData(){
+        userLoad();
+        projectsLoad();
+        tasksLoad();
+        checkData();
+    }
     public void checkData(){
-        checkUserData();
-        checkProjectData();
-        checkDataTask();
+        try {
+            checkUserData();
+            checkProjectData();
+            checkDataTask();
+        }catch (ConcurrentModificationException e){
+            checkData();
+        }
     }
 
     private void checkUserData(){
-        if(users_list_local.size() < users_list.size()){
-            users_list_local.clear();
-            database.execSQL("delete from " + USERS_TABLE + ";");
-            assignUser();
+        for(String user_id :users_list_local.keySet()){
+            if (!users_list.containsKey(user_id)){
+                users_list_local.remove(user_id);
+            }
         }
-        else if(users_list_local.size() > users_list.size()){
-            users_list_local.clear();
-            database.execSQL("delete from " + USERS_TABLE + ";");
-            assignUser();
+        for(String user_id :users_list.keySet()){
+            if (users_list_local.containsKey(user_id)){
+                users_list_local.remove(user_id);
+                users_list_local.put(user_id, users_list.get(user_id));
+            }else{
+                users_list_local.put(user_id, users_list.get(user_id));
+            }
         }
-        else {
-            users_list_local.clear();
-            database.execSQL("delete from " + USERS_TABLE + ";");
-            assignUser();
-        }
-    }
-
-    private void assignUser(){
-        users_list_local.putAll(users_list);
-        insertUser();
     }
 
     private void checkProjectData(){
-        if(projects_list_local.size() < projects_list.size()){
-            projects_list_local.clear();
-            database.execSQL("delete from " + PROJECTS_TABLE + ";");
-            assignProject();
+        for(String project_id :projects_list_local.keySet()){
+            if (!projects_list.containsKey(project_id)){
+                projects_list_local.remove(project_id);
+            }
         }
-        else if(projects_list_local.size() > projects_list.size()){
-            projects_list_local.clear();
-            database.execSQL("delete from " + PROJECTS_TABLE + ";");
-            assignProject();
+        for(String project_id :projects_list.keySet()){
+            if (projects_list_local.containsKey(project_id)){
+                projects_list_local.remove(project_id);
+                projects_list_local.put(project_id, projects_list.get(project_id));
+            }else{
+                projects_list_local.put(project_id, projects_list.get(project_id));
+            }
         }
-    }
-
-    private void assignProject(){
-        projects_list_local.putAll(projects_list);
-        insertProject();
     }
 
     private void checkDataTask(){
-        if(tasks_list_local.size() < tasks_list.size()){
-            tasks_list_local.clear();
-            database.execSQL("delete from " + TASKS_TABLE + ";");
-            assignTask();
+        for(String task_id :tasks_list_local.keySet()){
+            if (!tasks_list.containsKey(task_id)){
+                tasks_list_local.remove(task_id);
+            }
         }
-        else if(tasks_list_local.size() > tasks_list.size()){
-            tasks_list_local.clear();
-            database.execSQL("delete from " + TASKS_TABLE + ";");
-            assignTask();
-        }
-    }
-
-    private void assignTask() {
-        tasks_list_local.putAll(tasks_list);
-        insertTask();
-    }
-
-    private void insertUser(){
-        for(String i : users_list_local.keySet()){
-            database.execSQL("insert into " + USERS_TABLE + " values ( '" + users_list_local.get(i).get("user_id") + "','" + users_list_local.get(i).get("name") + "','" + users_list_local.get(i).get("email")
-                    + "','" + users_list_local.get(i).get("password") + "','" + users_list_local.get(i).get("phone") + "','" + users_list_local.get(i).get("type") + "','" +  users_list_local.get(i).get("company_id") + "');");
+        for(String task_id :tasks_list.keySet()){
+            if (tasks_list_local.containsKey(task_id)){
+                tasks_list_local.remove(task_id);
+                tasks_list_local.put(task_id, tasks_list.get(task_id));
+            }else{
+                tasks_list_local.put(task_id, tasks_list.get(task_id));
+            }
         }
     }
 
-
-    private void insertProject() {
-
-        for(String i : projects_list_local.keySet()){
-            database.execSQL("insert into " + PROJECTS_TABLE + " values ( '" + i + "','" + projects_list_local.get(i).get("name") + "','" + projects_list_local.get(i).get("client")
-                    + "','" + projects_list_local.get(i).get("platform") + "','" + projects_list_local.get(i).get("api") + "'," + projects_list_local.get(i).get("time") + ",'" +  projects_list_local.get(i).get("project_date") + "','" +  projects_list_local.get(i).get("info")
-                    + "','" +  projects_list_local.get(i).get("extra_info") + "','" +  projects_list_local.get(i).get("user_master_id") + "');");
-        }
+    private void insertUser(String user_id){
+        database.execSQL("insert into " + USERS_TABLE + " values ( '" + user_id + "','" + users_list.get(user_id).get("name") + "','" + users_list.get(user_id).get("email")
+                    + "','" + users_list.get(user_id).get("password") + "','" + users_list.get(user_id).get("phone") + "','" + users_list.get(user_id).get("type") + "','" +  users_list.get(user_id).get("company_id") + "');");
     }
 
 
-    private void insertTask() {
+    private void insertProject(String project_id) {
+        database.execSQL("insert into " + PROJECTS_TABLE + " values ( '" + project_id + "','" + projects_list.get(project_id).get("name") + "','" + projects_list.get(project_id).get("client")
+                    + "','" + projects_list.get(project_id).get("platform") + "','" + projects_list.get(project_id).get("api") + "'," + projects_list.get(project_id).get("time") + ",'" +  projects_list.get(project_id).get("project_date") + "','" +  projects_list.get(project_id).get("info")
+                    + "','" + projects_list.get(project_id).get("extra_info") + "','" + projects_list.get(project_id).get("user_master_id") + "');");
+    }
 
-        for(String i : tasks_list_local.keySet()){
-            database.execSQL("insert into " + TASKS_TABLE + " values ( '" + tasks_list_local.get(i).get("task_id") + "','" + tasks_list_local.get(i).get("name") + "','" + tasks_list_local.get(i).get("task")
-                    + "'," + tasks_list_local.get(i).get("task_time") + "," + tasks_list_local.get(i).get("used_time") + ",'" + tasks_list_local.get(i).get("task_date") + "','" +  tasks_list_local.get(i).get("priority") + "','" +  tasks_list_local.get(i).get("extra_info")
-                    + "','" +  tasks_list_local.get(i).get("project_id") + "','" +  tasks_list_local.get(i).get("user_id") + "');");
-        }
+
+    private void insertTask(String task_id) {
+        database.execSQL("insert into " + TASKS_TABLE + " values ( '" + task_id + "','" + tasks_list.get(task_id).get("name") + "','" + tasks_list.get(task_id).get("task")
+                    + "'," + tasks_list.get(task_id).get("time") + "," + tasks_list.get(task_id).get("used_time") + ",'" + tasks_list.get(task_id).get("task_date") + "','" +  tasks_list.get(task_id).get("priority") + "','" +  tasks_list.get(task_id).get("extra_info")
+                    + "','" +  tasks_list.get(task_id).get("project_id") + "','" +  tasks_list.get(task_id).get("user_id") + "');");
+    }
+
+    public void deleteUser(String user_id){
+        database.execSQL("delete from " + USERS_TABLE + " where " + USER_ID + " = '" + user_id + "';");
+
+    }
+
+    public void deleteProject(String project_id){
+        database.execSQL("delete from " + PROJECTS_TABLE + " where " + PROJECT_ID + " = '" + project_id + "';");
+    }
+
+    public void deleteTask(String task_id){
+        database.execSQL("delete from " + TASKS_TABLE + " where " + TASK_ID + " = '" + task_id + "';");
+    }
+
+    public void updateUser(String user_id)
+    {
+        database.execSQL("update " + USERS_TABLE + " set " + USER_NAME + " = '" + users_list.get(user_id).get("name") + "'," + USER_EMAIL + " = '" + users_list.get(user_id).get("email") + "',"
+                + USER_PASSWORD + " = '" + users_list.get(user_id).get("password") + "'," + USER_PHONE + " = '" + users_list.get(user_id).get("phone") + "',"
+                + USER_TYPE + " = '" + users_list.get(user_id).get("type") + "', " + USER_COMPANY_ID + " = '" + users_list.get(user_id).get("company_id")
+                + "' where " + USER_ID + " = '" + user_id + "';");
+    }
+
+    public void updateProject(String project_id)
+    {
+        database.execSQL("update " + PROJECTS_TABLE + " set "
+                + P_NAME + " = '" + projects_list.get(project_id).get("name") + "', " + CLIENT + " = '" + projects_list.get(project_id).get("client") + "', "
+                + PLATFORM + " = '" + projects_list.get(project_id).get("platform") + "', " + API + " = '" + projects_list.get(project_id).get("api") + "', "
+                + TIME + " = " + projects_list.get(project_id).get("time") + ", " + PROJECT_DATE + " = '" + projects_list.get(project_id).get("project_date") + "', "
+                + INFO + " = '" + projects_list.get(project_id).get("info") + "', " + EXTRA_INFO + " = '" + projects_list.get(project_id).get("extra_info") + "', "
+                + USER_MASTER_ID + " = '" + projects_list.get(project_id).get("user_master_id") + "' where " + PROJECT_ID + " = '" + project_id + "';");
+    }
+
+    public void updateTask(String task_id)
+    {
+        database.execSQL("update " + TASKS_TABLE + " set " + TASK_NAME + " = '" + tasks_list.get(task_id).get("name") + "', " + TASK + " = '" + tasks_list.get(task_id).get("task") + "', "
+                + TASK_TIME + " = " + tasks_list.get(task_id).get("time") + ", " + USED_TIME + " = " + tasks_list.get(task_id).get("used_time") + ", "
+                + TASK_DATE + " = '" + tasks_list.get(task_id).get("task_date") + "', " + PRIORITY + " = '" + tasks_list.get(task_id).get("priority") + "', "
+                + EXTRA_INFO + " = '" + tasks_list.get(task_id).get("extra_info") + "', " + PROJECT_ID + " = '" + tasks_list.get(task_id).get("project_id") + "' , "
+                + USER_ID + " = '" + tasks_list.get(task_id).get("user_id") + "' where " + TASK_ID + " = '" + task_id + "';");
     }
 
     public void addUser(String id, String name, String email, String password,
                         String phone, String type, String company_id)
     {
-        database.execSQL("insert into " + USERS_TABLE + " values ( '" + id + "','" + name + "','" + email
-                + "','" + password + "','" + phone + "','" + type + "','" +  company_id + "');");
-
         HashMap<String, String> user_map = new HashMap<>();
         user_map.put("name", name);
         user_map.put("email", email);
@@ -199,68 +223,61 @@ public class ManagerApplication extends Application {
         user_map.put("phone", phone);
         user_map.put("type", type);
         user_map.put("company_id", company_id);
-        users_list_local.put(id, user_map);
         users_list.put(id, user_map);
-
+        insertUser(id);
     }
 
     public void addProject(String id, String name, String client, String platform,
-                           String api, int time, String project_data, String info, String extra_info, String user_master_id)
+                           String api, int time, String project_date, String info, String extra_info, String user_master_id)
     {
-
-        database.execSQL("insert into " + PROJECTS_TABLE + " values ( '" + id + "','" + name + "','" + client
-                + "','" + platform + "','" + api + "'," + time + ",'" +  project_data + "','" +  info
-                + "','" +  extra_info + "','" +  user_master_id + "');");
-
         HashMap<String, String> project_map = new HashMap<>();
         project_map.put("name", name);
         project_map.put("client", client);
         project_map.put("platform", platform);
         project_map.put("api", api);
         project_map.put("time", String.valueOf(time));
-        project_map.put("project_date", project_data);
+        project_map.put("project_date", project_date);
         project_map.put("info", info);
         project_map.put("extraInfo", extra_info);
         project_map.put("user_master_id", user_master_id);
-        projects_list_local.put(id, project_map);
         projects_list.put(id, project_map);
+        insertProject(id);
+
     }
 
     public void addTask(String id, String name, String task, int task_time,
-                        int used_time, String task_data, String priority, String extra_info, String project_id, String user_id)
+                        int used_time, String task_date, String priority, String extra_info, String project_id, String user_id)
     {
-        database.execSQL("insert into " + TASKS_TABLE + " values ( '" + id + "','" + name + "','" + task
-                + "'," + task_time + "," + used_time + ",'" + task_data + "','" +  priority + "','" +  extra_info
-                + "','" +  project_id + "','" +  user_id + "');");
-
         HashMap<String, String> task_map = new HashMap<>();
         task_map.put("name", name);
         task_map.put("task", task);
         task_map.put("time", String.valueOf(task_time));
         task_map.put("used_time", String.valueOf(used_time));
-        task_map.put("task_date", task_data);
+        task_map.put("task_date", task_date);
         task_map.put("priority", priority);
         task_map.put("extraInfo", extra_info);
         task_map.put("project_id", project_id);
         task_map.put("user_id", user_id);
-        tasks_list_local.put(id, task_map);
-        tasks_list.put(id,task_map);
+        tasks_list.put(id, task_map);
+        insertTask(id);
     }
 
-    public void deleteUser(String id){
-        database.execSQL("delete from " + USERS_TABLE + " where " + USER_ID + " = '" + id + "';");
-
+    public void removeUser(String id){
+        deleteUser(id);
+        users_list_local.remove(id);
     }
 
-    public void deleteProject(String id){
-        database.execSQL("delete from " + PROJECTS_TABLE + " where " + PROJECT_ID + " = '" + id + "';");
+    public void removeProject(String id){
+        deleteProject(id);
+        projects_list_local.remove(id);
     }
 
-    public void deleteTask(String id){
-        database.execSQL("delete from " + TASKS_TABLE + " where " + TASK_ID + " = '" + id + "';");
+    public void removeTask(String id){
+        deleteTask(id);
+        tasks_list_local.remove(id);
     }
 
-    public void updateUser(String id, String name, String email, String password,
+    public void editUser(String id, String name, String email, String password,
                            String phone, String type, String company_id, String idd)
     {
         database.execSQL("update " + USERS_TABLE + " set " + USER_ID + " = '" + id + "', "
@@ -270,244 +287,191 @@ public class ManagerApplication extends Application {
                 + "' where " + USER_ID + " = '" + idd + "';");
     }
 
-    public void updateProject(String id, String name, String client, String platform,
-                              String api, int time, String project_data, String info,
+    public void editProject(String id, String name, String client, String platform,
+                              String api, int time, String project_date, String info,
                               String extra_info, String user_master_id, String idd)
     {
         database.execSQL("update " + PROJECTS_TABLE + " set " + PROJECT_ID + " = '" + id + "', "
                 + P_NAME + " = '" + name + "', " + CLIENT + " = '" + client + "', "
                 + PLATFORM + " = '" + platform + "', " + API + " = '" + api + "', "
-                + TIME + " = " + time + ", " + PROJECT_DATE + " = '" + project_data + "', "
+                + TIME + " = " + time + ", " + PROJECT_DATE + " = '" + project_date + "', "
                 + INFO + " = '" + info + "', " + EXTRA_INFO + " = '" + extra_info + "', "
                 + USER_MASTER_ID + " = '" + user_master_id + "' where " + PROJECT_ID + " = '" + idd + "';");
     }
 
-    public void updateTask(String id, String name, String task, int task_time,
-                           int used_time, String task_data, String priority, String extra_info,
+    public void editTask(String id, String name, String task, int task_time,
+                           int used_time, String task_date, String priority, String extra_info,
                            String project_id, String user_id, String idd)
     {
         database.execSQL("update " + TASKS_TABLE + " set " + TASK_ID + " = '" + id + "', "
                 + TASK_NAME + " = '" + name + "', " + TASK + " = '" + task + "', "
                 + TASK_TIME + " = " + task_time + ", " + USED_TIME + " = " + used_time + ", "
-                + TASK_DATA + " = '" + task_data + "', " + PRIORITY + " = '" + priority + "', "
+                + TASK_DATE + " = '" + task_date + "', " + PRIORITY + " = '" + priority + "', "
                 + EXTRA_INFO + " = '" + extra_info + "', " + PROJECT_ID + " = '" + project_id + "' , "
                 + USER_ID + " = '" + user_id + "' where " + TASK_ID + " = '" + idd + "';");
     }
 
 
-    private ArrayList<String> userLoad(String user){
-        ArrayList<String> listU;
-        try (Cursor cursor = database.rawQuery("select * from " + USERS_TABLE + " where user_id = '" + user + "'", null)) {
+    private   void userLoad(){
+        users_list_local.clear();
+        try (Cursor cursor = database.rawQuery("select * from " + USERS_TABLE, null)) {
             cursor.moveToFirst();
-            listU = new ArrayList<>();
             if (!cursor.isAfterLast()) {
                 do {
-                    listU.add(cursor.getString(0));
-                    listU.add(cursor.getString(1));
-                    listU.add(cursor.getString(2));
-                    listU.add(cursor.getString(3));
-                    listU.add(cursor.getString(4));
-                    listU.add(cursor.getString(5));
-                    listU.add(cursor.getString(6));
+                    HashMap<String, String> user_map = new HashMap<>();
+                    user_map.put("name", cursor.getString(1));
+                    user_map.put("email", cursor.getString(2));
+                    user_map.put("password", cursor.getString(3));
+                    user_map.put("phone", cursor.getString(4));
+                    user_map.put("type", cursor.getString(5));
+                    user_map.put("company_id", cursor.getString(6));
+                    users_list_local.put(cursor.getString(0), user_map);
                 } while (cursor.moveToNext());
             }
         }
-        return listU;
 
     }
 
-    private ArrayList<String> projectsLoad(String project){
-        ArrayList<String> listP;
-        try (Cursor cursor = database.rawQuery("select * from " + PROJECTS_TABLE + " where project_id = '" + project + "'", null)) {
+    public void projectsLoad(){
+        projects_list_local.clear();
+        try (Cursor cursor = database.rawQuery("select * from " + PROJECTS_TABLE, null)) {
             cursor.moveToFirst();
-            listP = new ArrayList<>();
             if (!cursor.isAfterLast()) {
                 do {
-                    listP.add(cursor.getString(0));
-                    listP.add(cursor.getString(1));
-                    listP.add(cursor.getString(2));
-                    listP.add(cursor.getString(3));
-                    listP.add(cursor.getString(4));
-                    listP.add(cursor.getString(5));
-                    listP.add(cursor.getString(6));
-                    listP.add(cursor.getString(7));
-                    listP.add(cursor.getString(8));
-                    listP.add(cursor.getString(9));
+                    HashMap<String, String> project_map = new HashMap<>();
+                    project_map.put("name", cursor.getString(1));
+                    project_map.put("client", cursor.getString(2));
+                    project_map.put("platform", cursor.getString(3));
+                    project_map.put("api", cursor.getString(4));
+                    project_map.put("time", cursor.getString(5));
+                    project_map.put("project_date", cursor.getString(6));
+                    project_map.put("info", cursor.getString(7));
+                    project_map.put("extra_info", cursor.getString(8));
+                    project_map.put("user_master_id", cursor.getString(9));
+                    projects_list_local.put(cursor.getString(0), project_map);
                 } while (cursor.moveToNext());
             }
         }
-        return listP;
 
     }
 
-    private ArrayList<String> tasksLoad(String task){
-        ArrayList<String> listT;
-        try (Cursor cursor = database.rawQuery("select * from " + TASKS_TABLE + " where task_id = '" + task + "'", null)) {
+    public void tasksLoad(){
+        tasks_list_local.clear();
+        try (Cursor cursor = database.rawQuery("select * from " + TASKS_TABLE, null)) {
             cursor.moveToFirst();
-            listT = new ArrayList<>();
             if (!cursor.isAfterLast()) {
                 do {
-                    listT.add(cursor.getString(0));
-                    listT.add(cursor.getString(1));
-                    listT.add(cursor.getString(2));
-                    listT.add(cursor.getString(3));
-                    listT.add(cursor.getString(4));
-                    listT.add(cursor.getString(5));
-                    listT.add(cursor.getString(6));
-                    listT.add(cursor.getString(7));
-                    listT.add(cursor.getString(8));
-                    listT.add(cursor.getString(9));
+                    HashMap<String, String> task_map = new HashMap<>();
+                    task_map.put("name", cursor.getString(1));
+                    task_map.put("task", cursor.getString(2));
+                    task_map.put("time", cursor.getString(3));
+                    task_map.put("used_time", cursor.getString(4));
+                    task_map.put("task_date", cursor.getString(5));
+                    task_map.put("priority", cursor.getString(6));
+                    task_map.put("extra_info", cursor.getString(7));
+                    task_map.put("project_id", cursor.getString(8));
+                    task_map.put("user_id", cursor.getString(9));
+                    tasks_list_local.put(cursor.getString(0), task_map);
                 } while (cursor.moveToNext());
             }
         }
-        return listT;
-
     }
 
     public void sendToServerUser() throws IOException {
-
-        ArrayList<String> UsersLocal = new ArrayList<>();
-        Iterator USI;
-        String user;
-        Iterator ULI;
-        try (Cursor cursor = database.rawQuery("select user_id from " + USERS_TABLE, null)) {
-            cursor.moveToFirst();
-            if (!cursor.isAfterLast()) {
-                do {
-                    String id = cursor.getString(0);
-                    UsersLocal.add(id);
-                } while (cursor.moveToNext());
-            }
-        }
-        USI = users_list_local.keySet().iterator();
-        while (USI.hasNext()){
-            user = (String) USI.next();
-            if (UsersLocal.contains(user)){
-                ArrayList<String> user_IC = userLoad(user);
-                URL url = new URL("http://155.158.135.197/worktime/edit.php?Users&user_id="+user_IC.get(0)+"&name="+user_IC.get(1)
-                        +"&email="+user_IC.get(2)+"&password="+user_IC.get(3)+"&phone="+user_IC.get(4)+"&type="+user_IC.get(5)
-                        +"&company_id="+user_IC.get(6));
-                url.openConnection();
-                UsersLocal.remove(user);
-
-            }
-            else if(!UsersLocal.contains(user)){
-                URL url = new URL("http://155.158.135.197/worktime/delete.php?Users&user_id="+user);
+        for (String user_id : users_list.keySet()) {
+            if (!users_list_local.containsKey(user_id)) {
+                users_list.remove(user_id);
+                URL url = new URL("http://155.158.135.197/worktime/delete.php?Users&user_id=" + user_id);
                 url.openConnection();
             }
         }
-        ULI = UsersLocal.iterator();
-        while(ULI.hasNext()) {
-            user = (String) ULI.next();
-            ArrayList<String> user_IC = userLoad(user);
-            URL url = new URL("http://155.158.135.197/worktime/add.php?Users&user_id="+user_IC.get(0)+"&name="+user_IC.get(1)
-                    +"&email="+user_IC.get(2)+"&password="+user_IC.get(3)+"&phone="+user_IC.get(4)+"&type="+user_IC.get(5)
-                    +"&company_id="+user_IC.get(6));
-            url.openConnection();
+        for (String user_id : users_list_local.keySet()) {
+            if (users_list.containsKey(user_id)) {
+                users_list.remove(user_id);
+                users_list.put(user_id, users_list_local.get(user_id));
+                URL url = new URL("http://155.158.135.197/worktime/edit.php?Users&user_id=" + user_id + "&name=" + users_list.get(user_id).get("name")
+                        + "&email=" + users_list.get(user_id).get("email") + "&password=" + users_list.get(user_id).get("password") + "&phone=" + users_list.get(user_id).get("phone") + "&type=" + users_list.get(user_id).get("type")
+                        + "&company_id=" + users_list.get(user_id).get("company_id"));
+                url.openConnection();
+            } else {
+                users_list.put(user_id, users_list_local.get(user_id));
+                URL url = new URL("http://155.158.135.197/worktime/add.php?Users&user_id=" + user_id + "&name=" + users_list.get(user_id).get("name")
+                        + "&email=" + users_list.get(user_id).get("email") + "&password=" + users_list.get(user_id).get("password") + "&phone=" + users_list.get(user_id).get("phone") + "&type=" + users_list.get(user_id).get("type")
+                        + "&company_id=" + users_list.get(user_id).get("company_id"));
+                url.openConnection();
+            }
         }
     }
 
     public void sendToServerProject() throws IOException {
-
-        ArrayList<String> ProjectsLocal = new ArrayList<>();
-        Iterator PSI;
-        String project;
-        Iterator PLI;
-        try (Cursor cursor = database.rawQuery("select project_id from " + PROJECTS_TABLE, null)) {
-            cursor.moveToFirst();
-            if (!cursor.isAfterLast()) {
-                do {
-                    String id = cursor.getString(0);
-                    ProjectsLocal.add(id);
-                } while (cursor.moveToNext());
-            }
-        }
-        PSI = projects_list.keySet().iterator();
-        while (PSI.hasNext()){
-            project = (String) PSI.next();
-            if (ProjectsLocal.contains(project)){
-                ArrayList<String> project_IC = projectsLoad(project);
-                URL url = new URL("http://155.158.135.197/worktime/edit.php?Projects&project_id="+project_IC.get(0)+"&name="+project_IC.get(1)
-                        +"&client="+project_IC.get(2)+"&platform="+project_IC.get(3)+"&api="+project_IC.get(4)+"&time="+project_IC.get(5)
-                        +"&project_data="+project_IC.get(6)+"&info="+project_IC.get(7)+"&extra_info="+project_IC.get(8)+"user_master_id="+project_IC.get(9));
-                url.openConnection();
-                ProjectsLocal.remove(project);
-
-            }
-            else if(!ProjectsLocal.contains(project)) {
-                URL url = new URL("http://155.158.135.197/worktime/delete.php?Projects&project_id=" + project);
+        for(String project_id :projects_list.keySet()){
+            if (!projects_list_local.containsKey(project_id)){
+                projects_list.remove(project_id);
+                URL url = new URL("http://155.158.135.197/worktime/delete.php?Projects&project_id=" + project_id);
                 url.openConnection();
             }
         }
-        PLI = ProjectsLocal.iterator();
-        while(PLI.hasNext()) {
-            project = (String) PLI.next();
-            ArrayList<String>  project_IC = projectsLoad(project);
-            URL url = new URL("http://155.158.135.197/worktime/add.php?Projects&project_id="+project_IC.get(0)+"&name="+project_IC.get(1)
-                    +"&client="+project_IC.get(2)+"&platform="+project_IC.get(3)+"&api="+project_IC.get(4)+"&time="+project_IC.get(5)
-                    +"&project_data="+project_IC.get(6)+"&info="+project_IC.get(7)+"&extra_info="+project_IC.get(8)+"user_master_id="+project_IC.get(9));
-            url.openConnection();
+        for(String project_id :projects_list_local.keySet()){
+            if (projects_list.containsKey(project_id)){
+                projects_list.remove(project_id);
+                projects_list.put(project_id, projects_list_local.get(project_id));
+                updateProject(project_id);
+                URL url = new URL("http://155.158.135.197/worktime/edit.php?Projects&project_id=" + project_id + "&name=" + projects_list.get(project_id).get("name")
+                        + "&client=" + projects_list.get(project_id).get("client") + "&platform=" + projects_list.get(project_id).get("platform") + "&api=" + projects_list.get(project_id).get("api") + "&time=" + projects_list.get(project_id).get("time")
+                        + "&project_date=" + projects_list.get(project_id).get("project_date") + "&info=" + projects_list.get(project_id).get("info") + "&extra_info=" + projects_list.get(project_id).get("extra_info") + "user_master_id=" + projects_list.get(project_id).get("user_master_id"));
+                url.openConnection();
+            }else{
+                projects_list.put(project_id, projects_list_local.get(project_id));
+                URL url = new URL("http://155.158.135.197/worktime/add.php?Projects&project_id=" + project_id + "&name=" + projects_list.get(project_id).get("name")
+                        + "&client=" + projects_list.get(project_id).get("client") + "&platform=" + projects_list.get(project_id).get("platform") + "&api=" + projects_list.get(project_id).get("api") + "&time=" + projects_list.get(project_id).get("time")
+                        + "&project_date=" + projects_list.get(project_id).get("project_date") + "&info=" + projects_list.get(project_id).get("info") + "&extra_info=" + projects_list.get(project_id).get("extra_info") + "user_master_id=" + projects_list.get(project_id).get("user_master_id"));
+                url.openConnection();
+            }
         }
     }
 
     public void sendToServerTask() throws IOException {
-
-        ArrayList<String> TasksLocal = new ArrayList<>();
-        Iterator TSI;
-        String task;
-        Iterator TLI;
-        try (Cursor cursor = database.rawQuery("select task_id from " + TASKS_TABLE, null)) {
-            cursor.moveToFirst();
-            if (!cursor.isAfterLast()) {
-                do {
-                    String id = cursor.getString(0);
-                    TasksLocal.add(id);
-                } while (cursor.moveToNext());
-            }
-        }
-        TSI = tasks_list.keySet().iterator();
-        while (TSI.hasNext()){
-            task = (String) TSI.next();
-            if (TasksLocal.contains(task)){
-                ArrayList<String> tasks = tasksLoad(task);
-                URL url = new URL("http://155.158.135.197/worktime/edit.php?Tasks&task_id="+tasks.get(0)+"&name="+tasks.get(1)
-                        +"&task="+tasks.get(2)+"&time="+tasks.get(3)+"&used_time="+tasks.get(4)+"&task_data="+tasks.get(5)
-                        +"&priority="+tasks.get(6)+"&extra_info="+tasks.get(7)+"&project_id="+tasks.get(8)+"user_id="+tasks.get(9));
-                url.openConnection();
-                TasksLocal.remove(task);
-
-            }
-            else if(!TasksLocal.contains(task)){
-                URL url = new URL("http://155.158.135.197/worktime/delete.php?Tasks&task_id="+task);
+        for(String task_id :tasks_list.keySet()){
+            if (!tasks_list_local.containsKey(task_id)){
+                tasks_list.remove(task_id);
+                URL url = new URL("http://155.158.135.197/worktime/delete.php?Tasks&task_id=" + task_id);
                 url.openConnection();
             }
         }
-        TLI = TasksLocal.iterator();
-        while(TLI.hasNext()) {
-            task = (String) TLI.next();
-            ArrayList<String>  tasks_IC = projectsLoad(task);
-            URL url = new URL("http://155.158.135.197/worktime/add.php?Tasks&task_id=" + tasks_IC.get(0) + "&name=" + tasks_IC.get(1)
-                    + "&task=" + tasks_IC.get(2) + "&time=" + tasks_IC.get(3) + "&used_time=" + tasks_IC.get(4) + "&task_data=" + tasks_IC.get(5)
-                    + "&priority=" + tasks_IC.get(6) + "&extra_info=" + tasks_IC.get(7) + "&project_id=" + tasks_IC.get(8) + "user_id=" + tasks_IC.get(9));
-            url.openConnection();
+        for(String task_id :tasks_list_local.keySet()){
+            if (tasks_list.containsKey(task_id)){
+                tasks_list.remove(task_id);
+                tasks_list.put(task_id, tasks_list_local.get(task_id));
+                URL url = new URL("http://155.158.135.197/worktime/edit.php?Tasks&task_id=" + task_id + "&name=" + tasks_list.get(task_id).get("name")
+                        + "&task=" + tasks_list.get(task_id).get("task") + "&time=" + tasks_list.get(task_id).get("time") + "&used_time=" + tasks_list.get(task_id).get("used_time") + "&task_date=" + tasks_list.get(task_id).get("task_date")
+                        + "&priority=" + tasks_list.get(task_id).get("priority") + "&extra_info=" + tasks_list.get(task_id).get("extra_info") + "&project_id=" + tasks_list.get(task_id).get("project_id") + "user_id=" + tasks_list.get(task_id).get("user_id"));
+                url.openConnection();
+            }else{
+                tasks_list.put(task_id, tasks_list_local.get(task_id));
+                URL url = new URL("http://155.158.135.197/worktime/add.php?Tasks&task_id=" + task_id + "&name=" + tasks_list.get(task_id).get("name")
+                        + "&task=" + tasks_list.get(task_id).get("task") + "&time=" + tasks_list.get(task_id).get("time") + "&used_time=" + tasks_list.get(task_id).get("used_time") + "&task_date=" + tasks_list.get(task_id).get("task_date")
+                        + "&priority=" + tasks_list.get(task_id).get("priority") + "&extra_info=" + tasks_list.get(task_id).get("extra_info") + "&project_id=" + tasks_list.get(task_id).get("project_id") + "user_id=" + tasks_list.get(task_id).get("user_id"));
+                url.openConnection();
+            }
         }
     }
     public void save_data(){
         editor.putString(LOGIN, user_name);
         editor.putString(PASSWORD, password);
-        editor.putLong(STARTTIME, startTime);
-        editor.putString(STARTEDTASK,startedTask);
+        editor.putLong(START_TIME, startTime);
+        editor.putString(STARTED_TASK,startedTask);
         editor.commit();
     }
 
     public void restoreData() {
-        ManagerApplication.startTime = sharedPreferences.getLong(STARTTIME,0);
+        ManagerApplication.startTime = sharedPreferences.getLong(START_TIME,0);
         ManagerApplication.user_name = sharedPreferences.getString(LOGIN, "");
         ManagerApplication.password = sharedPreferences.getString(PASSWORD, "");
-        ManagerApplication.startedTask = sharedPreferences.getString(STARTEDTASK, "");
+        ManagerApplication.startedTask = sharedPreferences.getString(STARTED_TASK, "");
     }
 
     public void downloadData(){
+
         new DownloadUser().execute();
     }
 
@@ -538,6 +502,7 @@ public class ManagerApplication extends Application {
                 for (int i = 0; i < JAr.length(); i++) {
                     userJAR(i);
                 }
+                ManagerApplication.ES = true;
                 switch (user_type) {
                     case "User":
                         new TasksDownload().execute();
@@ -548,6 +513,7 @@ public class ManagerApplication extends Application {
                     default:
                         break;
                 }
+
             }
             catch (JSONException | IOException e) {ManagerApplication.ES = false;}
             return null;
@@ -602,11 +568,12 @@ public class ManagerApplication extends Application {
                         tasks_list.clear();
                         for (Object project : projects_list.keySet()) {
                             generateJSONArray("http://155.158.135.197/WorkTime/JSON.php?Tasks&project_id=" + project);
-                            if (!JAr.equals(new JSONArray("[]"))) {
-                                tasksJAR(0);
+                            for (int i = 0; i < JAr.length(); i++) {
+                                if (!JAr.equals(new JSONArray("[]"))) {
+                                    tasksJAR(i);
+                                }
                             }
                         }
-
                         break;
                     default:
                         break;

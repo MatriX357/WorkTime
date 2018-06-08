@@ -45,7 +45,7 @@ public class UserTasks extends AppCompatActivity implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        ManagerApplication.idT = task_map.get(position);
+        ManagerApplication.task_uuid = task_map.get(position);
         Intent intent_user_zadanie = new Intent(this, UserTask.class);
         startActivity(intent_user_zadanie);
     }
@@ -61,7 +61,7 @@ public class UserTasks extends AppCompatActivity implements AdapterView.OnItemCl
         int position = 0;
 
         for(String i : ManagerApplication.tasks_list.keySet()){
-            if(ManagerApplication.idP.equals(ManagerApplication.tasks_list.get(i).get("project_id"))) {
+            if(ManagerApplication.project_uuid.equals(ManagerApplication.tasks_list.get(i).get("project_id"))) {
                 task_map.put(position, i);
                 name = ManagerApplication.tasks_list.get(i).get("name");
                 priority = ManagerApplication.tasks_list.get(i).get("priority");

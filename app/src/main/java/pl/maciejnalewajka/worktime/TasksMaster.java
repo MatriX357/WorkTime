@@ -43,7 +43,7 @@ public class TasksMaster extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ManagerApplication.idO = user_map.get(position);
+        ManagerApplication.select_user_uuid = user_map.get(position);
         Intent intent_master_osoba = new Intent(this, PersonMaster.class);
         startActivity(intent_master_osoba);
     }
@@ -63,7 +63,7 @@ public class TasksMaster extends AppCompatActivity implements AdapterView.OnItem
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         int position = 0;
         for(String i : ManagerApplication.tasks_list.keySet()){
-            if(ManagerApplication.idP.equals(ManagerApplication.tasks_list.get(i).get("project_id"))) {
+            if(ManagerApplication.project_uuid.equals(ManagerApplication.tasks_list.get(i).get("project_id"))) {
                 name = ManagerApplication.tasks_list.get(i).get("task");
                 priority = ManagerApplication.tasks_list.get(i).get("priority");
                 user_id = ManagerApplication.tasks_list.get(i).get("user_id");

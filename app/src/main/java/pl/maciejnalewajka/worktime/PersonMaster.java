@@ -56,11 +56,11 @@ public class PersonMaster extends AppCompatActivity{
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         int position = 1;
         for(String i : ManagerApplication.tasks_list.keySet()){
-            if(ManagerApplication.tasks_list.get(i).get("user_id").equals(ManagerApplication.idO) && ManagerApplication.tasks_list.get(i).get("project_id").equals(ManagerApplication.idP)){
-                name2 = ManagerApplication.tasks_list.get(i).get("task").toString();
-                priority = ManagerApplication.tasks_list.get(i).get("priority").toString();
-                percent = String.valueOf((Integer.parseInt(ManagerApplication.tasks_list.get(i).get("used_time").toString())*100)/
-                        Integer.parseInt(ManagerApplication.tasks_list.get(i).get("time").toString()));
+            if(ManagerApplication.tasks_list.get(i).get("user_id").equals(ManagerApplication.select_user_uuid) && ManagerApplication.tasks_list.get(i).get("project_id").equals(ManagerApplication.project_uuid)){
+                name2 = ManagerApplication.tasks_list.get(i).get("task");
+                priority = ManagerApplication.tasks_list.get(i).get("priority");
+                percent = String.valueOf((Integer.parseInt(ManagerApplication.tasks_list.get(i).get("used_time"))*100)/
+                        Integer.parseInt(ManagerApplication.tasks_list.get(i).get("time")));
                 data_A.add(new Elements(Integer.parseInt(percent), name2, percent + "%", priority));
                 barEntries.add(new BarEntry(position,Integer.parseInt(percent)));
                 position = position + 1;
@@ -85,8 +85,8 @@ public class PersonMaster extends AppCompatActivity{
     }                       // Zadania i wykres
 
     private void user() {
-        name.setText(ManagerApplication.users_list.get(ManagerApplication.idO).get("name").toString());
-        email.setText(ManagerApplication.users_list.get(ManagerApplication.idO).get("email").toString());
-        phone.setText(ManagerApplication.users_list.get(ManagerApplication.idO).get("phone").toString());
+        name.setText(ManagerApplication.users_list.get(ManagerApplication.select_user_uuid).get("name"));
+        email.setText(ManagerApplication.users_list.get(ManagerApplication.select_user_uuid).get("email"));
+        phone.setText(ManagerApplication.users_list.get(ManagerApplication.select_user_uuid).get("phone"));
     }
 }

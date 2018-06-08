@@ -33,7 +33,7 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ManagerApplication.idP = projects_map.get(position);
+        ManagerApplication.project_uuid = projects_map.get(position);
         Intent intent_user_zadania = new Intent(this, UserTasks.class);
         startActivity(intent_user_zadania);
     }
@@ -58,16 +58,16 @@ public class User extends AppCompatActivity implements AdapterView.OnItemClickLi
                 pro = 0;used = 0;amount = 0;
                 for (String j : ManagerApplication.tasks_list.keySet()) {
                     System.out.println(j+i);
-                    if(ManagerApplication.tasks_list.get(j).get("project_id").toString().equals(i)){
-                        pro += Integer.parseInt(ManagerApplication.tasks_list.get(j).get("time").toString());
-                        used += Integer.parseInt(ManagerApplication.tasks_list.get(j).get("used_time").toString());
+                    if(ManagerApplication.tasks_list.get(j).get("project_id").equals(i)){
+                        pro += Integer.parseInt(ManagerApplication.tasks_list.get(j).get("time"));
+                        used += Integer.parseInt(ManagerApplication.tasks_list.get(j).get("used_time"));
                         amount += 1;
                     }
                 }
                 if (used != 0) used = (used * 100) / pro;
                 if (used < 100) active = "Aktywne";
                 else active = "Nieaktywne";
-                name = ManagerApplication.projects_list.get(i).get("name").toString();
+                name = ManagerApplication.projects_list.get(i).get("name");
                 data_S.add(new Elements(used, name, String.valueOf(amount), active));
                 position = position + 1;
 

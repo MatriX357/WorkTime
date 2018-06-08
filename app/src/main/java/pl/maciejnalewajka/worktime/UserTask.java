@@ -38,7 +38,7 @@ public class UserTask extends AppCompatActivity {
         button = findViewById(R.id.button_us);
         stopwatch = findViewById(R.id.stopwatch);
         app = (ManagerApplication) getApplication();
-        task_id = ManagerApplication.idT;
+        task_id = ManagerApplication.task_uuid;
         if (isStarted(task_id)){
             button.setText(getString(R.string.finish_the_task));
         }
@@ -82,11 +82,11 @@ public class UserTask extends AppCompatActivity {
             button.setText(getString(R.string.start_the_task));
             Stopwatch.stop(task_id);
             long getTime  = getTime();
-            long milisec = getTime%1000;
+            long millisecond = getTime%1000;
             long sec = getTime/1000%60;
             long min = getTime/1000/60%60;
             long h = used_time + getTime/1000/60/60;
-            stopwatch.setText(String.format("%s:%s:%s,%s", String.valueOf(h), String.valueOf(min),String.valueOf(sec),String.valueOf(milisec)));
+            stopwatch.setText(String.format("%s:%s:%s,%s", String.valueOf(h), String.valueOf(min),String.valueOf(sec),String.valueOf(millisecond)));
             ManagerApplication.tasks_list.get(task_id).remove("used_time");
             ManagerApplication.tasks_list.get(task_id).put("used_time", String.valueOf(h));
         }
